@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Event 01",
+    "eventDate": "24 Feb 2024",
+    "location": "Dhaka,Bangladesh",
+    "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+    "photo":"/event/cover_1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Event 02",
+    "eventDate": "18 Jun 2023",
+    "location": "Dhaka,Bangladesh",
+    "description": "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+    "photo":"/event/cover_2.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Event 03",
+    "eventDate": "07 Jun 2023",
+    "location": "Dhaka,Bangladesh",
+    "description": "The Football Is Good For Training And Recreational Purposes",
+    "photo":"/event/cover_3.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Event 04",
+    "eventDate": "18 May 2023",
+    "location": "Dhaka,Bangladesh",
+    "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+    "photo":"/event/cover_4.jpg"
+  },
+  {
+    "id": 5,
+    "title": "Event 05",
+    "eventDate": "09 Aug 2023",
+    "location": "Dhaka,Bangladesh",
+    "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+    "photo":"/event/cover_5.jpg"
+  }
+]

@@ -1,0 +1,14 @@
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Scrollbar Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+  
+  /* Scrollbar Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
