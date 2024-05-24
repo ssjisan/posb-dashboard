@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../DataProcessing/DataProcessing";
 import { Outlet } from "react-router-dom";
-import Loading from "./Loading";
 import axios from "axios";
-import Login from "../UserAuth/Login";
+import Loading from "./Loading";
 
 export default function PrivateRoute() {
   //eslint-disable-next-line
@@ -23,13 +22,6 @@ export default function PrivateRoute() {
     if (auth?.token) authCheck();
   }, [auth?.token]);
 
-  // useEffect(() => {
-  //   if (auth?.token) {
-  //     setIsUserLoggedIn(true);
-  //   } else {
-  //     setIsUserLoggedIn(false);
-  //   }
-  // }, [auth?.token]);
 
-  return isUserLoggedIn ? <Outlet /> : <Login />;
+  return isUserLoggedIn ? <Outlet /> : <Loading />;
 }

@@ -1,16 +1,17 @@
 import { createContext } from "react";
 import PropTypes from "prop-types";
 import LoginForm from "./Components/LoginForm";
-import ProjectRequestData from "./Components/ProjectRequestData";
-import ScheduleMeetingData from "./Components/ScheduleMeetingData";
 import AuthProvider from "./Components/AuthProvider";
 import axios from "axios";
 
 export const DataContext = createContext();
 
 export default function DataProcessing({ children }) {
+  // -----------------------------------------------Auth Provider Start--------------------------------------------------- //
   const { auth, setAuth } = AuthProvider();
+  // -----------------------------------------------Auth Provider End--------------------------------------------------- //
 
+  // -----------------------------------------------Login Controller Start--------------------------------------------------- //
   const {
     showPassword,
     handleClickShowPassword,
@@ -21,24 +22,9 @@ export default function DataProcessing({ children }) {
     handleLoginDetails,
     loginDetails,
   } = LoginForm();
-  const {
-    allRequests,
-    handleChangePage,
-    handleChangeRowsPerPage,
-    page,
-    rowsPerPage,
-    handleRemoveRequest,
-  } = ProjectRequestData();
-  const {
-    allScheduleMeeting,
-    handleSchedulePageChange,
-    handleScheduleRowsPerPage,
-    schedulePage,
-    scheduleRowsPerPage,
-    handleScheduleRemoveRequest,
-  } = ScheduleMeetingData();
+  // -----------------------------------------------Login Controller End----------------------------------------------------- //
 
-  
+ 
   // Axios Configuration
   // eslint-disable-next-line
   axios.defaults.baseURL = process.env.REACT_APP_SERVER_API;
@@ -58,20 +44,6 @@ export default function DataProcessing({ children }) {
         setIsUserLoggedIn,
         handleLoginDetails,
         loginDetails,
-        // Client Project Request
-        allRequests,
-        handleChangePage,
-        handleChangeRowsPerPage,
-        page,
-        rowsPerPage,
-        handleRemoveRequest,
-        // Schedule Meeting Data
-        allScheduleMeeting,
-        handleSchedulePageChange,
-        handleScheduleRowsPerPage,
-        schedulePage,
-        scheduleRowsPerPage,
-        handleScheduleRemoveRequest,
       }}
     >
       {children}

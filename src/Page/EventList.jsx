@@ -1,6 +1,5 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import ProjectRequestTable from "../Components/Events/ProjectRequestTable";
 export default function EventList() {
   const drawerWidth = 280;
 
@@ -16,7 +15,7 @@ export default function EventList() {
         }}
       >
         <Toolbar />
-        <ProjectRequestTable />
+        {/* <ProjectRequestTable /> */}
       </Box>
     </Box>
   );

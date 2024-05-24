@@ -1,5 +1,6 @@
-import { Box, Toolbar, Typography } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
+import AddAnUser from "../Components/User/AddAnUser";
 export default function AddUser() {
   const drawerWidth = 280;
 
@@ -15,13 +16,7 @@ export default function AddUser() {
         }}
       >
         <Toolbar />
-        <Box sx={{ paddingBottom: "20px" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <Typography variant="h4" color="text.priamry">
-              This is Add User
-            </Typography>
-          </Box>
-        </Box>
+        <AddAnUser />
       </Box>
     </Box>
   );

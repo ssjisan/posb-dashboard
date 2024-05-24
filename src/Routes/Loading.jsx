@@ -17,5 +17,19 @@ export default function Loading() {
     return () => clearInterval(interval);
   }, [counter]);
 
-  return <div>Wait {counter}</div>;
+  return (
+    <div
+      style={{
+        height: "100vh",
+        border: "1px solid red",
+        margin: "0",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      Wait {counter}
+    </div>
+  );
 }
