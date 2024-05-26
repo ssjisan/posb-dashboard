@@ -1,12 +1,9 @@
-import { IconButton, TableBody, TableRow } from "@mui/material";
+import { IconButton, TableBody, TableRow, Tooltip } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import PropTypes from "prop-types";
-import { ChangePassword, Remove } from "../../../../assets/IconSet";
+import { Update, Remove } from "../../../../assets/IconSet";
 import RemoveUserModal from "../RemoveUserModal";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useEffect } from "react";
 
 export default function Body({
   users,
@@ -37,20 +34,22 @@ export default function Body({
             <StyledTableCell align="left">{data.name}</StyledTableCell>
             <StyledTableCell align="left">{data.email}</StyledTableCell>
             <StyledTableCell align="center">
-              <IconButton
-                sx={{ width: "40px", height: "40px" }}
-              >
-                <ChangePassword color="#919EAB" size={24} />
-              </IconButton>
-              <IconButton
-                sx={{ width: "40px", height: "40px" }}
-                onClick={() => {
-                  showModal();
-                  setSelectedUser(data);
-                }}
-              >
-                <Remove color="red" size={24} />
-              </IconButton>
+              <Tooltip title="Update">
+                <IconButton sx={{ width: "40px", height: "40px" }}>
+                  <Update color="#919EAB" size={24} />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Remove">
+                <IconButton
+                  sx={{ width: "40px", height: "40px" }}
+                  onClick={() => {
+                    showModal();
+                    setSelectedUser(data);
+                  }}
+                >
+                  <Remove color="red" size={24} />
+                </IconButton>
+              </Tooltip>
             </StyledTableCell>
           </TableRow>
         ))}
@@ -67,5 +66,9 @@ Body.propTypes = {
   users: PropTypes.any,
   page: PropTypes.any,
   rowsPerPage: PropTypes.func,
-  theme: PropTypes.any,
+  handleRemove: PropTypes.any,
+  isModalOpen: PropTypes.any,
+  showModal: PropTypes.any,
+  setSelectedUser: PropTypes.func,
+  userRemoveModal: PropTypes.any,
 };

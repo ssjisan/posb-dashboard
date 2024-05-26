@@ -1,6 +1,11 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
-export default function RemoveUserModal({ isModalOpen, handleRemove,userRemoveModal }) {
+export default function RemoveUserModal({
+  isModalOpen,
+  handleRemove,
+  userRemoveModal,
+}) {
   return (
     <Modal
       open={isModalOpen}
@@ -23,3 +28,9 @@ export default function RemoveUserModal({ isModalOpen, handleRemove,userRemoveMo
     </Modal>
   );
 }
+
+RemoveUserModal.propTypes = {
+  isModalOpen: PropTypes.any,
+  handleRemove: PropTypes.any,
+  userRemoveModal: PropTypes.any,
+};

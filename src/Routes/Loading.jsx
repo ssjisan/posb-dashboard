@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Loading() {
-  const [counter, setCounter] = useState(1);
+  const [counter, setCounter] = useState(3);
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
@@ -29,7 +29,8 @@ export default function Loading() {
         textAlign: "center",
       }}
     >
-      Wait {counter}
+      <img src="/loader.gif" alt="Loader" width="200px"/>
+      {/* Wait {counter} */}
     </div>
   );
 }
