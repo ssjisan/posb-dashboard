@@ -7,12 +7,7 @@ export default function RemoveUserModal({
   userRemoveModal,
 }) {
   return (
-    <Modal
-      open={isModalOpen}
-      onClose={userRemoveModal}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <Modal open={isModalOpen} onClose={userRemoveModal}>
       <Box>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Text in a modal

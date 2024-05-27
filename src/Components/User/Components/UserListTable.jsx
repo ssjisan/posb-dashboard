@@ -40,6 +40,10 @@ export default function UserListTable() {
   const handleRemove = async (e) => {
     e.preventDefault();
     try {
+      if (selectedUser.email === "ssjisan.dev@gmail.com") {
+        toast.error("Access Denied");
+        return;
+      }
       const { data } = await axios.delete(`/user/${selectedUser._id}`);
       if (data?.error) {
         toast.error(data.error);
@@ -52,6 +56,7 @@ export default function UserListTable() {
       toast.error(err.message);
     }
   };
+  
   return (
     <Box
       sx={{

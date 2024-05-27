@@ -1,21 +1,19 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Upload } from "../../../assets/IconSet";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-export default function EventCover() {
+export default function EventCover({ imageCover, setImageCover }) {
   const backgroundImage =
     "url(\"data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23333' stroke-width='1' stroke-dasharray='12' stroke-dashoffset='15' stroke-linecap='round'/%3e%3c/svg%3e\")";
 
-  const [image, setImage] = useState("");
   const inputRef = useRef(null);
 
   const handleBoxClick = () => {
     inputRef.current.click();
   };
-  console.log(image);
   return (
     <>
-      {!image ? (
+      {!imageCover ? (
         <Box
           onClick={handleBoxClick}
           sx={{
@@ -45,7 +43,7 @@ export default function EventCover() {
             name="image"
             ref={inputRef}
             onChange={(e) => {
-              setImage(e.target.files[0]);
+              setImageCover(e.target.files[0]);
             }}
             hidden
             style={{
@@ -70,7 +68,7 @@ export default function EventCover() {
             }}
           >
             <img
-              src={URL.createObjectURL(image)}
+              src={URL.createObjectURL(imageCover)}
               alt=""
               width="100%"
               height="100%"
@@ -91,7 +89,7 @@ export default function EventCover() {
                 name="image"
                 ref={inputRef}
                 onChange={(e) => {
-                  setImage(e.target.files[0]);
+                  setImageCover(e.target.files[0]);
                 }}
                 hidden
                 style={{
@@ -101,7 +99,7 @@ export default function EventCover() {
                 }}
               />
             </Button>
-            <Button color="error" onClick={() => setImage("")}>
+            <Button color="error" onClick={() => setImageCover("")}>
               Remove
             </Button>
           </Stack>
