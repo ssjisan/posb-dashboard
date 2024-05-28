@@ -31,11 +31,11 @@ export default function UpdateEventForm() {
   const [id, setId] = useState("");
   const navigate = useNavigate();
   const params = useParams();
-  
+
   useEffect(() => {
     loadEvent();
   }, []);
-  
+
   const loadEvent = async () => {
     try {
       const { data } = await axios.get(`/event/${params.slug}`);
@@ -45,13 +45,12 @@ export default function UpdateEventForm() {
       setEventTime(dayjs(data.eventTime, "HH:mm"));
       setEventDescription(data.description);
       setPublished(data.published);
-      setId(data._id)
-      setImageCover(data?.image);
+      setId(data._id);
+      setImageCover(data.image);
     } catch (err) {
       toast.error("Failed to load event data");
     }
   };
-  console.log(imageCover);
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -142,18 +141,7 @@ export default function UpdateEventForm() {
           </Stack>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          {/* <EventCover imageCover={imageCover} setImageCover={setImageCover} /> */}
-          <Box sx={{border:"1px solid red"}}>
-          {imageCover && 
-            <img
-            src={URL.createObjectURL(imageCover)}
-            alt={imageCover.name}
-            width="100%"
-            height="100%"
-            style={{ objectFit: "contain" }}
-          />
-          }
-          </Box>
+          <EventCover imageCover={imageCover} setImageCover={setImageCover} />
         </Grid>
       </Grid>
     </Box>

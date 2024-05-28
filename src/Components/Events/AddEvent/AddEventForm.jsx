@@ -25,7 +25,7 @@ export default function AddEventForm() {
   };
   //------------------------------------------------------Custome Icon End--------------------------------------------------------------//
 
-  // State Declear
+  //-------------------------------------------------------State Start-----------------------------------------------------------------//
 
   const [eventName, setEventName] = useState("");
   const [eventLocation, setEventLocation] = useState("");
@@ -35,6 +35,9 @@ export default function AddEventForm() {
   const [published, setPublished] = useState(true);
   const [imageCover, setImageCover] = useState("");
   const navigate = useNavigate();
+
+  //-------------------------------------------------------State End-------------------------------------------------------------------//
+
 
   const handleCreate = async (e) => {
     e.preventDefault();

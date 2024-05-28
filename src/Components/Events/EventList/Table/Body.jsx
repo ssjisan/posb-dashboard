@@ -1,4 +1,5 @@
 import {
+  Box,
   IconButton,
   MenuItem,
   Popover,
@@ -14,17 +15,21 @@ import { Update, Remove, More } from "../../../../assets/IconSet";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import EventModal from "../../RemoveEvent/EventModal";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Body({
   events,
   page,
   rowsPerPage,
-  handleRemove,
   selectedEvents,
   setSelectedEvents,
 }) {
-  const [open, setOpen] = useState(null);
   const navigate = useNavigate();
+  const [open, setOpen] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState(null);
 
   const handleOpenMenu = (event, events) => {
     setOpen(event.currentTarget);
@@ -40,6 +45,25 @@ export default function Body({
     navigate(`/event/${data.slug}`);
   };
 
+  const removeProduct = async (id) => {
+    try {
+      const { data } = await axios.delete(`/event/${id}`);
+      toast.success("Event deleted successfully");
+      window.location.reload(); // Reloading the page to reflect the changes
+    } catch (err) {
+      console.error(err);
+      toast.error("Unable to delete event at the moment.");
+    }
+  };
+
+  const handleConfirmRemove = () => {
+    if (eventToDelete) {
+      removeProduct(eventToDelete._id);
+      setIsModalOpen(false);
+      setEventToDelete(null);
+    }
+  };
+
   return (
     <TableBody>
       {events
@@ -48,13 +72,15 @@ export default function Body({
           <TableRow key={data._id}>
             <TableCell component="th" scope="row" padding="none">
               <Stack direction="row" alignItems="center" spacing={2}>
+                <Box sx={{width:"80px", height:"48px"}}>
                 <img
                   src={`${process.env.REACT_APP_SERVER_API}/event/image/${data._id}`}
                   alt={data.name}
-                  width="80px"
-                  height="48px"
+                  width="100%"
+                  height="100%"
+                  style={{objectFit:"cover"}}
                 />
-
+                </Box>
                 <Typography variant="subtitle2" noWrap>
                   {data.name}
                 </Typography>
@@ -104,14 +130,21 @@ export default function Body({
             gap: "8px",
             borderRadius: "8px",
           }}
-          onClick={(e) => {
-            handleRemove(e);
-            handleCloseMenu();
+          onClick={() => {
+            setEventToDelete(selectedEvents);
+            setIsModalOpen(true);
+            handleCloseMenu(); // Close popover
           }}
         >
           <Remove color="red" size={24} /> Delete
         </MenuItem>
       </Popover>
+      <EventModal
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        eventName={eventToDelete ? eventToDelete.name : ""}
+        handleRemove={handleConfirmRemove}
+      />
     </TableBody>
   );
 }
