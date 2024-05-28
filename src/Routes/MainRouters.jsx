@@ -11,6 +11,7 @@ import AddAlbum from "../Page/AddAlbum";
 import AlbumList from "../Page/AlbumList";
 import NoticeList from "../Page/NoticeList";
 import AddNotice from "../Page/AddNotice";
+import UpdateEvent from "../Page/UpdateEvent";
 
 export default function MainRouters() {
   return (
@@ -23,6 +24,7 @@ export default function MainRouters() {
           <Route path="add_user" element={<AddUser />} />
           <Route path="user_list" element={<UserList />} />
           <Route path="add_events" element={<AddEvent />} />
+          <Route path="event/:slug" element={<UpdateEvent />} />
           <Route path="events_list" element={<EventList />} />
           <Route path="add_album" element={<AddAlbum />} />
           <Route path="album_list" element={<AlbumList />} />

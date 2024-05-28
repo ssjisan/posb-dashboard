@@ -8,10 +8,7 @@ export default function Header() {
     <TableHead sx={{ borderRadius: "1em 0 0 1em" }}>
       <TableRow>
         <TableCell align="left">Name</TableCell>
-        <TableCell align="left">Location</TableCell>
-        <TableCell align="left">Date</TableCell>
-        <TableCell align="left">Time</TableCell>
-        <TableCell align="left">Status</TableCell>
+        <TableCell align="left">Email</TableCell>
         <TableCell align="center"></TableCell>
       </TableRow>
     </TableHead>

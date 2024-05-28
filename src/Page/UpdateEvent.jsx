@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import AllEventList from "../Components/Events/AllEventList";
-export default function EventList() {
+import UpdateAnEvent from "../Components/Events/UpdateEvent/UpdateAnEvent";
+export default function UpdateEvent() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +16,7 @@ export default function EventList() {
         }}
       >
         <Toolbar />
-        <AllEventList/>
+        <UpdateAnEvent />
       </Box>
     </Box>
   );
