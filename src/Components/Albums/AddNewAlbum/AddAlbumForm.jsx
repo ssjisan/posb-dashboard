@@ -16,12 +16,12 @@ export default function AddAlbumForm({
         Create Album
       </Typography>
       <Stack direction="column" spacing={3}>
-        <TextField 
-          label="Album Name" 
-          variant="outlined" 
-          fullWidth 
-          value={albumName} 
-          onChange={handleAlbumNameChange} 
+        <TextField
+          label="Album Name"
+          variant="outlined"
+          fullWidth
+          value={albumName}
+          onChange={handleAlbumNameChange}
         />
         <Button
           color="inherit"
@@ -45,7 +45,9 @@ export default function AddAlbumForm({
             }}
           />
         </Button>
-        <Button variant="contained" type="submit">Create</Button>
+        <Button variant="contained" type="submit">
+          Create
+        </Button>
       </Stack>
     </Box>
   );
@@ -53,7 +55,8 @@ export default function AddAlbumForm({
 
 AddAlbumForm.propTypes = {
   handleBoxClick: PropTypes.func.isRequired,
-  inputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
+  inputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
   handleFilesChange: PropTypes.func.isRequired,
   handleAlbumNameChange: PropTypes.func.isRequired,
   albumName: PropTypes.string.isRequired,

@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 export default function AddNewAlbum() {
   const [albumName, setAlbumName] = useState("");
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const handleBoxClick = () => {
@@ -30,34 +32,35 @@ export default function AddNewAlbum() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       if (!albumName || images.length === 0) {
-        alert('Please enter an album name and select at least one image.');
+        alert("Please enter an album name and select at least one image.");
         return;
       }
 
       const albumData = new FormData();
-      albumData.append('albumName', albumName);
-      
-      // Append each image with a unique key
+      albumData.append("albumName", albumName);
+
+      // eslint-disable-next-line
       images.forEach((image, index) => {
-        albumData.append('images', image);
+        albumData.append("images", image);
       });
 
-      const { data } = await axios.post('/album', albumData, {
+      const { data } = await axios.post("/album", albumData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
       console.log(data);
-      toast.success('Album created successfully!');
-      navigate("/album_list")
-      setAlbumName('');
+      toast.success("Album created successfully!");
+      navigate("/album_list");
+      setAlbumName("");
       setImages([]);
     } catch (error) {
       // toast.error('Error creating album:', error);
-      console.error('Error creating album:', error);
+      console.error("Error creating album:", error);
     }
   };
   return (
@@ -74,7 +77,7 @@ export default function AddNewAlbum() {
           />
         </Grid>
         <Grid item md={9}>
-          <ImagePreview images={images} handleRemoveImage={handleRemoveImage} />
+          <ImagePreview images={images} handleRemoveImage={handleRemoveImage} loading={loading}/>
         </Grid>
       </Grid>
     </Box>

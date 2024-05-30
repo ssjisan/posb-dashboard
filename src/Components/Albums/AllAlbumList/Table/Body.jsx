@@ -12,53 +12,22 @@ import {
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { Update, Remove, More, EyeOn } from "../../../../assets/IconSet";
-import { useState } from "react";
-import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import toast from "react-hot-toast";
 import RemoveAlbumModal from "../../RemoveAlbum/RemoveAlbumModal";
 
 export default function Body({
   events,
   page,
+  open,
   rowsPerPage,
   selectedAlbum,
-  setSelectedAlbum,
+  handleOpenMenu,
+  handleCloseMenu,
+  setAlbumToDelete,
+  setIsModalOpen,
+  isModalOpen,
+  albumToDelete,
+  handleConfirmRemove,
 }) {
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [albumToDelete, setAlbumToDelete] = useState(null);
-
-  const handleOpenMenu = (event, data) => {
-    setOpen(event.currentTarget);
-    setSelectedAlbum(data);
-  };
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
-
-  const removeProduct = async (id) => {
-    try {
-      const { data } = await axios.delete(`/album/${id}`);
-      toast.success("Event deleted successfully");
-      window.location.reload(); // Reloading the page to reflect the changes
-    } catch (err) {
-      console.error(err);
-      toast.error("Unable to delete album at the moment.");
-    }
-  };
-
-  const handleConfirmRemove = () => {
-    if (albumToDelete) {
-      removeProduct(albumToDelete._id);
-      setIsModalOpen(false);
-      setAlbumToDelete(null);
-    }
-  };
-  
   return (
     <TableBody>
       {events
@@ -160,5 +129,13 @@ Body.propTypes = {
   page: PropTypes.any,
   rowsPerPage: PropTypes.any,
   selectedAlbum: PropTypes.any,
+  open: PropTypes.any,
   setSelectedAlbum: PropTypes.any,
+  handleOpenMenu: PropTypes.any,
+  handleCloseMenu: PropTypes.any,
+  setAlbumToDelete: PropTypes.any,
+  setIsModalOpen: PropTypes.any,
+  isModalOpen: PropTypes.any,
+  albumToDelete: PropTypes.any,
+  handleConfirmRemove: PropTypes.any,
 };

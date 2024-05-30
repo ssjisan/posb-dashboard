@@ -8,7 +8,8 @@ import Body from "./Table/Body";
 
 export default function AlbumTable() {
   const [albums, setAlbums] = useState([]);
-  console.log(albums);
+  const [open, setOpen] = useState(null);
+
   useEffect(() => {
     loadAlbums();
   }, []);
@@ -37,8 +38,35 @@ export default function AlbumTable() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // eslint-disable-next-line
   const [userRemoveModal, setUserRemoveModal] = useState(false);
+  const [albumToDelete, setAlbumToDelete] = useState(null);
+
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const handleOpenMenu = (event, data) => {
+    setOpen(event.currentTarget);
+    setSelectedAlbum(data);
+  };
+  const handleCloseMenu = () => {
+    setOpen(null);
+  };
+
+  const removeProduct = async (id) => {
+    try {
+      const { data } = await axios.delete(`/album/${id}`);
+      toast.success(`${data.name} deleted successfully`);
+      window.location.reload(); // Reloading the page to reflect the changes
+    } catch (err) {
+      toast.error("Unable to delete album at the moment.");
+    }
+  };
+
+  const handleConfirmRemove = () => {
+    if (albumToDelete) {
+      removeProduct(albumToDelete._id);
+      setIsModalOpen(false);
+      setAlbumToDelete(null);
+    }
   };
   return (
     <Box
@@ -62,6 +90,13 @@ export default function AlbumTable() {
             showModal={showModal}
             selectedAlbum={selectedAlbum}
             setSelectedAlbum={setSelectedAlbum}
+            handleOpenMenu={handleOpenMenu}
+            handleCloseMenu={handleCloseMenu}
+            setAlbumToDelete={setAlbumToDelete}
+            setIsModalOpen={setIsModalOpen}
+            albumToDelete={albumToDelete}
+            handleConfirmRemove={handleConfirmRemove}
+            open={open}
           />
         </Table>
         <Pagination
