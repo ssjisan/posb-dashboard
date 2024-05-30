@@ -13,6 +13,8 @@ import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { Update, Remove, More, EyeOn } from "../../../../assets/IconSet";
 import RemoveAlbumModal from "../../RemoveAlbum/RemoveAlbumModal";
+import AlbumView from "../AlbumView";
+import { useState } from "react";
 
 export default function Body({
   events,
@@ -28,6 +30,20 @@ export default function Body({
   albumToDelete,
   handleConfirmRemove,
 }) {
+  const [albumOpen, setAlbumOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]); // State for selected images
+
+  const handleOpen = (images) => {
+    setSelectedImages(images); // Set the selected images array in state
+    setAlbumOpen(true); // Open the modal
+  };
+
+  const handleClose = () => setAlbumOpen(false);
+  console.log(selectedAlbum);
+  const handlePreviewClick = () => {
+    setAlbumOpen(true);
+    handleCloseMenu(); // Close popover
+  };
   return (
     <TableBody>
       {events
@@ -88,6 +104,7 @@ export default function Body({
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+          onClick={handlePreviewClick}
         >
           <EyeOn color="#919EAB" size={24} />
           Preview
@@ -119,6 +136,11 @@ export default function Body({
         handleClose={() => setIsModalOpen(false)}
         eventName={albumToDelete ? albumToDelete.name : ""}
         handleRemove={handleConfirmRemove}
+      />
+       <AlbumView
+        selectedImages={selectedAlbum?.images} // Pass selected album images to AlbumView
+        handleClose={() => setAlbumOpen(false)}
+        albumOpen={albumOpen}
       />
     </TableBody>
   );

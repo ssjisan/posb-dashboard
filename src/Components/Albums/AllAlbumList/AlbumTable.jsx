@@ -13,7 +13,6 @@ export default function AlbumTable() {
   useEffect(() => {
     loadAlbums();
   }, []);
-  console.log(albums);
   const loadAlbums = async () => {
     try {
       const { data } = await axios.get("/albums");
