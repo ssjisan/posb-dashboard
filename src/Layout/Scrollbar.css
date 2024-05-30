@@ -1,14 +1,23 @@
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-  /* Scrollbar Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 6px;
-  }
-  
-  /* Scrollbar Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
+/* Scrollbar track */
+::-webkit-scrollbar {
+  width: 5px; /* Hide the scrollbar by default */
+}
+
+/* Show scrollbar when hovering over the sidebar */
+.sidebar ::-webkit-scrollbar {
+  width: 0px; /* Set the width of the scrollbar */
+  transition: width 5s ease-in-out; /* Add transition for smooth visibility change */
+}
+
+/* Show scrollbar when hovering over the sidebar */
+.sidebar:hover ::-webkit-scrollbar {
+  width: 5px; /* Set the width of the scrollbar */
+  transition: width 5s ease-in-out; /* Add transition for smooth visibility change */
+
+}
+
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: rgb(145,142,175);
+  border-radius: 10px; /* Rounded corners of the thumb */
+}

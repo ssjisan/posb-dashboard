@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import AllAblumListTable from "../Components/Albums/AllAlbumList/AllAblumListTable";
-export default function AlbumList() {
+import ListOfCommittee from "../Components/ExecutiveCommittee/ListOfCommittee/ListOfCommittee";
+export default function ComitteeList() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +16,7 @@ export default function AlbumList() {
         }}
       >
         <Toolbar />
-        <AllAblumListTable />
+        <ListOfCommittee />
       </Box>
     </Box>
   );

@@ -55,6 +55,7 @@ export default function AddEventForm() {
       if (data?.error) {
         toast.error(data.error);
       } else {
+        console.log(data)
         toast.success("Event Created");
         navigate("/events_list");
       }

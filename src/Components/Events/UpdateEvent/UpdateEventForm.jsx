@@ -27,7 +27,7 @@ export default function UpdateEventForm() {
   const [eventTime, setEventTime] = useState(dayjs());
   const [eventDescription, setEventDescription] = useState("");
   const [published, setPublished] = useState(true);
-  const [imageCover, setImageCover] = useState("");
+  const [image, setImage] = useState("");
   const [id, setId] = useState("");
   const navigate = useNavigate();
   const params = useParams();
@@ -46,7 +46,8 @@ export default function UpdateEventForm() {
       setEventDescription(data.description);
       setPublished(data.published);
       setId(data._id);
-      setImageCover(data.image);
+      setImage(data.image);
+      console.log(data)
     } catch (err) {
       toast.error("Failed to load event data");
     }
@@ -55,7 +56,7 @@ export default function UpdateEventForm() {
     e.preventDefault();
     try {
       const eventData = new FormData();
-      imageCover && eventData.append("image", imageCover);
+      image && eventData.append("image", image);
       eventData.append("name", eventName);
       eventData.append("description", eventDescription);
       eventData.append("location", eventLocation);
@@ -141,7 +142,7 @@ export default function UpdateEventForm() {
           </Stack>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <EventCover imageCover={imageCover} setImageCover={setImageCover} />
+          <EventCover image={image} setImage={setImage} id={id} eventName={eventName}/>
         </Grid>
       </Grid>
     </Box>

@@ -10,11 +10,11 @@ export function overrides(theme) {
           boxSizing: "border-box",
         },
         "*::-webkit-scrollbar-thumb": {
-          backgroundColor: "red",
+          backgroundColor: "#rgb(145,142,175)",
           borderRadius: "10px",
         },
         "*::-webkit-scrollbar-thumb:hover": {
-          backgroundColor: "#000",
+          backgroundColor: "#rgb(145,142,175)",
         },
       },
       html: {

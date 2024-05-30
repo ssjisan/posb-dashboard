@@ -1,27 +1,22 @@
 import { Box, Table, TableContainer } from "@mui/material";
+import Header from "./Table/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Pagination from "./Table/Pagination";
 import Body from "./Table/Body";
-import Header from "./Table/Header";
 
-export default function EventListTable() {
-  const [events, setEvents] = useState([]);
-  const [selectedEvents, setSelectedEvents] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // eslint-disable-next-line
-  const [userRemoveModal, setUserRemoveModal] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+export default function AlbumTable() {
+  const [albums, setAlbums] = useState([]);
+  console.log(albums);
   useEffect(() => {
-    loadEvents();
+    loadAlbums();
   }, []);
-  const loadEvents = async () => {
+  console.log(albums);
+  const loadAlbums = async () => {
     try {
-      const { data } = await axios.get("/events");
-      setEvents(data);
+      const { data } = await axios.get("/albums");
+      setAlbums(data);
     } catch (err) {
       toast.error("Check");
     }
@@ -37,7 +32,14 @@ export default function EventListTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-console.log(events);
+
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // eslint-disable-next-line
+  const [userRemoveModal, setUserRemoveModal] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
   return (
     <Box
       sx={{
@@ -52,18 +54,18 @@ console.log(events);
         <Table>
           <Header />
           <Body
-            events={events}
+            events={albums}
             page={page}
             rowsPerPage={rowsPerPage}
             isModalOpen={isModalOpen}
             userRemoveModal={userRemoveModal}
             showModal={showModal}
-            selectedEvents={selectedEvents}
-            setSelectedEvents={setSelectedEvents}
+            selectedAlbum={selectedAlbum}
+            setSelectedAlbum={setSelectedAlbum}
           />
         </Table>
         <Pagination
-          events={events}
+          events={albums}
           rowsPerPage={rowsPerPage}
           page={page}
           handleChangePage={handleChangePage}

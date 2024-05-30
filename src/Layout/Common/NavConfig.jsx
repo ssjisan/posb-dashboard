@@ -101,6 +101,31 @@ const navConfig = ({ pathname }) => [
       },
     ],
   },
+  // {
+  //   title: "Executive Member",
+  //   items: [
+  //     {
+  //       title: "Add Committee",
+  //       link: "/add-committee",
+  //       icon: (
+  //         <AddUser
+  //           color={pathname === "/add-committee" ? "#00AE60" : "#918EAF"}
+  //           size={24}
+  //         />
+  //       ),
+  //     },
+  //     {
+  //       title: "Committee List",
+  //       link: "/committee-list",
+  //       icon: (
+  //         <UserList
+  //           color={pathname === "/committee-list" ? "#00AE60" : "#918EAF"}
+  //           size={24}
+  //         />
+  //       ),
+  //     },
+  //   ],
+  // },
   {
     title: "User",
     items: [
