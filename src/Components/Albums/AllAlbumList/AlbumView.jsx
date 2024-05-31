@@ -4,13 +4,12 @@ import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import PropTypes from "prop-types";
 
-export default function AlbumView({selectedImages,handleClose,albumOpen}) {
+export default function AlbumView({ selectedImages, handleClose, albumOpen }) {
   const forBelow767 = useMediaQuery("(max-width:767px)");
   const galleryImages = selectedImages?.map((image) => ({
     original: image,
     thumbnail: image,
   }));
-  console.log("galleryImages",galleryImages);
   const style = {
     position: "absolute",
     top: "50%",
@@ -39,8 +38,7 @@ export default function AlbumView({selectedImages,handleClose,albumOpen}) {
 }
 
 AlbumView.propTypes = {
-    selectedImages: PropTypes.any,
-    handleClose: PropTypes.any,
-    albumOpen: PropTypes.any
-  };
-  
+  selectedImages: PropTypes.any,
+  handleClose: PropTypes.any,
+  albumOpen: PropTypes.any,
+};

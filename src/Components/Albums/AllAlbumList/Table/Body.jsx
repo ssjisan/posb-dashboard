@@ -15,6 +15,7 @@ import { Update, Remove, More, EyeOn } from "../../../../assets/IconSet";
 import RemoveAlbumModal from "../../RemoveAlbum/RemoveAlbumModal";
 import AlbumView from "../AlbumView";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Body({
   events,
@@ -32,17 +33,20 @@ export default function Body({
 }) {
   const [albumOpen, setAlbumOpen] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]); // State for selected images
-
+  const navigate = useNavigate()
   const handleOpen = (images) => {
     setSelectedImages(images); // Set the selected images array in state
     setAlbumOpen(true); // Open the modal
   };
 
   const handleClose = () => setAlbumOpen(false);
-  console.log(selectedAlbum);
+
   const handlePreviewClick = () => {
     setAlbumOpen(true);
     handleCloseMenu(); // Close popover
+  };
+  const redirectEdit = (e, selectedAlbum) => {
+    navigate(`/update-album/${selectedAlbum.slug}`);
   };
   return (
     <TableBody>
@@ -111,6 +115,7 @@ export default function Body({
         </MenuItem>
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+          onClick={(e) => redirectEdit(e, selectedAlbum)}
         >
           <Update color="#919EAB" size={24} />
           Edit

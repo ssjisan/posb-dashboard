@@ -53,7 +53,6 @@ export default function AddNewAlbum() {
         },
       });
 
-      console.log(data);
       toast.success("Album created successfully!");
       navigate("/album_list");
       setAlbumName("");

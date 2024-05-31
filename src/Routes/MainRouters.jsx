@@ -12,8 +12,7 @@ import AlbumList from "../Page/AlbumList";
 import NoticeList from "../Page/NoticeList";
 import AddNotice from "../Page/AddNotice";
 import UpdateEvent from "../Page/UpdateEvent";
-import AddComittee from "../Page/AddComittee";
-import ComitteeList from "../Page/ComitteeList";
+import UpdateAlbum from "../Page/UpdateAlbum";
 
 export default function MainRouters() {
   return (
@@ -30,10 +29,9 @@ export default function MainRouters() {
           <Route path="events_list" element={<EventList />} />
           <Route path="add_album" element={<AddAlbum />} />
           <Route path="album_list" element={<AlbumList />} />
+          <Route path="update-album/:slug" element={<UpdateAlbum />} />
           <Route path="add_notice" element={<AddNotice />} />
           <Route path="notice_list" element={<NoticeList />} />
-          <Route path="committee-list" element={<ComitteeList />} />
-          <Route path="add-committee" element={<AddComittee />} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>
