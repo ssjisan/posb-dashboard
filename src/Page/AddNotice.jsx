@@ -1,5 +1,6 @@
-import { Box, Toolbar, Typography } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
+import AddAnNotice from "../Components/Notice/AddNewNotice/AddAnNotice";
 export default function AddNotice() {
   const drawerWidth = 280;
 
@@ -15,13 +16,7 @@ export default function AddNotice() {
         }}
       >
         <Toolbar />
-        <Box sx={{ paddingBottom: "20px" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <Typography variant="h4" color="text.priamry">
-              This is Add Notice
-            </Typography>
-          </Box>
-        </Box>
+        <AddAnNotice />
       </Box>
     </Box>
   );
