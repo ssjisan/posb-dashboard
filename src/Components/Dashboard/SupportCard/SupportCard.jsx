@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 export default function SupportCard() {
   const forBelow676 = useMediaQuery("(max-width:676px)");
-  const { auth, setAuth } = useContext(DataContext);
+  const { auth } = useContext(DataContext);
 
   return (
     <Box

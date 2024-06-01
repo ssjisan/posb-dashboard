@@ -1,6 +1,21 @@
 import { Box, Stack, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function AlbumCount() {
+  const [albums,setAlbums]=useState([])
+  useEffect(() => {
+    loadEvents();
+  }, []);
+  const loadEvents = async () => {
+    try {
+      const { data } = await axios.get("/albums");
+      setAlbums(data);
+    } catch (err) {
+      toast.error("Check");
+    }
+  };
   return (
     <Box
       sx={{
@@ -16,7 +31,7 @@ export default function AlbumCount() {
     >
       <img src="/dashboard/album.png" alt="event_illustration" />
       <Stack>
-        <Typography variant="h4">10</Typography>
+        <Typography variant="h4">{albums.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Total Album
         </Typography>

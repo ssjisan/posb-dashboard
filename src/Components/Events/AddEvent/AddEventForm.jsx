@@ -35,12 +35,13 @@ export default function AddEventForm() {
   const [published, setPublished] = useState(true);
   const [imageCover, setImageCover] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   //-------------------------------------------------------State End-------------------------------------------------------------------//
 
-
   const handleCreate = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const eventData = new FormData();
       eventData.append("image", imageCover);
@@ -55,11 +56,12 @@ export default function AddEventForm() {
       if (data?.error) {
         toast.error(data.error);
       } else {
-        console.log(data)
+        setLoading(false);
         toast.success("Event Created");
         navigate("/events_list");
       }
     } catch (err) {
+      setLoading(false);
       toast.error("Event creation failed, check all fields");
     }
   };
@@ -122,8 +124,13 @@ export default function AddEventForm() {
               />
               <Typography>Publish Event</Typography>
             </Stack>
-            <Button variant="contained" color="primary" onClick={handleCreate}>
-              Create
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCreate}
+              endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+            >
+              {loading ? "Creating" : "Create"}
             </Button>
           </Stack>
         </Grid>

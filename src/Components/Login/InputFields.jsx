@@ -22,6 +22,7 @@ export default function InputFields() {
   const { showPassword, handleClickShowPassword, handleMouseDownPassword } =
     useContext(DataContext);
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(
     localStorage.getItem("isChecked") === "true"
@@ -40,6 +41,7 @@ export default function InputFields() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.post("/login", {
         email,
@@ -60,11 +62,13 @@ export default function InputFields() {
           localStorage.removeItem("isChecked", rememberMe); // Store password in local storage (not secure)
         }
         setAuth({ ...auth, token: data.token, user: data.user });
+        setLoading(false);
         toast.success("Login Successful");
         navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      setLoading(false);
+      toast.success("Please try again");
     }
   };
 
@@ -125,7 +129,11 @@ export default function InputFields() {
           label="Remember me"
         />
       </FormGroup>
-      <Button variant="contained" onClick={handleLogin}>
+      <Button
+        variant="contained"
+        onClick={handleLogin}
+        endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+      >
         Login
       </Button>
     </Box>

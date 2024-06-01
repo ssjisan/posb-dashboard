@@ -11,7 +11,7 @@ export default function DirectNavigation() {
         position: "relative",
       }}
     >
-      <Stack
+      {/* <Stack
         sx={{ position: "absolute", top: "16px", right: "16px" }}
         direction="row"
         spacing={1}
@@ -29,9 +29,9 @@ export default function DirectNavigation() {
         <IconButton>
           <ArrowRight color="#fff" size={20} />
         </IconButton>
-      </Stack>
+      </Stack> */}
       <img
-        src="/event.jpg"
+        src="/graphics.png"
         alt="event"
         width="100%"
         height="100%"
