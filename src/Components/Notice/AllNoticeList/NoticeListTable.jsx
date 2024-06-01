@@ -38,7 +38,6 @@ export default function NoticeListTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-console.log(notices);
   return (
     <Box
       sx={{

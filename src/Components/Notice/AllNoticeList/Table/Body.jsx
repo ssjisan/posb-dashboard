@@ -42,8 +42,6 @@ export default function Body({
     navigate(`/event/${data.slug}`);
   };
 
- 
-
   return (
     <TableBody>
       {notices
@@ -51,15 +49,18 @@ export default function Body({
         .map((data) => (
           <TableRow key={data._id}>
             <TableCell component="th" scope="row" padding="none">
-            <Typography variant="subtitle2" noWrap>
-                  {data.title}
-                </Typography>
+              <Typography variant="subtitle2" noWrap>
+                {data.title}
+              </Typography>
             </TableCell>
-            <TableCell align="left">{data.description}</TableCell>
+            <TableCell align="left" sx={{textOverflow: "ellipsis", width:"320px",overflow: "hidden"}}>
+            {data.description}
+            </TableCell>
+            <TableCell align="left">{data.author.name}</TableCell>
             <TableCell align="left">
-              {data.author.name}
+              {" "}
+              {new Date(data.createdAt).toLocaleString()}
             </TableCell>
-            <TableCell align="left">{data.eventTime}</TableCell>
             <TableCell align="center">
               <Tooltip title="Actions">
                 <IconButton

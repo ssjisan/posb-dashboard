@@ -1,6 +1,6 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import NoticeListTable from "../Components/Notice/AllNoticeList/NoticeListTable";
+import AllNoticeList from "../Components/Notice/AllNoticeList/AllNoticeList";
 export default function NoticeList() {
   const drawerWidth = 280;
 
@@ -16,7 +16,7 @@ export default function NoticeList() {
         }}
       >
         <Toolbar />
-        <NoticeListTable />
+        <AllNoticeList />
       </Box>
     </Box>
   );
