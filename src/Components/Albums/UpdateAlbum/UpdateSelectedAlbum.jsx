@@ -63,8 +63,8 @@ console.log("update",images);
       formData.append("albumName", albumName);
   
       // Append updated images to remove
-      imagesToRemove.forEach((imageSrc) => {
-        formData.append("imagesToRemove", imageSrc);
+      images.forEach((images) => {
+        formData.append("images", images.src);
       });
   
       // Append new images to formData

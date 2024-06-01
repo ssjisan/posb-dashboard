@@ -1,7 +1,11 @@
 import { Box, Button, Stack, Typography, useMediaQuery } from "@mui/material";
+import { DataContext } from "../../../DataProcessing/DataProcessing";
+import { useContext } from "react";
 
 export default function SupportCard() {
   const forBelow676 = useMediaQuery("(max-width:676px)");
+  const { auth, setAuth } = useContext(DataContext);
+
   return (
     <Box
       sx={{
@@ -24,8 +28,8 @@ export default function SupportCard() {
         }}
       >
         <Stack>
-          <Typography variant="h4" sx={{width:"220px"}}>
-            Welcome back Fabiana Capmany!
+          <Typography variant="h4" sx={{width:"100%"}}>
+            Welcome back <br/> {auth?.user?.name}!
           </Typography>
           <Typography variant="body2" color="text.secondary">
             If you are going to use a passage of Lorem Ipsum, you need to be

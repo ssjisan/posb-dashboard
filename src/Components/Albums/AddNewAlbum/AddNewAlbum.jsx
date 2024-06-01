@@ -58,8 +58,8 @@ export default function AddNewAlbum() {
       setAlbumName("");
       setImages([]);
     } catch (error) {
-      // toast.error('Error creating album:', error);
-      console.error("Error creating album:", error);
+      toast.error('Error creating album:', error);
+      setLoading(false)
     }
   };
   return (
