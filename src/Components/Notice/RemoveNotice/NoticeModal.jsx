@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
 import { Button, Typography } from "@mui/material";
 
-export default function EventModal({
+export default function NoticeModal({
   isOpen,
   handleClose,
-  eventName,
+  noticeTitle,
   handleRemove,
 }) {
   return (
@@ -26,7 +26,7 @@ export default function EventModal({
           Delete Event
         </Typography>
         <Typography variant="body1">
-          Are you sure you want to delete <strong>&quot;{eventName}&quot;</strong>?
+          Are you sure you want to delete <strong>&quot;{noticeTitle}&quot;</strong>?
         </Typography>
         <div
           style={{
@@ -47,7 +47,7 @@ export default function EventModal({
   );
 }
 
-EventModal.propTypes = {
+NoticeModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   eventName: PropTypes.string.isRequired,

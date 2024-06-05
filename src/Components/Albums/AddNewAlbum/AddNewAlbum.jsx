@@ -7,59 +7,64 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function AddNewAlbum() {
-  const [albumName, setAlbumName] = useState("");
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const handleBoxClick = () => {
     inputRef.current.click();
   };
 
+  const [albumName, setAlbumName] = useState("");
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  console.log(images);
+
   const handleFilesChange = (e) => {
     const files = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
   };
 
+  
   const handleRemoveImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
-  const handleAlbumNameChange = (e) => {
-    setAlbumName(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
+
     try {
       if (!albumName || images.length === 0) {
-        alert("Please enter an album name and select at least one image.");
+        ("Please enter an album name and select at least one image.");
+        setLoading(false);
         return;
       }
 
       const albumData = new FormData();
-      albumData.append("albumName", albumName);
+      albumData.append("name", albumName);
 
-      // eslint-disable-next-line
       images.forEach((image, index) => {
         albumData.append("images", image);
       });
 
-      const { data } = await axios.post("/album", albumData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      const { data } = await axios.post(
+        "/album",
+        albumData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(albumData);
       toast.success("Album created successfully!");
       navigate("/album_list");
       setAlbumName("");
       setImages([]);
     } catch (error) {
-      toast.error('Error creating album:', error);
-      setLoading(false)
+      toast.error(`Error creating album: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -70,13 +75,18 @@ export default function AddNewAlbum() {
             handleBoxClick={handleBoxClick}
             inputRef={inputRef}
             handleFilesChange={handleFilesChange}
-            handleAlbumNameChange={handleAlbumNameChange}
             albumName={albumName}
             handleSubmit={handleSubmit}
+            loading={loading}
+            setAlbumName={setAlbumName}
           />
         </Grid>
         <Grid item md={9}>
-          <ImagePreview images={images} handleRemoveImage={handleRemoveImage} loading={loading}/>
+          <ImagePreview
+            images={images}
+            handleRemoveImage={handleRemoveImage}
+            loading={loading}
+          />
         </Grid>
       </Grid>
     </Box>

@@ -31,6 +31,7 @@ export default function UpdateEventForm() {
   const [id, setId] = useState("");
   const navigate = useNavigate();
   const params = useParams();
+  console.log(params)
 
   useEffect(() => {
     loadEvent();
@@ -47,7 +48,6 @@ export default function UpdateEventForm() {
       setPublished(data.published);
       setId(data._id);
       setImage(data.image);
-      console.log(data)
     } catch (err) {
       toast.error("Failed to load event data");
     }

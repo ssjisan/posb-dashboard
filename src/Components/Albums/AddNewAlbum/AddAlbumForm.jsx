@@ -5,10 +5,11 @@ import PropTypes from "prop-types";
 export default function AddAlbumForm({
   handleBoxClick,
   inputRef,
+  setAlbumName,
   handleFilesChange,
-  handleAlbumNameChange,
   albumName,
   handleSubmit,
+  loading,
 }) {
   return (
     <Box component="form" onSubmit={handleSubmit}>
@@ -20,21 +21,25 @@ export default function AddAlbumForm({
           label="Album Name"
           variant="outlined"
           fullWidth
+          disabled={loading}
           value={albumName}
-          onChange={handleAlbumNameChange}
+          onChange={(e) => setAlbumName(e.target.value)}
         />
         <Button
           color="inherit"
           variant="soft"
-          startIcon={<AlbumAdd size="24px" color="#060415" />}
+          startIcon={
+            <AlbumAdd size="24px" color={loading ? "#B2B3B6" : "#060415"} />
+          }
           onClick={handleBoxClick}
+          disabled={loading}
         >
           Upload image
           <input
             ref={inputRef}
             type="file"
             accept="image/*"
-            name="images"
+            name="image"
             hidden
             multiple
             onChange={handleFilesChange}
@@ -45,7 +50,7 @@ export default function AddAlbumForm({
             }}
           />
         </Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={loading}>
           Create
         </Button>
       </Stack>
@@ -54,11 +59,12 @@ export default function AddAlbumForm({
 }
 
 AddAlbumForm.propTypes = {
-  handleBoxClick: PropTypes.func.isRequired,
-  inputRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    .isRequired,
-  handleFilesChange: PropTypes.func.isRequired,
-  handleAlbumNameChange: PropTypes.func.isRequired,
+  handleBoxClick: PropTypes.any,
+  inputRef: PropTypes.any,
+  handleFilesChange: PropTypes.any,
+  handleAlbumNameChange: PropTypes.any,
   albumName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.any,
+  setAlbumName: PropTypes.any,
+  loading: PropTypes.any,
 };

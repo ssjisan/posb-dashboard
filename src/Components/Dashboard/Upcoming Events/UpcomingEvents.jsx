@@ -1,7 +1,28 @@
 import { Box, Button, Typography } from "@mui/material";
-import event from "../../../assets/event.json";
 import { ArrowRight } from "../../../assets/IconSet";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 export default function UpcomingEvents() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    loadEvents();
+  }, []);
+  const loadEvents = async () => {
+    try {
+      const { data } = await axios.get("/events");
+      setEvents(data);
+    } catch (err) {
+      toast.error("Problem event loading");
+    }
+  };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    return new Intl.DateTimeFormat('en-GB', options).format(date);
+  };
   return (
     <Box
       sx={{
@@ -15,7 +36,7 @@ export default function UpcomingEvents() {
         <Typography variant="h6">Upcoming Events</Typography>
       </Box>
       <Box sx={{ p: "16px 16px 0px 16px" }}>
-        {event.map((data) => {
+        {events.map((data) => {
           return (
             <Box
               key={data.id}
@@ -30,12 +51,12 @@ export default function UpcomingEvents() {
                 },
                 gap: "16px",
                 justifyContent: "space-berween",
-                alignItems:  {
-                    xs: "flex-start",
-                    sm: "space-berween",
-                    md: "space-berween",
-                    lg: "space-berween",
-                  },
+                alignItems: {
+                  xs: "flex-start",
+                  sm: "space-berween",
+                  md: "space-berween",
+                  lg: "space-berween",
+                },
               }}
             >
               <Box
@@ -48,20 +69,20 @@ export default function UpcomingEvents() {
                 }}
               >
                 <img
-                  src={data.photo}
-                  alt={data.title}
+                  src={`${process.env.REACT_APP_SERVER_API}/event/image/${data._id}`}
+                  alt={data.name}
                   width="100%"
                   height="100%"
                   style={{ obejctFIt: "cover" }}
                 />
               </Box>
-              <Box sx={{ flexGrow: 1, minWidth: 240, width:"100%" }}>
+              <Box sx={{ flexGrow: 1, minWidth: 240, width: "100%" }}>
                 <Typography
                   variant="body2"
                   sx={{ fontWeight: 600 }}
                   color="text.primary"
                 >
-                  {data.title}
+                  {data.name}
                 </Typography>
                 <Typography
                   sx={{
@@ -81,7 +102,7 @@ export default function UpcomingEvents() {
                 color="text.secondary"
                 sx={{ flexShrink: 0 }}
               >
-                {data.eventDate}
+                {formatDate(data.eventDate)}
               </Typography>
             </Box>
           );
@@ -93,12 +114,14 @@ export default function UpcomingEvents() {
             textAlign: "right",
           }}
         >
-          <Button
-            color="inherit"
-            endIcon={<ArrowRight size={16} color="#060415" />}
-          >
-            View All
-          </Button>
+          <Link to="/events_list">
+            <Button
+              color="inherit"
+              endIcon={<ArrowRight size={16} color="#060415" />}
+            >
+              View All
+            </Button>
+          </Link>
         </Box>
       </Box>
     </Box>

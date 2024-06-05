@@ -52,11 +52,12 @@ export default function AlbumTable() {
 
   const removeProduct = async (id) => {
     try {
-      const { data } = await axios.delete(`/album/${id}`);
-      toast.success(`${data.name} deleted successfully`);
-      window.location.reload(); // Reloading the page to reflect the changes
-    } catch (err) {
-      toast.error("Unable to delete album at the moment.");
+      await axios.delete(`albums/${id}`);
+      // Remove the deleted album from the state
+      setAlbums(albums.filter(album => album._id !== id));
+      toast.success("Remove Success")
+    } catch (error) {
+      toast.error("There was an error deleting the album!", error);
     }
   };
 

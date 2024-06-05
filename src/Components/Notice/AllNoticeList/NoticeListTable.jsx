@@ -8,7 +8,7 @@ import Header from "./Table/Header";
 
 export default function NoticeListTable() {
   const [notices, setNotices] = useState([]);
-  const [selectedEvents, setSelectedEvents] = useState(null);
+  const [selectedNotice, setSelectedNotice] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // eslint-disable-next-line
   const [userRemoveModal, setUserRemoveModal] = useState(false);
@@ -58,8 +58,8 @@ export default function NoticeListTable() {
             isModalOpen={isModalOpen}
             userRemoveModal={userRemoveModal}
             showModal={showModal}
-            selectedEvents={selectedEvents}
-            setSelectedEvents={setSelectedEvents}
+            selectedNotice={selectedNotice}
+            setSelectedNotice={setSelectedNotice}
           />
         </Table>
         <Pagination
@@ -73,3 +73,4 @@ export default function NoticeListTable() {
     </Box>
   );
 }
+

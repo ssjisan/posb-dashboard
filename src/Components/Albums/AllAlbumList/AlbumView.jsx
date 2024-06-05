@@ -6,9 +6,10 @@ import PropTypes from "prop-types";
 
 export default function AlbumView({ selectedImages, handleClose, albumOpen }) {
   const forBelow767 = useMediaQuery("(max-width:767px)");
+  console.log(selectedImages);
   const galleryImages = selectedImages?.map((image) => ({
-    original: image,
-    thumbnail: image,
+    original: image.url,
+    thumbnail: image.url,
   }));
   const style = {
     position: "absolute",

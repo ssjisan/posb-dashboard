@@ -19,7 +19,7 @@ export default function RemoveAlbumModal({
           backgroundColor: "white",
           padding: "20px",
           borderRadius: "8px",
-          maxWidth: "300px",
+          maxWidth: "480px",
         }}
       >
         <Typography variant="h6" gutterBottom>

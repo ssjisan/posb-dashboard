@@ -48,6 +48,7 @@ export default function InputFields() {
         password,
       });
       if (data?.error) {
+        setLoading(false);
         toast.error(data.error);
       } else {
         localStorage.setItem("auth", JSON.stringify(data));
@@ -68,7 +69,7 @@ export default function InputFields() {
       }
     } catch (err) {
       setLoading(false);
-      toast.success("Please try again");
+      toast.error("Please try again");
     }
   };
 

@@ -46,8 +46,9 @@ export default function Body({
     handleCloseMenu(); // Close popover
   };
   const redirectEdit = (e, selectedAlbum) => {
-    navigate(`/update-album/${selectedAlbum.slug}`);
+    navigate(`/album/${selectedAlbum.slug}`);
   };
+
   return (
     <TableBody>
       {events
@@ -66,8 +67,8 @@ export default function Body({
                     }}
                   >
                     <img
-                      src={data.images[0]}
-                      alt="First Image"
+                    src={data.images[0].url}
+                    alt="First Image"
                       width="100%"
                       height="100%"
                       style={{ objectFit: "cover" }}

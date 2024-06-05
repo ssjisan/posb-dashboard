@@ -1,6 +1,23 @@
 import { Box, Stack, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function NoticeNewsCount() {
+  const [notices, setNotices] = useState([]);
+
+  useEffect(() => {
+    loadNotices();
+  }, []);
+
+  const loadNotices = async () => {
+    try {
+      const { data } = await axios.get("/notices");
+      setNotices(data);
+    } catch (err) {
+      toast.error("Problem Loading");
+    }
+  };
   return (
     <Box
       sx={{
@@ -16,7 +33,7 @@ export default function NoticeNewsCount() {
     >
       <img src="/dashboard/noticeNews.png" alt="event_illustration" />
       <Stack>
-        <Typography variant="h4">5</Typography>
+        <Typography variant="h4">{notices.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Total Notice
         </Typography>

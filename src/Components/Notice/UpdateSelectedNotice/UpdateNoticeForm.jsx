@@ -1,32 +1,50 @@
 import { Box, Button, Grid, Stack, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function AddNoticeForm() {
+export default function UpdateNoticeForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
+  const [id, setId] = useState("");
+  const params = useParams();
+
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+
+  useEffect(() => {
+    loadNotice();
+  }, []);
+
+  const loadNotice = async () => {
     try {
-      const { data } = await axios.post("/notice", {
+      const { data } = await axios.get(`/notice/${params.noticeId}`);
+      setTitle(data.title);
+      setDescription(data.description);
+      setLink(data.link);
+      setId(data._id);
+    } catch (err) {
+      toast.error("Failed to load event data");
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const { data } = await axios.put(`/notice/${id}`, {
         title,
         description,
-        link
+        link,
       });
-      if (data?.error) {
+
+      if (data.error) {
         toast.error(data.error);
       } else {
+        toast.success("Notice updated successfully");
         navigate("/notice_list");
-        toast.success("Notice Created");
-        setTitle("");
-        setDescription("");
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error("Failed to update notice");
     }
   };
   return (

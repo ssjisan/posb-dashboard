@@ -7,36 +7,15 @@ import UpdateAlbumForm from "./UpdateAlbumForm";
 import UpdateImagePreview from "./UpdateImagePreview";
 
 export default function UpdateSelectedAlbum() {
-  const [albumName, setAlbumName] = useState("");
-  const [images, setImages] = useState([]);
-  const [imagesToRemove, setImagesToRemove] = useState([]);
-  const [id, setId] = useState([]);
-  const [loading, setLoading] = useState(false);
-
   const params = useParams();
-  const inputRef = useRef(null);
   const navigate = useNavigate();
-
-  const handleBoxClick = () => {
-    inputRef.current.click();
-  };
-
-  const handleFilesChange = (e) => {
-    const files = Array.from(e.target.files).map(file => ({ src: file, fromDatabase: false }));
-    setImages((prevImages) => [...prevImages, ...files]);
-  };
-
-  const handleRemoveImage = (index) => {
-    const imageToRemove = images[index];
-    if (imageToRemove.fromDatabase) {
-      setImagesToRemove((prev) => [...prev, imageToRemove.src]);
-    }
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
-  };
-console.log("update",images);
-  const handleAlbumNameChange = (e) => {
-    setAlbumName(e.target.value);
-  };
+  const [albumName, setAlbumName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [id, setId] = useState("");
+  const [images, setImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+  const [removeImageIds, setRemoveImageIds] = useState([]);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     loadAlbum();
@@ -44,52 +23,74 @@ console.log("update",images);
 
   const loadAlbum = async () => {
     try {
-      const { data } = await axios.get(`/album/${params.slug}`);
+      const { data } = await axios.get(
+        `http://localhost:8000/album/${params.slug}`
+      );
       setAlbumName(data.name);
-      const formattedImages = data.images.map((image) => ({ src: image, fromDatabase: true }));
+      const formattedImages = data.images.map((image) => ({
+        src: image.url,
+        public_id: image.public_id,
+        _id: image._id,
+        fromDatabase: true,
+      }));
+
       setImages(formattedImages);
       setId(data._id);
     } catch (err) {
       toast.error("Failed to load album data");
     }
   };
+  const handleBoxClick = () => {
+    inputRef.current.click();
+  };
 
+  const handleFilesChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newFiles = files.map((file) => ({
+      src: URL.createObjectURL(file),
+      file: file,
+      name: file.name, // Set the name property to the name of the file
+      fromDatabase: false,
+    }));
+    setNewImages([...newImages, ...newFiles]);
+  };
+
+  const handleRemoveImage = (index) => {
+    const imageToRemove = images[index];
+    setRemoveImageIds([...removeImageIds, imageToRemove.public_id]);
+    setImages(images.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveNewImage = (index) => {
+    setNewImages(newImages.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const formData = new FormData();
-      formData.append("albumName", albumName);
-  
-      // Append updated images to remove
-      images.forEach((images) => {
-        formData.append("images", images.src);
+      formData.append("name", albumName);
+      formData.append("removeImageIds", JSON.stringify(removeImageIds)); // Convert array to JSON string
+      newImages.forEach((image) => {
+        formData.append("newImages", image.file);
       });
-  
-      // Append new images to formData
-      images.forEach((image) => {
-        if (!image.fromDatabase) {
-          formData.append("images", image.src);
-        }
-      });
-  
-      // Send request to update album
+
       const { data } = await axios.put(`/album/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-  
-      console.log("Update response:", data); // Debugging information
       toast.success("Album updated successfully");
-      navigate("/album_list"); // Redirect after successful update
-    } catch (err) {
-      console.error("Error updating album:", err); // Debugging information
+      navigate("/album_list");
+    } catch (error) {
       toast.error("Failed to update album");
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <Box sx={{ p: "24px 24px 0px 24px" }}>
@@ -98,8 +99,8 @@ console.log("update",images);
           <UpdateAlbumForm
             handleBoxClick={handleBoxClick}
             inputRef={inputRef}
+            setAlbumName={setAlbumName}
             handleFilesChange={handleFilesChange}
-            handleAlbumNameChange={handleAlbumNameChange}
             albumName={albumName}
             handleSubmit={handleSubmit}
           />
@@ -108,7 +109,9 @@ console.log("update",images);
           <UpdateImagePreview
             images={images}
             handleRemoveImage={handleRemoveImage}
+            handleRemoveNewImage={handleRemoveNewImage}
             loading={loading}
+            newImages={newImages}
           />
         </Grid>
       </Grid>

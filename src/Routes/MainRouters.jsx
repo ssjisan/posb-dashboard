@@ -13,6 +13,7 @@ import NoticeList from "../Page/NoticeList";
 import AddNotice from "../Page/AddNotice";
 import UpdateEvent from "../Page/UpdateEvent";
 import UpdateAlbum from "../Page/UpdateAlbum";
+import UpdateNotice from "../Page/UpdateNotice";
 
 export default function MainRouters() {
   return (
@@ -29,9 +30,10 @@ export default function MainRouters() {
           <Route path="events_list" element={<EventList />} />
           <Route path="add_album" element={<AddAlbum />} />
           <Route path="album_list" element={<AlbumList />} />
-          <Route path="update-album/:slug" element={<UpdateAlbum />} />
+          <Route path="album/:slug" element={<UpdateAlbum />} />
           <Route path="add_notice" element={<AddNotice />} />
           <Route path="notice_list" element={<NoticeList />} />
+          <Route path="notice/:noticeId" element={<UpdateNotice />} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>

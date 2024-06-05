@@ -8,6 +8,7 @@ export default function UpdateAlbumForm({
   handleFilesChange,
   handleAlbumNameChange,
   albumName,
+  setAlbumName,
   handleSubmit,
 }) {
   return (
@@ -21,7 +22,7 @@ export default function UpdateAlbumForm({
           variant="outlined"
           fullWidth
           value={albumName}
-          onChange={handleAlbumNameChange}
+          onChange={(e)=>setAlbumName(e.target.value)}
         />
         <Button
           color="inherit"
