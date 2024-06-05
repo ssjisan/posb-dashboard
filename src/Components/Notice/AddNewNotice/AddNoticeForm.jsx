@@ -18,6 +18,7 @@ export default function AddNoticeForm() {
         link
       });
       if (data?.error) {
+        console.log(data.error);
         toast.error(data.error);
       } else {
         navigate("/notice_list");

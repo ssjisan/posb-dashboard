@@ -6,7 +6,6 @@ export default function UpdateAlbumForm({
   handleBoxClick,
   inputRef,
   handleFilesChange,
-  handleAlbumNameChange,
   albumName,
   setAlbumName,
   handleSubmit,
