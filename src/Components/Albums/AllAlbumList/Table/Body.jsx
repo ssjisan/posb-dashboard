@@ -16,6 +16,7 @@ import RemoveAlbumModal from "../../RemoveAlbum/RemoveAlbumModal";
 import AlbumView from "../AlbumView";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { format } from 'date-fns';
 
 export default function Body({
   events,
@@ -81,8 +82,7 @@ export default function Body({
               </Stack>
             </TableCell>
             <TableCell align="left">
-              {" "}
-              {new Date(data.createdAt).toLocaleString()}
+            {format(new Date(data.createdAt), "dd MMMM yyyy, hh:mm a")}
             </TableCell>
             <TableCell align="center">{data?.images?.length}</TableCell>
             <TableCell align="center">

@@ -63,6 +63,7 @@ export default function Body({
       setEventToDelete(null);
     }
   };
+  const defaultAvatar = "/elementor-placeholder-image.webp"; // Replace with the path to your default avatar
 
   return (
     <TableBody>
@@ -72,17 +73,36 @@ export default function Body({
           <TableRow key={data._id}>
             <TableCell component="th" scope="row" padding="none">
               <Stack direction="row" alignItems="center" spacing={2}>
-                <Box sx={{width:"80px", height:"48px"}}>
-                <img
-                  src={`${process.env.REACT_APP_SERVER_API}/event/image/${data._id}`}
-                  alt={data.name}
-                  width="100%"
-                  height="100%"
-                  style={{objectFit:"cover"}}
-                />
+                <Box
+                  sx={{
+                    width: "80px",
+                    height: "48px",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={`${process.env.REACT_APP_SERVER_API}/event/image/${data._id}`}
+                    alt={data.name}
+                    width="100%"
+                    height="100%"
+                    style={{ objectFit: "cover" }}
+                    onError={(e) => {
+                      e.target.src = defaultAvatar;
+                    }}
+                  />
                 </Box>
                 <Typography variant="subtitle2" noWrap>
-                  {data.name}
+                  <Box
+                    sx={{
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      width: "320px",
+                    }}
+                  >
+                    {data.name}
+                  </Box>
                 </Typography>
               </Stack>
             </TableCell>
