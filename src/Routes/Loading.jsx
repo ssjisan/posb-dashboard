@@ -29,7 +29,7 @@ export default function Loading() {
         textAlign: "center",
       }}
     >
-      <img src="/loader.gif" alt="Loader" width="200px"/>
+      <img src="/loader02.gif" alt="Loader" width="200px"/>
       {/* Wait {counter} */}
     </div>
   );
