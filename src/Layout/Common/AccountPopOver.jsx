@@ -63,7 +63,6 @@ export default function AccountPopOver() {
     localStorage.removeItem("auth");
     navigate("/login");
   };
-
   return (
     <Box>
       <Box sx={AvatarSx} onClick={handleOpenPopOver} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -90,7 +89,7 @@ export default function AccountPopOver() {
             {auth?.user?.name}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary">
-          {auth?.user?.email}
+          {auth?.user?.role === 0 ? "Modarator" : "Admin"}
           </Typography>
         </Box>
         <Divider variant="middle" sx={{ borderStyle: "dashed" }} />

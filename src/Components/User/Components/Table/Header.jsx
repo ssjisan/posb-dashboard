@@ -9,6 +9,7 @@ export default function Header() {
       <TableRow>
         <TableCell align="left">Name</TableCell>
         <TableCell align="left">Email</TableCell>
+        <TableCell align="left">Role</TableCell>
         <TableCell align="center"></TableCell>
       </TableRow>
     </TableHead>

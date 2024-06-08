@@ -10,7 +10,8 @@ import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { Update, Remove, More } from "../../../../assets/IconSet";
 import RemoveUserModal from "../RemoveUserModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { DataContext } from "../../../../DataProcessing/DataProcessing";
 
 export default function Body({
   users,
@@ -23,7 +24,7 @@ export default function Body({
   setSelectedUser,
 }) {
   const [open, setOpen] = useState(null);
-
+  const {auth} = useContext(DataContext)
   const handleOpenMenu = (event, user) => {
     setOpen(event.currentTarget);
     setSelectedUser(user);
@@ -40,13 +41,17 @@ export default function Body({
           <TableRow key={data.id}>
             <TableCell align="left">{data.name}</TableCell>
             <TableCell align="left">{data.email}</TableCell>
+            <TableCell align="left">{data.role === 1 ? "Admin" : "Modarator"}</TableCell>
             <TableCell align="center">
+              <Tooltip title="actions">
               <IconButton
                 sx={{ width: "40px", height: "40px" }}
                 onClick={(event) => handleOpenMenu(event, data)}
+                disabled={auth?.user?.role === 0 }
               >
                 <More color="#919EAB" size={24} />
               </IconButton>
+              </Tooltip>
             </TableCell>
           </TableRow>
         ))}

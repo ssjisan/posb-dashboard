@@ -53,7 +53,7 @@ export default function UserListTable() {
         setUserRemoveModal(false);
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error("Access Denied");
     }
   };
   
