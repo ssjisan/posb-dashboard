@@ -1,7 +1,7 @@
 import { Typography, Menu, MenuItem, Box, Divider } from "@mui/material";
 import { useContext, useState } from "react";
 import { DataContext } from "../../DataProcessing/DataProcessing";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AccountPopOver() {
   //Styling Variables
@@ -46,6 +46,11 @@ export default function AccountPopOver() {
     transition: "transform 0.3s ease", // Adding transition for smooth scaling
     transform: isHovered ? "scale(1.1)" : "scale(1)",
   };
+  const linkStyle = {
+    textDecoration: "none",
+    fontWeight: 600,
+    borderRadius: "4px",
+  };
   const [accountPopOver, setAccountPopOver] = useState(false);
   const handleOpenPopOver = (event) => {
     setAccountPopOver(event.currentTarget);
@@ -65,7 +70,12 @@ export default function AccountPopOver() {
   };
   return (
     <Box>
-      <Box sx={AvatarSx} onClick={handleOpenPopOver} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Box
+        sx={AvatarSx}
+        onClick={handleOpenPopOver}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <img src="avatar.jpg" width="100%" />
       </Box>
       <Menu
@@ -89,10 +99,27 @@ export default function AccountPopOver() {
             {auth?.user?.name}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary">
-          {auth?.user?.role === 0 ? "Modarator" : "Admin"}
+            {auth?.user?.role === 0 ? "Modarator" : "Admin"}
           </Typography>
         </Box>
         <Divider variant="middle" sx={{ borderStyle: "dashed" }} />
+        <Link to="/change-password" style={linkStyle}>
+          <MenuItem
+            sx={{
+              mt: "8px",
+            }}
+          >
+            <Typography
+            color="text.primary"
+              sx={{
+                fontSize: "14px",
+                fontWeight: 400,
+              }}
+            >
+              Change Password
+            </Typography>
+          </MenuItem>
+        </Link>
         <MenuItem
           sx={{
             mt: "8px",

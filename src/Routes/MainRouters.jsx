@@ -14,6 +14,7 @@ import AddNotice from "../Page/AddNotice";
 import UpdateEvent from "../Page/UpdateEvent";
 import UpdateAlbum from "../Page/UpdateAlbum";
 import UpdateNotice from "../Page/UpdateNotice";
+import ChangePassword from "../Page/ChangePassword";
 
 export default function MainRouters() {
   return (
@@ -24,6 +25,7 @@ export default function MainRouters() {
         <Route path="" element={<PrivateRoute />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="add_user" element={<AddUser />} />
+          <Route path="change-password" element={<ChangePassword />} />
           <Route path="user_list" element={<UserList />} />
           <Route path="add_events" element={<AddEvent />} />
           <Route path="event/:slug" element={<UpdateEvent />} />

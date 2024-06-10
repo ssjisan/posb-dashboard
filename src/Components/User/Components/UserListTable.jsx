@@ -79,6 +79,7 @@ export default function UserListTable() {
             userRemoveModal={userRemoveModal}
             showModal={showModal}
             setSelectedUser={setSelectedUser}
+            selectedUser={selectedUser}
           />
         </Table>
         <Pagination

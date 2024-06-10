@@ -12,6 +12,8 @@ import { Update, Remove, More } from "../../../../assets/IconSet";
 import RemoveUserModal from "../RemoveUserModal";
 import { useContext, useState } from "react";
 import { DataContext } from "../../../../DataProcessing/DataProcessing";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function Body({
   users,
@@ -25,13 +27,28 @@ export default function Body({
 }) {
   const [open, setOpen] = useState(null);
   const {auth} = useContext(DataContext)
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
   const handleOpenMenu = (event, user) => {
     setOpen(event.currentTarget);
     setSelectedUser(user);
+    setSelectedUserId(user._id)
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
+  };
+  const handleResetPassword = async (userId) => {
+    console.log(userId);
+    try {
+      const response = await axios.post(
+        `/reset-password/${userId}`,
+        {},
+      );
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Something went wrong.");
+    }
   };
   return (
     <TableBody>
@@ -62,14 +79,18 @@ export default function Body({
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
-          sx: { width: 160, p: "8px", borderRadius: "16px" },
+          sx: { width: 200, p: "8px", borderRadius: "16px" },
         }}
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+          onClick={() => {
+            handleResetPassword(selectedUserId);
+            handleCloseMenu();
+          }}
         >
           <Update color="#919EAB" size={24} />
-          Edit
+          Reset Password
         </MenuItem>
         <MenuItem
           sx={{
