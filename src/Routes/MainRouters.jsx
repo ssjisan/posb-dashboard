@@ -15,6 +15,8 @@ import UpdateEvent from "../Page/UpdateEvent";
 import UpdateAlbum from "../Page/UpdateAlbum";
 import UpdateNotice from "../Page/UpdateNotice";
 import ChangePassword from "../Page/ChangePassword";
+import AddMember from "../Page/AddMember";
+import MemberList from "../Page/MemberList";
 
 export default function MainRouters() {
   return (
@@ -36,6 +38,8 @@ export default function MainRouters() {
           <Route path="add_notice" element={<AddNotice />} />
           <Route path="notice_list" element={<NoticeList />} />
           <Route path="notice/:noticeId" element={<UpdateNotice />} />
+          <Route path="add-member" element={<AddMember/>} />
+          <Route path="members" element={<MemberList/>} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>

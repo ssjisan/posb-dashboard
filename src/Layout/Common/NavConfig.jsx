@@ -6,6 +6,8 @@ import {
   AlbumList,
   Dashboard,
   EventList,
+  AddMember,
+  MemberList,
   NoticeList,
   UserList,
 } from "../../assets/IconSet";
@@ -102,30 +104,55 @@ const navConfig = ({ pathname }) => [
     ],
   },
   {
-    title: "Executive Member",
+    title: "Members",
     items: [
       {
-        title: "Add Committee",
-        link: "/add-committee",
+        title: "Add Member",
+        link: "/add-member",
         icon: (
-          <AddUser
-            color={pathname === "/add-committee" ? "#00AE60" : "#918EAF"}
+          <AddMember
+            color={pathname === "/add-member" ? "#00AE60" : "#918EAF"}
             size={24}
           />
         ),
       },
       {
-        title: "Committee List",
-        link: "/committee-list",
+        title: "Member List",
+        link: "/members",
         icon: (
-          <UserList
-            color={pathname === "/committee-list" ? "#00AE60" : "#918EAF"}
+          <MemberList
+            color={pathname === "/member-list" ? "#00AE60" : "#918EAF"}
             size={24}
           />
         ),
       },
     ],
   },
+  // {
+  //   title: "Executive Member",
+  //   items: [
+  //     {
+  //       title: "Add Committee",
+  //       link: "/add-committee",
+  //       icon: (
+  //         <AddUser
+  //           color={pathname === "/add-committee" ? "#00AE60" : "#918EAF"}
+  //           size={24}
+  //         />
+  //       ),
+  //     },
+  //     {
+  //       title: "Committee List",
+  //       link: "/committee-list",
+  //       icon: (
+  //         <UserList
+  //           color={pathname === "/committee-list" ? "#00AE60" : "#918EAF"}
+  //           size={24}
+  //         />
+  //       ),
+  //     },
+  //   ],
+  // },
   {
     title: "User",
     items: [

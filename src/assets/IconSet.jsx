@@ -854,6 +854,96 @@ export const AlbumAdd = ({ color, size }) => {
     </div>
   );
 };
+
+export const AddMember = ({ color, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16 6C16 8.20914 14.2091 10 12 10C9.79086 10 8 8.20914 8 6C8 3.79086 9.79086 2 12 2C14.2091 2 16 3.79086 16 6Z"
+          fill={color}
+        />
+        <path
+          opacity="0.5"
+          d="M14.4774 21.9208C13.7513 21.9728 12.9296 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C14.8806 13 17.4056 13.8564 18.8142 15.1412C18.298 15 17.5737 15 16.5 15C14.8501 15 14.0251 15 13.5126 15.5126C13 16.0251 13 16.8501 13 18.5C13 20.1499 13 20.9749 13.5126 21.4874C13.7501 21.725 14.0547 21.8524 14.4774 21.9208Z"
+          fill={color}
+        />
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M16.5 22C14.8501 22 14.0251 22 13.5126 21.4874C13 20.9749 13 20.1499 13 18.5C13 16.8501 13 16.0251 13.5126 15.5126C14.0251 15 14.8501 15 16.5 15C18.1499 15 18.9749 15 19.4874 15.5126C20 16.0251 20 16.8501 20 18.5C20 20.1499 20 20.9749 19.4874 21.4874C18.9749 22 18.1499 22 16.5 22ZM17.0833 16.9444C17.0833 16.6223 16.8222 16.3611 16.5 16.3611C16.1778 16.3611 15.9167 16.6223 15.9167 16.9444V17.9167H14.9444C14.6223 17.9167 14.3611 18.1778 14.3611 18.5C14.3611 18.8222 14.6223 19.0833 14.9444 19.0833H15.9167V20.0556C15.9167 20.3777 16.1778 20.6389 16.5 20.6389C16.8222 20.6389 17.0833 20.3777 17.0833 20.0556V19.0833H18.0556C18.3777 19.0833 18.6389 18.8222 18.6389 18.5C18.6389 18.1778 18.3777 17.9167 18.0556 17.9167H17.0833V16.9444Z"
+          fill={color}
+        />
+      </svg>
+    </div>
+  );
+};
+
+export const MemberList = ({ color, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.5 7.5C15.5 9.433 13.933 11 12 11C10.067 11 8.5 9.433 8.5 7.5C8.5 5.567 10.067 4 12 4C13.933 4 15.5 5.567 15.5 7.5Z"
+          fill={color}
+        />
+        <path
+          opacity="0.4"
+          d="M19.5 7.5C19.5 8.88071 18.3807 10 17 10C15.6193 10 14.5 8.88071 14.5 7.5C14.5 6.11929 15.6193 5 17 5C18.3807 5 19.5 6.11929 19.5 7.5Z"
+          fill={color}
+        />
+        <path
+          opacity="0.4"
+          d="M4.5 7.5C4.5 8.88071 5.61929 10 7 10C8.38071 10 9.5 8.88071 9.5 7.5C9.5 6.11929 8.38071 5 7 5C5.61929 5 4.5 6.11929 4.5 7.5Z"
+          fill={color}
+        />
+        <path
+          d="M18 16.5C18 18.433 15.3137 20 12 20C8.68629 20 6 18.433 6 16.5C6 14.567 8.68629 13 12 13C15.3137 13 18 14.567 18 16.5Z"
+          fill={color}
+        />
+        <path
+          opacity="0.4"
+          d="M22 16.5C22 17.8807 20.2091 19 18 19C15.7909 19 14 17.8807 14 16.5C14 15.1193 15.7909 14 18 14C20.2091 14 22 15.1193 22 16.5Z"
+          fill={color}
+        />
+        <path
+          opacity="0.4"
+          d="M2 16.5C2 17.8807 3.79086 19 6 19C8.20914 19 10 17.8807 10 16.5C10 15.1193 8.20914 14 6 14C3.79086 14 2 15.1193 2 16.5Z"
+          fill={color}
+        />
+      </svg>
+    </div>
+  );
+};
+
 Dashboard.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -943,6 +1033,14 @@ More.propTypes = {
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 AlbumAdd.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+AddMember.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+MemberList.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };

@@ -23,6 +23,7 @@ export default function Body({
   isModalOpen,
   userRemoveModal,
   showModal,
+  selectedUser,
   setSelectedUser,
 }) {
   const [open, setOpen] = useState(null);
@@ -39,8 +40,12 @@ export default function Body({
     setOpen(null);
   };
   const handleResetPassword = async (userId) => {
-    console.log(userId);
+    
     try {
+      if (selectedUser?.email === "ssjisan.dev@gmail.com") {
+        toast.error("Access Denied");
+        return;
+      }
       const response = await axios.post(
         `/reset-password/${userId}`,
         {},
