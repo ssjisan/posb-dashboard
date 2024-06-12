@@ -8,7 +8,8 @@ import axios from "axios";
 
 export default function MemberTable() {
   const [members, setMembers] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  //eslint-disable-next-line
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
   //--------------------Pagination Controller--------------------//
@@ -35,6 +36,18 @@ export default function MemberTable() {
   };
   //--------------------Members Load in table--------------------//
 
+  //------------------- Open Popover Menu------------------- //
+  const [openMenu, setOpenMenu] = useState("");
+  const [selectedMember, setSelectedMember] = useState([]);
+  const handleOpenMenu = (e, data) => {
+    setOpenMenu(e.currentTarget);
+    setSelectedMember(data);
+  };
+  const handleCloseMenu = () => {
+    setOpenMenu(null);
+  };
+  //------------------- Open Popover Menu------------------- //
+
   return (
     <Box
       sx={{
@@ -48,7 +61,15 @@ export default function MemberTable() {
       <TableContainer>
         <Table>
           <Header />
-          <Body members={members} rowsPerPage={rowsPerPage} page={page} />
+          <Body
+            members={members}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            handleOpenMenu={handleOpenMenu}
+            handleCloseMenu={handleCloseMenu}
+            openMenu={openMenu}
+            selectedMember={selectedMember}
+          />
         </Table>
         <Pagination
           members={members}

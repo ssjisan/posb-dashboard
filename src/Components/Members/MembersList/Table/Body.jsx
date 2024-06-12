@@ -1,7 +1,9 @@
-import { More } from "../../../../assets/IconSet";
+import { More, Remove, Update } from "../../../../assets/IconSet";
 import {
   Box,
   IconButton,
+  MenuItem,
+  Popover,
   Stack,
   TableBody,
   TableCell,
@@ -10,9 +12,41 @@ import {
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import RemoveMemberModal from "../../RemoveMember.jsx/RemoveMemberModal";
+import { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-export default function Body({ members, rowsPerPage, page }) {
+export default function Body({
+  members,
+  rowsPerPage,
+  page,
+  handleOpenMenu,
+  openMenu,
+  handleCloseMenu,
+  selectedMember,
+}) {
   const defaultAvatar = "/dp.png"; // Replace with the path to your default avatar
+  const [openRemoveModal,setOpenRemoveModal] = useState(false)
+  const [memberForDelete, setMemberForDelete] = useState(null);
+
+  const handleDelete = async (memberId) => {
+    try {
+      await axios.delete(`/member/${memberId}`);
+      toast.success('Member deleted successfully');
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to delete member', error);
+      toast.error('Failed to delete member');
+    }
+  };
+  const handleConfirmRemove = () => {
+    if (memberForDelete) {
+      handleDelete(memberForDelete._id);
+      setOpenRemoveModal(false);
+      setMemberForDelete(null)
+    }
+  };
   return (
     <TableBody>
       {members
@@ -30,7 +64,11 @@ export default function Body({ members, rowsPerPage, page }) {
                   }}
                 >
                   <img
-                     src={data?.profilePhoto?.length ? data.profilePhoto[0]?.url : defaultAvatar}
+                    src={
+                      data?.profilePhoto?.length
+                        ? data.profilePhoto[0]?.url
+                        : defaultAvatar
+                    }
                     alt={data.name}
                     width="100%"
                     height="100%"
@@ -60,13 +98,54 @@ export default function Body({ members, rowsPerPage, page }) {
             <TableCell align="left">{data.mailingAddress}</TableCell>
             <TableCell align="center">
               <Tooltip title="Actions">
-                <IconButton sx={{ width: "40px", height: "40px" }}>
+                <IconButton
+                  sx={{ width: "40px", height: "40px" }}
+                  onClick={(e) => handleOpenMenu(e, data)}
+                >
                   <More color="#919EAB" size={24} />
                 </IconButton>
               </Tooltip>
             </TableCell>
           </TableRow>
         ))}
+      <Popover
+        open={openMenu}
+        anchorEl={openMenu}
+        onClose={handleCloseMenu}
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        PaperProps={{
+          sx: { width: 160, p: "8px", borderRadius: "8px" },
+        }}
+      >
+        <MenuItem
+          sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+        >
+          <Update color="#919EAB" size={24} />
+          Edit
+        </MenuItem>
+        <MenuItem
+          sx={{
+            color: "error.main",
+            display: "flex",
+            gap: "8px",
+            borderRadius: "8px",
+          }}
+          onClick={() => {
+            setMemberForDelete(selectedMember)
+            setOpenRemoveModal(true);
+            handleCloseMenu(); // Close popover
+          }}
+        >
+          <Remove color="red" size={24} /> Delete
+        </MenuItem>
+      </Popover>
+      <RemoveMemberModal
+        open={openRemoveModal}
+        handleClose={() => setOpenRemoveModal(false)}
+        memberName={memberForDelete ? memberForDelete.name : ""}
+        handleRemove={handleConfirmRemove}
+      />
     </TableBody>
   );
 }
@@ -75,4 +154,8 @@ Body.propTypes = {
   members: PropTypes.any,
   page: PropTypes.any,
   rowsPerPage: PropTypes.any,
+  handleOpenMenu: PropTypes.any,
+  openMenu: PropTypes.any,
+  handleCloseMenu: PropTypes.any,
+  selectedMember: PropTypes.any,
 };

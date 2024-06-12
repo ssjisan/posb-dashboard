@@ -37,7 +37,6 @@ export default function EventListTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-console.log(events);
   return (
     <Box
       sx={{
