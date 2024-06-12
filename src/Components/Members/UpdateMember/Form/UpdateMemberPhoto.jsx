@@ -1,7 +1,7 @@
 import { Box, Button, Stack } from "@mui/material";
 import PropTypes from "prop-types";
 
-export default function UpdateMemberPhoto({ image, setImage, handleImageUpload }) {
+export default function UpdateMemberPhoto({ image, handleImageUpload,handleRemoveImage }) {
   return (
     <Stack>
       <Box
@@ -42,7 +42,7 @@ export default function UpdateMemberPhoto({ image, setImage, handleImageUpload }
               Change
               <input type="file" hidden onChange={handleImageUpload} />
             </Button>
-            <Button color="error" onClick={() => setImage(null)}>
+            <Button color="error" onClick={handleRemoveImage}>
               Remove
             </Button>
           </>
@@ -56,4 +56,5 @@ UpdateMemberPhoto.propTypes = {
   image: PropTypes.any,
   setImage: PropTypes.any,
   handleImageUpload: PropTypes.any,
+  handleRemoveImage: PropTypes.any,
 };

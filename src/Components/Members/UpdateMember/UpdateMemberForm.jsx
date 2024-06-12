@@ -15,27 +15,67 @@ export default function UpdateMemberForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
+  const [image, setImage] = useState(null);
   const [mailingAddress, setMailingAddress] = useState("");
+  const [removePhoto, setRemovePhoto] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params);
   useEffect(() => {
     loadMember();
   }, []);
 
   const loadMember = async () => {
     try {
-      const { data } = await axios.get(`/member/${params.memberId}`);
+      const { data } = await axios.get(`/member/${params.id}`);
       setName(data.name)
       setDesignation(data.designation)
       setWorkPlace(data.workPlace)
       setEmail(data.email)
       setPhone(data.phone)
       setMailingAddress(data.mailingAddress)
-      setProfilePhoto(data.profilePhoto[0].url)
-      console.log(data.profilePhoto[0].url);
+      if (data.profilePhoto && data.profilePhoto.length > 0) {
+        setProfilePhoto(data.profilePhoto[0].url);
+      }
     } catch (err) {
       toast.error("Failed to load event data");
+    }
+  };
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+      setProfilePhoto(URL.createObjectURL(e.target.files[0]));
+      setRemovePhoto(false); 
+    }
+  };
+  const handleRemoveImage = () => {
+    setImage(null);
+    setProfilePhoto("");
+    setRemovePhoto(true);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("designation", designation);
+      formData.append("workPlace", workPlace);
+      formData.append("email", email);
+      formData.append("phone", phone);
+      formData.append("mailingAddress", mailingAddress);
+      if (image) {
+        formData.append("profilePhoto", image);
+      }
+      formData.append("removePhoto", removePhoto); // Add the removePhoto flag
+
+      const { data } = await axios.put(`/member/${params.id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      toast.success("Member updated successfully");
+      navigate("/members");
+    } catch (error) {
+      toast.error("Failed to update member");
     }
   };
 
@@ -61,12 +101,13 @@ export default function UpdateMemberForm() {
           setMailingAddress={setMailingAddress}
         />
         <UpdateMemberPhoto
-          handleImageUpload={"handleImageUpload"}
+          handleImageUpload={handleImageChange}
           image={profilePhoto}
           setImage={setProfilePhoto}
+          handleRemoveImage={handleRemoveImage}
         />
       </Stack>
-      <Button variant="contained" color="primary" onClick={"handleCreateMember"}>
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
         Update
       </Button>
     </>

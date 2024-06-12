@@ -1,6 +1,22 @@
 import { Box, Stack, Typography } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function MemberCount() {
+   const [members,setMembers]=useState([])
+  useEffect(() => {
+    loadMembers();
+  }, []);
+
+  const loadMembers = async () => {
+    try {
+      const { data } = await axios.get("/members");
+      setMembers(data);
+    } catch (err) {
+      toast.error("Something Wrong");
+    }
+  };
   return (
     <Box
       sx={{
@@ -16,7 +32,7 @@ export default function MemberCount() {
     >
       <img src="/dashboard/member.png" alt="event_illustration" />
       <Stack>
-        <Typography variant="h4">35</Typography>
+        <Typography variant="h4">{members.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Total Member
         </Typography>
