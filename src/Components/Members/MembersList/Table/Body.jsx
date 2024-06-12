@@ -16,6 +16,7 @@ import RemoveMemberModal from "../../RemoveMember.jsx/RemoveMemberModal";
 import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Body({
   members,
@@ -29,7 +30,7 @@ export default function Body({
   const defaultAvatar = "/dp.png"; // Replace with the path to your default avatar
   const [openRemoveModal,setOpenRemoveModal] = useState(false)
   const [memberForDelete, setMemberForDelete] = useState(null);
-
+  const navigate = useNavigate()
   const handleDelete = async (memberId) => {
     try {
       await axios.delete(`/member/${memberId}`);
@@ -47,6 +48,13 @@ export default function Body({
       setMemberForDelete(null)
     }
   };
+
+  const redirectEdit = (event, data) => {
+    event.preventDefault();
+    navigate(`/member/${data._id}`);
+  };
+
+
   return (
     <TableBody>
       {members
@@ -120,6 +128,7 @@ export default function Body({
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+          onClick={(e) => redirectEdit(e, selectedMember)}
         >
           <Update color="#919EAB" size={24} />
           Edit
