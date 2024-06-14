@@ -14,34 +14,38 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function UpdateExecutiveForm() {
   const [committeeName, setCommitteeName] = useState("");
-  const [members, setMembers] = useState([]); // Assuming you will load available members from the API
+  const [members, setMembers] = useState([]); // To load available members from the API
   const [executiveBody, setExecutiveBody] = useState([{ member: null, position: "" }]);
   const navigate = useNavigate();
-  const [committee, setCommittee] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const params = useParams();
-  console.log(params);
-
+  const params = useParams(); // Extract the committee ID
+  const [id,setId]=useState(null)
   useEffect(() => {
     loadExecutiveBody();
+    loadMembers();
   }, []);
 
   const loadExecutiveBody = async () => {
     try {
       const { data } = await axios.get(`/executive-committee/${params.slug}`);
-      setCommittee(data);
-      setCommitteeName(data.title); // Assuming the committee has a title field
+      setCommitteeName(data.title);
+      setId(data._id)
       setExecutiveBody(
         data.members.map((member) => ({
-          member: member.member, // Assuming each member has a member field with member details
+          member: member.member,
           position: member.position,
         }))
       );
-      setLoading(false);
     } catch (error) {
       console.error('Failed to fetch committee data:', error);
-      setLoading(false);
+    }
+  };
+
+  const loadMembers = async () => {
+    try {
+      const { data } = await axios.get("/members"); // Adjust endpoint as per your API
+      setMembers(data);
+    } catch (error) {
+      console.error('Failed to load members:', error);
     }
   };
 
@@ -61,31 +65,57 @@ export default function UpdateExecutiveForm() {
     setExecutiveBody([...executiveBody, { member: null, position: "" }]);
   };
 
-  const handleRemoveMember = (index) => {
-    const newExecutiveBody = executiveBody.filter((_, i) => i !== index);
-    setExecutiveBody(newExecutiveBody);
-  };
-
-  const handleCreateCommittee = async () => {
+  const handleUpdateCommittee = async () => {
     try {
+      // Validate and extract member IDs from executiveBody
+      const updatedMembers = executiveBody.map((item, index) => {
+        console.log(`Processing Member at index ${index}:`, item.member); // Log member object
+  
+        const memberId = item.member ? item.member._id : null; // Correctly extract memberId
+        if (!memberId) {
+          console.warn(`Skipping member at index ${index} due to invalid memberId: ${item.member}`);
+        }
+  
+        return {
+          memberId,
+          position: item.position
+        };
+      }).filter(member => member.memberId); // Only include members with valid IDs
+  
+      // Check the final list of members
+      console.log("Final Members List:", updatedMembers);
+  
       const updatedCommittee = {
         title: committeeName,
-        members: executiveBody.map((item) => ({
-          memberId: item.member.id, // Assuming each member has an id
-          position: item.position,
-        })),
+        members: updatedMembers,
       };
-      await axios.put(`/executive-committee/${params.slug}`, updatedCommittee);
+  
+      // Log the complete updated committee payload
+      console.log("Updated Committee Payload:", updatedCommittee);
+  
+      // Make the API call to update the committee
+      const { data } = await axios.put(`/executive-committee/${id}`, updatedCommittee);
+  
+      // Success notification and navigation
       toast.success("Committee updated successfully");
-      navigate('/committee-list'); // Navigate to the list or another page as needed
+      navigate("/committee-list");
     } catch (error) {
+      // Log any errors
+      console.error("Error updating committee:", error);
       toast.error("Failed to update committee");
     }
   };
+  
+  
+  
+  
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const getAvailableMembers = (index) => {
+    const selectedMemberIds = executiveBody
+      .map((item, i) => i !== index ? item.member?.id : null)
+      .filter(Boolean);
+    return members.filter((member) => !selectedMemberIds.includes(member.id) || member.id === executiveBody[index].member?.id);
+  };
 
   return (
     <Box>
@@ -110,7 +140,7 @@ export default function UpdateExecutiveForm() {
             <Autocomplete
               disablePortal
               fullWidth
-              options={members} // Assuming members are loaded into this state
+              options={getAvailableMembers(index)}
               getOptionLabel={(option) => option.name}
               value={item.member}
               onChange={(event, value) => handleMemberChange(index, value)}
@@ -129,7 +159,7 @@ export default function UpdateExecutiveForm() {
                 onClick={handleAddMember}
                 disabled={!item.member || !item.position}
               >
-                <Plus color={item.member && item.position ? "#000" : "#ddd"} size="32px" />
+                <Plus color={item.member && item.position ? "#00AE60" : "#918EAF"} size="32px" />
               </IconButton>
             ) : (
               <IconButton
@@ -141,7 +171,7 @@ export default function UpdateExecutiveForm() {
             )}
           </Stack>
         ))}
-        <Button variant="contained" sx={{ width: "220px" }} onClick={handleCreateCommittee}>
+        <Button variant="contained" sx={{ width: "220px" }} onClick={handleUpdateCommittee}>
           Update
         </Button>
       </Stack>
