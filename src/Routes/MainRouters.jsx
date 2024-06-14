@@ -18,6 +18,8 @@ import ChangePassword from "../Page/ChangePassword";
 import AddMember from "../Page/AddMember";
 import MemberList from "../Page/MemberList";
 import UpdateMember from "../Page/UpdateMember";
+import CreateExecutiveBody from "../Page/CreateExecutiveBody";
+import ExecutiveBody from "../Page/ExecutiveBody";
 
 export default function MainRouters() {
   return (
@@ -42,6 +44,8 @@ export default function MainRouters() {
           <Route path="add-member" element={<AddMember/>} />
           <Route path="members" element={<MemberList/>} />
           <Route path="member/:id" element={<UpdateMember/>} />
+          <Route path="set-committee" element={<CreateExecutiveBody/>} />
+          <Route path="committee-list" element={<ExecutiveBody/>} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>

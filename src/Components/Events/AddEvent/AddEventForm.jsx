@@ -66,9 +66,9 @@ export default function AddEventForm() {
     }
   };
   return (
-    <Box sx={{ p: "24px" }}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={12} md={6} lg={7}>
+    <Box>
+      <Grid container spacing={3} direction={{ xs: "column-reverse", sm: "column-reverse", md: "row", lg: "row" }}>
+        <Grid item xs={12} sm={12} md={7} lg={5}>
           <Stack spacing={3}>
             <TextField
               label="Event Name"
@@ -134,7 +134,7 @@ export default function AddEventForm() {
             </Button>
           </Stack>
         </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={5}>
+        <Grid item xs={12} sm={12} md={5} lg={5}>
           <EventCover imageCover={imageCover} setImageCover={setImageCover} />
         </Grid>
       </Grid>

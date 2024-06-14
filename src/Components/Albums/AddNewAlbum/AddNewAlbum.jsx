@@ -69,7 +69,7 @@ export default function AddNewAlbum() {
   return (
     <Box sx={{ p: "24px 24px 0px 24px" }}>
       <Grid container spacing={3}>
-        <Grid item md={3}>
+        <Grid item xs={12} sm={12} md={12} lg={3}>
           <AddAlbumForm
             handleBoxClick={handleBoxClick}
             inputRef={inputRef}
@@ -80,7 +80,7 @@ export default function AddNewAlbum() {
             setAlbumName={setAlbumName}
           />
         </Grid>
-        <Grid item md={9}>
+        <Grid item xs={12} sm={12} md={12} lg={9}>
           <ImagePreview
             images={images}
             handleRemoveImage={handleRemoveImage}

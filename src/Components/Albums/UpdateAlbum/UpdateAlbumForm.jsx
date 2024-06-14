@@ -13,7 +13,7 @@ export default function UpdateAlbumForm({
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Typography variant="h4" sx={{ mb: "40px" }}>
-        Create Album
+        Update Album
       </Typography>
       <Stack direction="column" spacing={3}>
         <TextField
@@ -46,7 +46,7 @@ export default function UpdateAlbumForm({
           />
         </Button>
         <Button variant="contained" type="submit">
-          Create
+          Update
         </Button>
       </Stack>
     </Box>

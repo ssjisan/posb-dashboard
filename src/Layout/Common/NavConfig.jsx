@@ -121,38 +121,38 @@ const navConfig = ({ pathname }) => [
         link: "/members",
         icon: (
           <MemberList
-            color={pathname === "/member-list" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/members" ? "#00AE60" : "#918EAF"}
             size={24}
           />
         ),
       },
     ],
   },
-  // {
-  //   title: "Executive Member",
-  //   items: [
-  //     {
-  //       title: "Add Committee",
-  //       link: "/add-committee",
-  //       icon: (
-  //         <AddUser
-  //           color={pathname === "/add-committee" ? "#00AE60" : "#918EAF"}
-  //           size={24}
-  //         />
-  //       ),
-  //     },
-  //     {
-  //       title: "Committee List",
-  //       link: "/committee-list",
-  //       icon: (
-  //         <UserList
-  //           color={pathname === "/committee-list" ? "#00AE60" : "#918EAF"}
-  //           size={24}
-  //         />
-  //       ),
-  //     },
-  //   ],
-  // },
+  {
+    title: "Executive Committee",
+    items: [
+      {
+        title: "Set Committee",
+        link: "/set-committee",
+        icon: (
+          <AddUser
+            color={pathname === "/set-committee" ? "#00AE60" : "#918EAF"}
+            size={24}
+          />
+        ),
+      },
+      {
+        title: "Committee List",
+        link: "/committee-list",
+        icon: (
+          <UserList
+            color={pathname === "/committee-list" ? "#00AE60" : "#918EAF"}
+            size={24}
+          />
+        ),
+      },
+    ],
+  },
   {
     title: "User",
     items: [

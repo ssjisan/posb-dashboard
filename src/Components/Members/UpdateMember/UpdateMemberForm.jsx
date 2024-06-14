@@ -1,8 +1,8 @@
 import { Button, Stack, useMediaQuery } from "@mui/material";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UpdateMemberInfo from "./Form/UpdateMemberInfo";
 import UpdateMemberPhoto from "./Form/UpdateMemberPhoto";
 
@@ -27,12 +27,12 @@ export default function UpdateMemberForm() {
   const loadMember = async () => {
     try {
       const { data } = await axios.get(`/member/${params.id}`);
-      setName(data.name)
-      setDesignation(data.designation)
-      setWorkPlace(data.workPlace)
-      setEmail(data.email)
-      setPhone(data.phone)
-      setMailingAddress(data.mailingAddress)
+      setName(data.name);
+      setDesignation(data.designation);
+      setWorkPlace(data.workPlace);
+      setEmail(data.email);
+      setPhone(data.phone);
+      setMailingAddress(data.mailingAddress);
       if (data.profilePhoto && data.profilePhoto.length > 0) {
         setProfilePhoto(data.profilePhoto[0].url);
       }
@@ -44,7 +44,7 @@ export default function UpdateMemberForm() {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
       setProfilePhoto(URL.createObjectURL(e.target.files[0]));
-      setRemovePhoto(false); 
+      setRemovePhoto(false);
     }
   };
   const handleRemoveImage = () => {
@@ -69,7 +69,7 @@ export default function UpdateMemberForm() {
 
       const { data } = await axios.put(`/member/${params.id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
       toast.success("Member updated successfully");

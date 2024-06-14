@@ -20,7 +20,7 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="xl">
+        <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12} md={7}>
               <SupportCard />
@@ -38,7 +38,7 @@ export default function Dashboard() {
               <UpcomingEvents />
             </Grid>
           </Grid>
-        </Container>
+        </Box>
       </Box>
     </Box>
   );

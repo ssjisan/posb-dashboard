@@ -33,7 +33,7 @@ export default function AddNoticeForm() {
   return (
     <Box sx={{ p: "24px" }}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={12} md={6} lg={7}>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
           <Stack spacing={3}>
             <TextField
               label="Title"

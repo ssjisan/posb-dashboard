@@ -6,7 +6,7 @@ export default function DirectNavigation() {
     <Box
       sx={{
         borderRadius: "16px",
-        height: "300px",
+        height: "320px",
         overflow: "hidden",
         position: "relative",
       }}

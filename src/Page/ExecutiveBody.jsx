@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import ListOfCommittee from "../Components/ExecutiveCommittee/ListOfCommittee/ListOfCommittee";
-export default function ComitteeList() {
+import ExecutiveBodyList from "../Components/ExecutiveBody/ExecutiveBodyList/ExecutiveBodyList";
+export default function ExecutiveBody() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +16,7 @@ export default function ComitteeList() {
         }}
       >
         <Toolbar />
-        <ListOfCommittee />
+        <ExecutiveBodyList/>
       </Box>
     </Box>
   );

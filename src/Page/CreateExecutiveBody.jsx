@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import ProjectRequestTable from "../Components/Events/ProjectRequestTable";
-export default function CreateEvents() {
+import SetExecutiveBody from "../Components/ExecutiveBody/SetExecutiveBody/SetExecutiveBody";
+export default function CreateExecutiveBody() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +16,7 @@ export default function CreateEvents() {
         }}
       >
         <Toolbar />
-        <ProjectRequestTable />
+        <SetExecutiveBody/>
       </Box>
     </Box>
   );
