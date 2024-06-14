@@ -76,7 +76,7 @@ export default function AccountPopOver() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <img src="avatar.jpg" width="100%" />
+        <img src="/avatar.jpg" width="100%" />
       </Box>
       <Menu
         sx={MenuSx}
@@ -110,7 +110,7 @@ export default function AccountPopOver() {
             }}
           >
             <Typography
-            color="text.primary"
+              color="text.primary"
               sx={{
                 fontSize: "14px",
                 fontWeight: 400,
