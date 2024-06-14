@@ -26,7 +26,7 @@ export default function RemoveModal({
           Delete Committee
         </Typography>
         <Typography variant="body1">
-          Are you sure you want to delete &quot;{eventName}&quot; this committee?
+          Are you sure you want to delete &quot;{eventName}&quot; committee?
         </Typography>
         <div
           style={{
@@ -51,5 +51,5 @@ RemoveModal.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  eventName: PropTypes.func.isRequired,
+  eventName: PropTypes.string.isRequired,
 };
