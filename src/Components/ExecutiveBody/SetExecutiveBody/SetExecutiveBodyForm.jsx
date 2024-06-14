@@ -16,21 +16,28 @@ export default function SetExecutiveBodyForm() {
   const [committeeName, setCommitteeName] = useState("");
   const [members, setMembers] = useState([]);
   const [executiveBody, setExecutiveBody] = useState([{ member: null, position: "" }]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     loadMembers();
   }, []);
+
   const loadMembers = async () => {
     try {
       const { data } = await axios.get("/members");
       setMembers(data);
     } catch (err) {
-      toast.error("Something Wrong");
+      toast.error("Something went wrong");
     }
   };
 
   const handleAddMember = () => {
-    setExecutiveBody([...executiveBody, { member: null, position: "" }]);
+    const lastItem = executiveBody[executiveBody.length - 1];
+    if (lastItem.member && lastItem.position) {
+      setExecutiveBody([...executiveBody, { member: null, position: "" }]);
+    } else {
+      toast.error("Please fill out the current section before adding a new one.");
+    }
   };
 
   const handleRemoveMember = (index) => {
@@ -53,34 +60,48 @@ export default function SetExecutiveBodyForm() {
 
   const getAvailableMembers = (index) => {
     const selectedIds = executiveBody.map((item) => item.member?._id);
-    return members.filter((member) => !selectedIds.includes(member._id) || member._id === executiveBody[index].member?._id);
+    return members.filter(
+      (member) =>
+        !selectedIds.includes(member._id) ||
+        member._id === executiveBody[index].member?._id
+    );
   };
+
   const getIconColor = (disabled) => {
     return disabled ? "#918EAF" : "#00AE60";
   };
 
   const handleCreateCommittee = async () => {
+    // Check if all sections are filled
+    const isValid = executiveBody.every((item) => item.member && item.position);
+
+    if (!isValid) {
+      toast.error("Please fill out all sections before submitting.");
+      return;
+    }
+
     const committeeData = {
       title: committeeName,
-      members: executiveBody.map(item => ({
-        member: item.member._id,  // Ensure to send _id
-        position: item.position
-      }))
+      members: executiveBody.map((item) => ({
+        member: item.member._id,
+        position: item.position,
+      })),
     };
-    
+
     try {
       const { data } = await axios.post("/create-committee", committeeData);
       toast.success("Committee created successfully");
-       // Clear state after successful submission
-       setCommitteeName("");
-       setExecutiveBody([{ member: null, position: "" }]);
- 
-       // Navigate to committee-list page
-       navigate("/committee-list");
+      // Clear state after successful submission
+      setCommitteeName("");
+      setExecutiveBody([{ member: null, position: "" }]);
+
+      // Navigate to committee-list page
+      navigate("/committee-list");
     } catch (error) {
       toast.error("Failed to create committee");
     }
   };
+
   return (
     <Box>
       <Stack>
@@ -124,9 +145,8 @@ export default function SetExecutiveBodyForm() {
               <IconButton
                 sx={{ width: "40px", height: "40px" }}
                 onClick={handleAddMember}
-                disabled={!item.member || !item.position}
               >
-                <Plus  color={getIconColor(!item.member || !item.position)} size="32px" />
+                <Plus color="#00AE60" size="32px" />
               </IconButton>
             ) : (
               <IconButton
@@ -138,7 +158,9 @@ export default function SetExecutiveBodyForm() {
             )}
           </Stack>
         ))}
-        <Button variant="contained" sx={{width:"220px"}} onClick={handleCreateCommittee}>Save</Button>
+        <Button variant="contained" sx={{ width: "220px" }} onClick={handleCreateCommittee}>
+          Save
+        </Button>
       </Stack>
     </Box>
   );
