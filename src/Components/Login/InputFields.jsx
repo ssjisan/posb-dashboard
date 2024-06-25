@@ -10,6 +10,7 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../DataProcessing/DataProcessing";
@@ -19,6 +20,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function InputFields() {
+  const forBelow776 = useMediaQuery("(max-width:776px)");
   const { showPassword, handleClickShowPassword, handleMouseDownPassword } =
     useContext(DataContext);
   const [email, setEmail] = useState("");
@@ -81,7 +83,7 @@ export default function InputFields() {
         gap: "20px",
         width: "100%",
         mt: "40px",
-        mb: "160px",
+        mb:forBelow776? "80px" : "160px",
       }}
     >
       <TextField
