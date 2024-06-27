@@ -1,4 +1,12 @@
-import { Typography, Menu, MenuItem, Box, Divider } from "@mui/material";
+import {
+  Typography,
+  Menu,
+  MenuItem,
+  Box,
+  Divider,
+  IconButton,
+  Avatar,
+} from "@mui/material";
 import { useContext, useState } from "react";
 import { DataContext } from "../../DataProcessing/DataProcessing";
 import { Link, useNavigate } from "react-router-dom";
@@ -69,74 +77,81 @@ export default function AccountPopOver() {
     navigate("/login");
   };
   return (
-    <Box>
-      <Box
-        sx={AvatarSx}
+    <>
+      <IconButton
+        sx={{
+          border: "1px solid #dfdfdf",
+          width: "40px",
+          height: "40px",
+          p: "4px !important",
+        }}
         onClick={handleOpenPopOver}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <img src="/avatar.jpg" width="100%" />
-      </Box>
-      <Menu
-        sx={MenuSx}
-        id="menu-appbar"
-        anchorEl={accountPopOver}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={accountPopOver}
-        onClose={handleClosePopOver}
-      >
-        <Box sx={UserInfoSx}>
-          <Typography variant="body2" color="text.primary">
-            {auth?.user?.name}
-          </Typography>
-          <Typography variant="subtitle2" color="text.secondary">
-            {auth?.user?.role === 0 ? "Modarator" : "Admin"}
-          </Typography>
-        </Box>
-        <Divider variant="middle" sx={{ borderStyle: "dashed" }} />
-        <Link to="/change-password" style={linkStyle}>
+        <Avatar src="/avatar.jpg" sx={AvatarSx}></Avatar>
+      </IconButton>
+      <Box>
+        <Menu
+          sx={MenuSx}
+          id="menu-appbar"
+          anchorEl={accountPopOver}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={accountPopOver}
+          onClose={handleClosePopOver}
+        >
+          <Box sx={UserInfoSx}>
+            <Typography variant="body2" color="text.primary">
+              {auth?.user?.name}
+            </Typography>
+            <Typography variant="subtitle2" color="text.secondary">
+              {auth?.user?.role === 0 ? "Modarator" : "Admin"}
+            </Typography>
+          </Box>
+          <Divider variant="middle" sx={{ borderStyle: "dashed" }} />
+          <Link to="/change-password" style={linkStyle}>
+            <MenuItem
+              sx={{
+                mt: "8px",
+              }}
+            >
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: "14px",
+                  fontWeight: 400,
+                }}
+              >
+                Change Password
+              </Typography>
+            </MenuItem>
+          </Link>
           <MenuItem
             sx={{
               mt: "8px",
             }}
+            onClick={handleLogout}
           >
             <Typography
-              color="text.primary"
               sx={{
                 fontSize: "14px",
                 fontWeight: 400,
+                color: "#FF4842",
               }}
             >
-              Change Password
+              Log Out
             </Typography>
           </MenuItem>
-        </Link>
-        <MenuItem
-          sx={{
-            mt: "8px",
-          }}
-          onClick={handleLogout}
-        >
-          <Typography
-            sx={{
-              fontSize: "14px",
-              fontWeight: 400,
-              color: "#FF4842",
-            }}
-          >
-            Log Out
-          </Typography>
-        </MenuItem>
-      </Menu>
-    </Box>
+        </Menu>
+      </Box>
+    </>
   );
 }

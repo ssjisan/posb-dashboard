@@ -1039,6 +1039,160 @@ export const DownArrow = ({ color, size }) => {
   );
 };
 
+export const Mail = ({ color, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          opacity="0.5"
+          d="M14.2 3H9.8C5.65164 3 3.57746 3 2.28873 4.31802C1 5.63604 1 7.75736 1 12C1 16.2426 1 18.364 2.28873 19.682C3.57746 21 5.65164 21 9.8 21H14.2C18.3484 21 20.4225 21 21.7113 19.682C23 18.364 23 16.2426 23 12C23 7.75736 23 5.63604 21.7113 4.31802C20.4225 3 18.3484 3 14.2 3Z"
+          fill={color}
+        />
+        <path
+          d="M19.1284 8.03302C19.4784 7.74133 19.5257 7.22112 19.234 6.87109C18.9423 6.52106 18.4221 6.47377 18.0721 6.76546L15.6973 8.74444C14.671 9.59966 13.9585 10.1915 13.357 10.5784C12.7747 10.9529 12.3798 11.0786 12.0002 11.0786C11.6206 11.0786 11.2258 10.9529 10.6435 10.5784C10.0419 10.1915 9.32941 9.59966 8.30315 8.74444L5.92837 6.76546C5.57834 6.47377 5.05812 6.52106 4.76643 6.87109C4.47474 7.22112 4.52204 7.74133 4.87206 8.03302L7.28821 10.0465C8.2632 10.859 9.05344 11.5176 9.75091 11.9661C10.4775 12.4334 11.185 12.7286 12.0002 12.7286C12.8154 12.7286 13.523 12.4334 14.2495 11.9661C14.947 11.5176 15.7372 10.859 16.7122 10.0465L19.1284 8.03302Z"
+          fill={color}
+        />
+      </svg>
+    </div>
+  );
+};
+
+export const CheckRead = ({ color, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M4 12.9L7.14286 16.5L15 7.5"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M20 7.5625L11.4283 16.5625L11 16"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+};
+
+export const MailNotification = () => {
+  return (
+    <svg
+      height="24"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <linearGradient
+        id="a"
+        x1="39.907%"
+        x2="113.315%"
+        y1="39.91%"
+        y2="113.318%"
+      >
+        <stop offset="0" stopColor="#a7f3ce" />
+        <stop offset="1" stopColor="#61db99" />
+      </linearGradient>
+      <linearGradient id="b" x1="0%" x2="100%" y1="0%" y2="100%">
+        <stop offset="0" stopColor="#5be584" />
+        <stop offset="1" stopColor="#00ab55" />
+      </linearGradient>
+      <linearGradient id="c" x1="0%" x2="100%" y1="0%" y2="100%">
+        <stop offset="0" stopColor="#74caff" />
+        <stop offset="1" stopColor="#0c53b7" />
+      </linearGradient>
+      <g fill="none" fillRule="evenodd">
+        <path
+          d="m15.9546562 7.27185938c4.38225-.0669375 7.9590001 3.38217192 8.0438438 7.76409372.0124687.6433594-.0518438 1.2695625-.1843125 1.8702188-.2243437 1.0170469-.3577031 2.052-.3577031 3.0935156v2.0131875c0 .3084375-.2500313.5584688-.5584688.5584688h-2.0131875c-1.0415156 0-2.0764687.1333593-3.0935156.3577031-.6006094.1324687-1.2268125.1967812-1.8701719.1843125-4.381875-.0847969-7.83098435-3.6614531-7.7641406-8.0436094.06520313-4.2773437 3.5203594-7.73254688 7.7976562-7.79789062z"
+          fill="url(#a)"
+          fillRule="nonzero"
+        />
+        <path
+          d="m15.9546562 7.27185938c4.38225-.0669375 7.9590001 3.38217192 8.0438438 7.76409372.0124687.6433594-.0518438 1.2695625-.1843125 1.8702188-.2243437 1.0170469-.3577031 2.052-.3577031 3.0935156v2.0131875c0 .3084375-.2500313.5584688-.5584688.5584688h-2.0131875c-1.0415156 0-2.0764687.1333593-3.0935156.3577031-.6006094.1324687-1.2268125.1967812-1.8701719.1843125-4.381875-.0847969-7.83098435-3.6614531-7.7641406-8.0436094.06520313-4.2773437 3.5203594-7.73254688 7.7976562-7.79789062z"
+          fill="url(#b)"
+        />
+        <path
+          d="m9.80146875.04260938c-5.33878125-.08156251-9.69623437 4.12035937-9.79964062 9.45876562-.01514063.7837031.06318749 1.5466875.224625 2.2784063.27328125 1.239.43575 2.4998906.43575 3.7687499v2.4525938c0 .37575.30459375.6803906.68039062.6803906h2.45259375c1.2688125 0 2.52970312.1624688 3.76875.43575.73171875.1613907 1.49465625.2397656 2.27835937.2245782 5.33831253-.1033594 9.54023433-4.4606719 9.45885933-9.79935942-.0794999-5.21095313-4.2887812-9.42032813-9.49968745-9.499875z"
+          fill="url(#c)"
+        />
+        <g fill="#0c53b7">
+          <path d="m6.19654688 9.17526562c-.272625-.28968749-.6585-.47160937-1.08778125-.47160937-.82560938 0-1.49489063.66928125-1.49489063 1.49489065 0 .4292343.181875.8151094.47160938 1.0877812l3.22471875 3.2247188c.27267187.2896875.65854687.4716093 1.08778125.4716093.82560937 0 1.49489062-.6692812 1.49489062-1.4948906 0-.4292344-.18192188-.8151094-.47160937-1.0877812z" />
+          <path d="m10.4242031 9.17526562c-.272625-.28968749-.65849997-.47160937-1.08778122-.47160937-.82560938 0-1.49489063.66928125-1.49489063 1.49489065 0 .4292343.181875.8151094.47160938 1.0877812l3.22471877 3.2247188c.2726719.2896875.6585469.4716093 1.0877812.4716093.8256094 0 1.4948907-.6692812 1.4948907-1.4948906 0-.4292344-.1819219-.8151094-.4716094-1.0877812z" />
+          <path d="m14.6518125 9.17526562c-.272625-.28968749-.6585-.47160937-1.0877813-.47160937-.8256093 0-1.4948906.66928125-1.4948906 1.49489065 0 .4292343.1819219.8151094.4716094 1.0877812l3.2247187 3.2247188c.2726719.2896875.6585469.4716093 1.0877813.4716093.8256094 0 1.4948906-.6692812 1.4948906-1.4948906 0-.4292344-.1819219-.8151094-.4716094-1.0877812z" />
+        </g>
+        <g fill="#fff" fillRule="nonzero">
+          <circle cx="5.109" cy="10.198" r="1.495" />
+          <circle cx="9.336" cy="10.198" r="1.495" />
+          <circle cx="13.564" cy="10.198" r="1.495" />
+        </g>
+      </g>
+    </svg>
+  );
+};
+export const TimeAgo = ({ color, size }) => {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="1.5" />
+        <path
+          d="M12 8V12L14.5 14.5"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+};
+
 Dashboard.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -1150,6 +1304,18 @@ Minus.propTypes = {
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 DownArrow.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+Mail.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+CheckRead.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+TimeAgo.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };

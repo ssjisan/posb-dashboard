@@ -21,6 +21,7 @@ import UpdateMember from "../Page/UpdateMember";
 import CreateExecutiveBody from "../Page/CreateExecutiveBody";
 import ExecutiveBody from "../Page/ExecutiveBody";
 import UpdateExecutiveBody from "../Page/UpdateExecutiveBody";
+import AllMessages from "../Page/AllMessages";
 
 export default function MainRouters() {
   return (
@@ -48,6 +49,7 @@ export default function MainRouters() {
           <Route path="set-committee" element={<CreateExecutiveBody/>} />
           <Route path="committee-list" element={<ExecutiveBody/>} />
           <Route path="committee-list/:slug" element={<UpdateExecutiveBody/>} />
+          <Route path="all-messages" element={<AllMessages/>} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>

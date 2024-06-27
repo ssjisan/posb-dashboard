@@ -1,13 +1,20 @@
-import { AppBar, IconButton, Toolbar, useMediaQuery } from "@mui/material";
+import {
+  AppBar,
+  IconButton,
+  Stack,
+  Toolbar,
+  useMediaQuery,
+} from "@mui/material";
 import { BurgerMenu } from "../assets/IconSet";
 import AccountPopOver from "./Common/AccountPopOver";
+import MessagesNotification from "./Common/MessagesNotification";
 
 const drawerWidth = 280;
 // eslint-disable-next-line
 export default function Navbar({ handleDrawerToggle }) {
   // eslint-disable-next-line
   const forBelow1100 = useMediaQuery("(min-width:1100px)");
-  
+
   return (
     <AppBar
       position="fixed"
@@ -39,17 +46,12 @@ export default function Navbar({ handleDrawerToggle }) {
           onClick={handleDrawerToggle}
           sx={{ mr: 2, display: { lg: "none" } }}
         >
-          <BurgerMenu color="#031E21" size={24}/>
+          <BurgerMenu color="#031E21" size={24} />
         </IconButton>
-        <IconButton
-          sx={{
-            border: "1px solid #dfdfdf",
-            width: "40px",
-            height: "40px",
-          }}
-        >
-          <AccountPopOver />
-        </IconButton>
+        <Stack direction="row" gap="16px" justifyContent="center">
+          <MessagesNotification />
+          <AccountPopOver/>
+        </Stack>
       </Toolbar>
     </AppBar>
   );
