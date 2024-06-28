@@ -31,16 +31,18 @@ export default function Body({
   const [openRemoveModal,setOpenRemoveModal] = useState(false)
   const [memberForDelete, setMemberForDelete] = useState(null);
   const navigate = useNavigate()
+
   const handleDelete = async (memberId) => {
     try {
+      const loadingToastId = toast.loading('Deleting member...');
       await axios.delete(`/member/${memberId}`);
-      toast.success('Member deleted successfully');
+      toast.success('Member deleted successfully', { id: loadingToastId });
       window.location.reload();
     } catch (error) {
-      console.error('Failed to delete member', error);
       toast.error('Failed to delete member');
     }
   };
+
   const handleConfirmRemove = () => {
     if (memberForDelete) {
       handleDelete(memberForDelete._id);

@@ -18,6 +18,7 @@ export default function UpdateMemberForm() {
   const [image, setImage] = useState(null);
   const [mailingAddress, setMailingAddress] = useState("");
   const [removePhoto, setRemovePhoto] = useState(false);
+  const [isCreating, setIsCreating] = useState(false); 
   const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
@@ -54,6 +55,8 @@ export default function UpdateMemberForm() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsCreating(true)
+
     try {
       const formData = new FormData();
       formData.append("name", name);
@@ -74,8 +77,12 @@ export default function UpdateMemberForm() {
       });
       toast.success("Member updated successfully");
       navigate("/members");
+      setIsCreating(false)
+
     } catch (error) {
       toast.error("Failed to update member");
+      setIsCreating(false)
+
     }
   };
 
@@ -107,8 +114,8 @@ export default function UpdateMemberForm() {
           handleRemoveImage={handleRemoveImage}
         />
       </Stack>
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Update
+      <Button variant="contained" color="primary" onClick={handleSubmit} disabled={isCreating}>
+        {isCreating ? "Updating" : "Update"}
       </Button>
     </>
   );

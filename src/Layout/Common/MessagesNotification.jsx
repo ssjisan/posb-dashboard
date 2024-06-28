@@ -104,7 +104,7 @@ export default function MessagesNotification() {
         <List disablePadding>
           {messages.slice(0, 5).map((message) => (
             <MessageInformation
-            onClose={handleClose}
+              onClose={handleClose}
               key={message.id}
               notification={message}
               style={{

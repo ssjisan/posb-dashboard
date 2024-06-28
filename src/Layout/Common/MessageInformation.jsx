@@ -6,8 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { MailNotification, TimeAgo } from "../../assets/IconSet";
-import { useState } from "react";
-import MessagePreview from "../../Components/Common/MessagePreview";
+import { Link } from "react-router-dom";
 
 export default function MessageInformation({ notification }) {
   // Calculate time difference from now
@@ -28,59 +27,54 @@ export default function MessageInformation({ notification }) {
       minutesDifference === 1 ? "minute" : "minutes"
     } ago`;
   }
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   return (
-    <ListItemButton
-      sx={{
-        py: 1.5,
-        px: 2.5,
-        mt: "1px",
-        borderRadius: "12px",
-        backgroundColor: notification.read
-          ? "transparent"
-          : "rgba(255, 0, 0, 0.1)", // Red background for unread messages
-      }}
-      onClick={handleClickOpen}
-    >
-      <ListItemAvatar>
-        <MailNotification />
-      </ListItemAvatar>
-      <ListItemText
-        primary={
-          <Typography variant="body2" color="text.secondary">
-            You have a new message from &nbsp;
-            <Typography
-              component="span"
-              color="text.primary"
-              sx={{ fontWeight: "600" }}
-            >
-              {notification.name}
+    <Link to="/all-messages" style={{textDecoration:"none"}}>
+      <ListItemButton
+        sx={{
+          py: 1.5,
+          px: 2.5,
+          mt: "1px",
+          borderRadius: "12px",
+          backgroundColor: notification.read
+            ? "transparent"
+            : "rgba(255, 0, 0, 0.1)", // Red background for unread messages
+        }}
+      >
+        <ListItemAvatar>
+          <MailNotification />
+        </ListItemAvatar>
+        <ListItemText
+          primary={
+            <Typography variant="body2" color="text.secondary">
+              You have a new message from &nbsp;
+              <Typography
+                component="span"
+                color="text.primary"
+                sx={{ fontWeight: "600" }}
+              >
+                {notification.name}
+              </Typography>
             </Typography>
-          </Typography>
-        }
-        secondary={
-          <Typography
-            variant="caption"
-            component="span"
-            color="text.secondary"
-            sx={{
-              mt: 0.5,
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-            }}
-          >
-            <TimeAgo size="16px" color="#918EAF" /> Sent {formattedSendTime}
-          </Typography>
-        }
-      />
-      <MessagePreview open={open} setOpen={setOpen} />
-    </ListItemButton>
+          }
+          secondary={
+            <Typography
+              variant="caption"
+              component="span"
+              color="text.secondary"
+              sx={{
+                mt: 0.5,
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <TimeAgo size="16px" color="#918EAF" /> Sent {formattedSendTime}
+            </Typography>
+          }
+        />
+      </ListItemButton>
+    </Link>
   );
 }
 

@@ -1,5 +1,6 @@
-import { Box, Toolbar } from "@mui/material";
+import { Box, Grid, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
+import MessagesList from "../Components/Common/MessagesList";
 
 export default function AllMessages() {
   const drawerWidth = 280;
@@ -17,7 +18,11 @@ export default function AllMessages() {
       >
         <Toolbar />
         <Box>
-          This Is All Messages Page
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={4}>
+              <MessagesList />
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Box>

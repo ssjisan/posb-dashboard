@@ -3,35 +3,69 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  Stack,
+  Typography,
 } from "@mui/material";
+import PropTypes from "prop-types";
 
-export default function MessagePreview({setOpen,open}) {
-  
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export default function MessagePreview({ open, onClose, message }) {
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      onClose={onClose}
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Use Google's location service?"}
-      </DialogTitle>
+      <DialogTitle>Message</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.
-        </DialogContentText>
+        <Stack gap="16px">
+          <Typography color={"text.secondary"} sx={{ fontSize: "18px" }}>
+            Name:{" "}
+            <Typography
+              component={"span"}
+              color={"text.primary"}
+              variant="body"
+            >
+              {message?.name}
+            </Typography>
+          </Typography>
+          <Typography color={"text.secondary"} sx={{ fontSize: "18px" }}>
+            Email:{" "}
+            <Typography
+              component={"span"}
+              color={"text.primary"}
+              variant="body"
+            >
+              {message?.email}
+            </Typography>
+          </Typography>
+          <Typography color={"text.secondary"} sx={{ fontSize: "18px" }}>
+            Subject:{" "}
+            <Typography
+              component={"span"}
+              color={"text.primary"}
+              variant="body"
+            >
+              {message?.subject || "No subject to show"}
+            </Typography>
+          </Typography>
+          <Typography>Messages:</Typography>
+          <Typography>{message?.message || "No message to show"}</Typography>
+        </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Delete</Button>
+        <Button onClick={onClose}>Close</Button>
       </DialogActions>
     </Dialog>
   );
 }
+
+MessagePreview.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  message: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    message: PropTypes.string,
+    subject: PropTypes.string,
+  }),
+};

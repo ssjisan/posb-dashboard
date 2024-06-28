@@ -16,6 +16,7 @@ export default function AddMemberForm() {
   const [phone, setPhone] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
   const [mailingAddress, setMailingAddress] = useState("");
+  const [isCreating, setIsCreating] = useState(false); 
   const navigate = useNavigate();
 
   const handleImageUpload = (event) => {
@@ -26,6 +27,7 @@ export default function AddMemberForm() {
   };
 
   const handleCreateMember = async () => {
+    setIsCreating(true)
     try {
       const formData = new FormData();
       formData.append("name", name);
@@ -45,6 +47,7 @@ export default function AddMemberForm() {
       });
 
       if (data?.error) {
+        setIsCreating(false)
         toast.error(data.error);
       } else {
         toast.success("Member Create Succesfully");
@@ -56,8 +59,10 @@ export default function AddMemberForm() {
         setMailingAddress("");
         setProfilePhoto(null);
         navigate("/members");
+        setIsCreating(false)
       }
     } catch (error) {
+      setIsCreating(false)
       toast.error(error.message);
     }
   };
@@ -89,8 +94,8 @@ export default function AddMemberForm() {
           setImage={setProfilePhoto}
         />
       </Stack>
-      <Button variant="contained" color="primary" onClick={handleCreateMember}>
-        Create
+      <Button variant="contained" color="primary" onClick={handleCreateMember} disabled={isCreating}>
+        {isCreating ? "Creating" : "Create"}
       </Button>
     </>
   );
