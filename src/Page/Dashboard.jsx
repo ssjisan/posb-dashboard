@@ -5,6 +5,7 @@ import SupportCard from "../Components/Dashboard/SupportCard/SupportCard";
 import DirectNavigation from "../Components/Dashboard/DirectNavigation/DirectNavigation";
 import NoticeUpdate from "../Components/Dashboard/Notice Update/NoticeUpdate";
 import UpcomingEvents from "../Components/Dashboard/Upcoming Events/UpcomingEvents";
+import Breadcrumbs from "../Components/BreadCrumbs/Breadcrumbs";
 export default function Dashboard() {
   const drawerWidth = 280;
 
@@ -20,6 +21,7 @@ export default function Dashboard() {
         }}
       >
         <Toolbar />
+        <Breadcrumbs/>
         <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12} md={7}>
