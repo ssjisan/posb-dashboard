@@ -428,7 +428,7 @@ export const ArrowRight = ({ color, size }) => {
         <path
           d="M8.90997 19.9201L15.43 13.4001C16.2 12.6301 16.2 11.3701 15.43 10.6001L8.90997 4.08008"
           stroke={color}
-          strokeWidth="1.5"
+          strokeWidth="2"
           strokeMiterlimit="10"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -1193,6 +1193,7 @@ export const TimeAgo = ({ color, size }) => {
   );
 };
 
+
 Dashboard.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -1316,6 +1317,10 @@ CheckRead.propTypes = {
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 TimeAgo.propTypes = {
+  color: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+};
+ArrowRight.propTypes = {
   color: PropTypes.string.isRequired,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };

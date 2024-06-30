@@ -81,10 +81,10 @@ function Sidebar(props) {
                     <ListItemButton
                       sx={{
                         ...ListItemButtonSx,
-                        color: pathname === item.link ? "#00AE60" : "#918EAF",
+                        color: pathname === item.link ? "#00AE60" : "#637381",
                       }}
                     >
-                      <ListItemIcon>{item.icon}</ListItemIcon>
+                      <ListItemIcon sx={{minWidth:"36px"}}>{item.icon}</ListItemIcon>
                       <Typography
                         sx={{
                           fontWeight: pathname === item.link ? 600 : 500,

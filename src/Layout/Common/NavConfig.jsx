@@ -21,7 +21,7 @@ const navConfig = ({ pathname }) => [
         link: "/",
         icon: (
           <Dashboard
-            color={pathname === "/" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -36,7 +36,7 @@ const navConfig = ({ pathname }) => [
         link: "/add_events",
         icon: (
           <AddEvent
-            color={pathname === "/add_events" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/add_events" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -46,7 +46,7 @@ const navConfig = ({ pathname }) => [
         link: "/events_list",
         icon: (
           <EventList
-            color={pathname === "/events_list" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/events_list" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -61,7 +61,7 @@ const navConfig = ({ pathname }) => [
         link: "/add_album",
         icon: (
           <AddAlbum
-            color={pathname === "/add_album" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/add_album" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -71,7 +71,7 @@ const navConfig = ({ pathname }) => [
         link: "/album_list",
         icon: (
           <AlbumList
-            color={pathname === "/album_list" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/album_list" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -86,7 +86,7 @@ const navConfig = ({ pathname }) => [
         link: "/add_notice",
         icon: (
           <AddNotice
-            color={pathname === "/add_notice" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/add_notice" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -96,7 +96,7 @@ const navConfig = ({ pathname }) => [
         link: "/notice_list",
         icon: (
           <NoticeList
-            color={pathname === "/notice_list" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/notice_list" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -111,7 +111,7 @@ const navConfig = ({ pathname }) => [
         link: "/add-member",
         icon: (
           <AddMember
-            color={pathname === "/add-member" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/add-member" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -121,7 +121,7 @@ const navConfig = ({ pathname }) => [
         link: "/members",
         icon: (
           <MemberList
-            color={pathname === "/members" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/members" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -136,7 +136,7 @@ const navConfig = ({ pathname }) => [
         link: "/set-committee",
         icon: (
           <AddUser
-            color={pathname === "/set-committee" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/set-committee" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -146,7 +146,7 @@ const navConfig = ({ pathname }) => [
         link: "/committee-list",
         icon: (
           <UserList
-            color={pathname === "/committee-list" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/committee-list" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -161,7 +161,7 @@ const navConfig = ({ pathname }) => [
         link: "/add_user",
         icon: (
           <AddUser
-            color={pathname === "/add_user" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/add_user" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
@@ -171,7 +171,7 @@ const navConfig = ({ pathname }) => [
         link: "/user_list",
         icon: (
           <UserList
-            color={pathname === "/user_list" ? "#00AE60" : "#918EAF"}
+            color={pathname === "/user_list" ? "#00AE60" : "#637381"}
             size={24}
           />
         ),
