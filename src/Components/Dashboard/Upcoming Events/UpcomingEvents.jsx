@@ -73,7 +73,7 @@ export default function UpcomingEvents() {
                   alt={data.name}
                   width="100%"
                   height="100%"
-                  style={{ obejctFIt: "cover" }}
+                  style={{ objectFit: "cover" }}
                 />
               </Box>
               <Box sx={{ flexGrow: 1, minWidth: 240, width: "100%" }}>

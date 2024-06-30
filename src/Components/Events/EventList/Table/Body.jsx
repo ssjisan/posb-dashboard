@@ -47,11 +47,11 @@ export default function Body({
 
   const removeProduct = async (id) => {
     try {
+      const loadingToastId = toast.loading("Deleting album...");
       const { data } = await axios.delete(`/event/${id}`);
-      toast.success("Event deleted successfully");
+      toast.success("Event deleted successfully", { id: loadingToastId });
       window.location.reload(); // Reloading the page to reflect the changes
     } catch (err) {
-      console.error(err);
       toast.error("Unable to delete event at the moment.");
     }
   };

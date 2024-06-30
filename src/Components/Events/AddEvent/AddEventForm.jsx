@@ -55,6 +55,7 @@ export default function AddEventForm() {
       const { data } = await axios.post("/event", eventData);
       if (data?.error) {
         toast.error(data.error);
+        setLoading(false);
       } else {
         setLoading(false);
         toast.success("Event Created");

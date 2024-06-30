@@ -28,10 +28,11 @@ export default function UpdateEventForm() {
   const [eventDescription, setEventDescription] = useState("");
   const [published, setPublished] = useState(true);
   const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [id, setId] = useState("");
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params)
+  console.log(params);
 
   useEffect(() => {
     loadEvent();
@@ -54,6 +55,7 @@ export default function UpdateEventForm() {
   };
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const eventData = new FormData();
       image && eventData.append("image", image);
@@ -66,13 +68,19 @@ export default function UpdateEventForm() {
 
       const { data } = await axios.put(`/event/${id}`, eventData);
       if (data?.error) {
+        setLoading(false);
+
         toast.error(data.error);
       } else {
+        setLoading(false);
+
         toast.success("Event Updated");
         navigate("/events_list");
         window.location.reload();
       }
     } catch (err) {
+      setLoading(false);
+
       toast.error("Event update failed");
     }
   };
@@ -136,13 +144,23 @@ export default function UpdateEventForm() {
               />
               <Typography>Publish Event</Typography>
             </Stack>
-            <Button variant="contained" color="primary" onClick={handleUpdate}>
-              Update
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleUpdate}
+              endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+            >
+              {loading ? "Updating" : "Update"}
             </Button>
           </Stack>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={5}>
-          <EventCover image={image} setImage={setImage} id={id} eventName={eventName}/>
+          <EventCover
+            image={image}
+            setImage={setImage}
+            id={id}
+            eventName={eventName}
+          />
         </Grid>
       </Grid>
     </Box>
