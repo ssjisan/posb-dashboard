@@ -136,6 +136,7 @@ export default function InputFields() {
         variant="contained"
         onClick={handleLogin}
         endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+        disabled={loading}
       >
         Login
       </Button>

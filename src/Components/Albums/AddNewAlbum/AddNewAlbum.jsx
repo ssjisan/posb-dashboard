@@ -16,7 +16,7 @@ export default function AddNewAlbum() {
   const [albumName, setAlbumName] = useState("");
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log(images);
+  console.log("here",images);
 
   const handleFilesChange = (e) => {
     const files = Array.from(e.target.files);
@@ -34,8 +34,14 @@ export default function AddNewAlbum() {
     setLoading(true);
 
     try {
-      if (!albumName || images.length === 0) {
-        ("Please enter an album name and select at least one image.");
+      if (!albumName) {
+        toast.error("Please enter an album name.");
+        setLoading(false);
+        return;
+      }
+
+      if (images.length === 0) {
+        toast.error("Please select at least one image.");
         setLoading(false);
         return;
       }
@@ -43,19 +49,15 @@ export default function AddNewAlbum() {
       const albumData = new FormData();
       albumData.append("name", albumName);
 
-      images.forEach((image, index) => {
+      images.forEach((image) => {
         albumData.append("images", image);
       });
 
-      const { data } = await axios.post(
-        "/album",
-        albumData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const { data } = await axios.post("/album", albumData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success("Album created successfully!");
       navigate("/album_list");
       setAlbumName("");
@@ -66,6 +68,8 @@ export default function AddNewAlbum() {
       setLoading(false);
     }
   };
+
+  
   return (
     <Box sx={{ p: "24px 24px 0px 24px" }}>
       <Grid container spacing={3}>
