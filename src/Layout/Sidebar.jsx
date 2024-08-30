@@ -1,51 +1,63 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import navConfig from "./Common/NavConfig";
-import { ListItem, ListItemButton, Typography } from "@mui/material";
+import {
+  ListItem,
+  ListItemButton,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import Logo from "/itbd.svg";
 import Navbar from "./Navbar";
-const drawerWidth = 280;
 import "./Scrollbar.css";
+import { ArrowDown, Bullet } from "../assets/IconSet";
+
+const drawerWidth = 280;
 
 function Sidebar(props) {
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   const { window } = props;
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
-  // eslint-disable-next-line
+  const [expanded, setExpanded] = useState(false);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  // Style Configuration Start //
-  const linkStyle = {
-    textDecoration: "none",
-    fontWeight: 600,
-    borderRadius: "4px",
+  const handleAccordionChange = (section) => (event, isExpanded) => {
+    setExpanded(isExpanded ? section.title : false);
   };
+
+  const handleItemClick = (link) => {
+    navigate(link);
+    setMobileOpen(false);
+  };
+
   const ListItemSx = {
     borderRadius: "8px",
     width: "100%",
-    height: "44px",
+    height: "36px",
     mb: "4px",
     display: "flex",
   };
+
   const ListItemButtonSx = {
     display: "flex",
     justifyContent: "flex-start",
     borderRadius: "4px",
     width: "100%",
     padding: "8px 16px",
-    height: "44px",
-    // ,
+    height: "36px",
   };
-
-  // Style Configuration End //
 
   const drawer = (
     <div>
@@ -61,44 +73,143 @@ function Sidebar(props) {
           <img src={Logo} alt="logo" width="48px" height="48px" />
         </Box>
         <List>
-          {navConfig({ pathname }).map((section) => (
-            <Box key={section.title}>
-              <Box sx={{ p: "16px 8px 8px 12px" }}>
-                <Typography variant="overline" color="text.primary">
-                  {section.title}
+          {navConfig({ pathname }).map((section) =>
+            section.items.length === 1 ? (
+              // Render ListItemButton directly if only one item
+              <ListItemButton
+                key={section.items[0].title}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  borderRadius: "8px",
+                  width: "100%",
+                  padding: "8px 16px",
+                  height: "44px",
+                  mb:"8px",
+                  background:
+                    pathname === section.items[0].link &&
+                    "rgba(6, 4, 21, 0.04)",
+                  color:
+                    pathname === section.items[0].link ? "#00AE60" : "#637381",
+                }}
+                onClick={() => handleItemClick(section.items[0].link)}
+              >
+                <ListItemIcon sx={{ minWidth: "36px" }}>
+                  {section.icon}
+                </ListItemIcon>
+                <Typography
+                  sx={{
+                    fontWeight: pathname === section.items[0].link ? 600 : 500,
+                    fontSize: "14px",
+                  }}
+                >
+                  {section.items[0].title}
                 </Typography>
-              </Box>
-              {section.items.map((item) => (
-                <Link to={item.link} style={linkStyle} key={item.title}>
-                  <ListItem
-                    disablePadding
-                    sx={{
-                      ...ListItemSx,
-                      background:
-                        pathname === item.link && "rgba(0 ,174, 96, 0.12)",
-                    }}
+              </ListItemButton>
+            ) : (
+              // Render Accordion if more than one item
+              <Accordion
+                square={false}
+                key={section.title}
+                expanded={
+                  expanded === section.title ||
+                  section.items.some((item) => pathname === item.link)
+                }
+                sx={{
+                  "&::before": {
+                    content: "none",
+                  },
+                  boxShadow: "none",
+                  margin: "8px 0px",
+                  "&.Mui-expanded": {
+                    margin: "8px 0px",
+                  },
+                }}
+                onChange={handleAccordionChange(section)}
+              >
+                <AccordionSummary
+                  expandIcon={<ArrowDown color={"#637381"} size={"16px"} />}
+                  aria-controls={`${section.title}-content`}
+                  id={`${section.title}-header`}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    minHeight: "44px",
+                    margin: "0px",
+                    backgroundColor: section.items.some(
+                      (item) => pathname === item.link
+                    )
+                      ? "rgba(0 ,174, 96, 0.12)"
+                      : "transparent",
+                    "&.Mui-expanded": {
+                      minHeight: "44px",
+                      height: "44px",
+                      borderRadius: "8px",
+                    },
+                    "& .MuiAccordionSummary-content": {
+                      alignItems: "center",
+                      display: "flex",
+                      width: "100%",
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: "36px" }}>
+                    {section.icon}
+                  </ListItemIcon>
+                  <Typography
+                    variant="overline"
+                    color={
+                      section.items.some((item) => pathname === item.link)
+                        ? "#00AE60"
+                        : "#637381"
+                    }
                   >
-                    <ListItemButton
+                    {section.title}
+                  </Typography>
+                </AccordionSummary>
+
+                <AccordionDetails sx={{ p: "8px 0px 0px 16px" }}>
+                  {section.items.map((item) => (
+                    <ListItem
+                      disablePadding
                       sx={{
-                        ...ListItemButtonSx,
-                        color: pathname === item.link ? "#00AE60" : "#637381",
+                        ...ListItemSx,
+                        background:
+                          pathname === item.link && "rgba(6, 4, 21, 0.04)",
                       }}
+                      key={item.title}
+                      onClick={() => handleItemClick(item.link)}
                     >
-                      <ListItemIcon sx={{minWidth:"36px"}}>{item.icon}</ListItemIcon>
-                      <Typography
+                      <ListItemButton
                         sx={{
-                          fontWeight: pathname === item.link ? 600 : 500,
-                          fontSize: "14px",
+                          ...ListItemButtonSx,
+                          color: pathname === item.link ? "#060415" : "#637381",
                         }}
                       >
-                        {item.title}
-                      </Typography>
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              ))}
-            </Box>
-          ))}
+                        <ListItemIcon sx={{ minWidth: "24px" }}>
+                          <Bullet
+                            color={
+                              pathname === item.link ? "#060415" : "#637381"
+                            }
+                            size={pathname === item.link ? 12 : 10}
+                          />
+                        </ListItemIcon>
+                        <Typography
+                          sx={{
+                            fontWeight: pathname === item.link ? 600 : 500,
+                            fontSize: "14px",
+                          }}
+                        >
+                          {item.title}
+                        </Typography>
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            )
+          )}
         </List>
       </Box>
     </div>
@@ -117,14 +228,13 @@ function Sidebar(props) {
         aria-label="mailbox folders"
         className="sidebar"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", lg: "none" },

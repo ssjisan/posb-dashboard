@@ -1,180 +1,206 @@
 import {
-  AddAlbum,
-  AddEvent,
-  AddNotice,
-  AddUser,
   AlbumList,
   Dashboard,
   EventList,
-  AddMember,
   MemberList,
   NoticeList,
   UserList,
+  JournalList,
+  Users,
+  UpdateContact,
 } from "../../assets/IconSet";
 
 const navConfig = ({ pathname }) => [
   {
     title: "Overview",
+    icon: (
+      <Dashboard color={pathname === "/" ? "#00AE60" : "#637381"} size={20} />
+    ),
     items: [
       {
         title: "Dashboard",
         link: "/",
-        icon: (
-          <Dashboard
-            color={pathname === "/" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
+      },
+    ],
+  },
+  {
+    title: "Contact Info",
+    icon: (
+      <UpdateContact
+        color={pathname === "/update_contact" ? "#00AE60" : "#637381"}
+        size={20}
+      />
+    ),
+    items: [
+      {
+        title: "Update Contact",
+        link: "/update_contact",
       },
     ],
   },
   {
     title: "Events",
+    icon: (
+      <EventList
+        color={
+          pathname.startsWith("/add_events") ||
+          pathname.startsWith("/events_list")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
     items: [
       {
         title: "Add Events",
         link: "/add_events",
-        icon: (
-          <AddEvent
-            color={pathname === "/add_events" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
       {
         title: "Events List",
         link: "/events_list",
-        icon: (
-          <EventList
-            color={pathname === "/events_list" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
     ],
   },
   {
     title: "Album",
+    icon: (
+      <AlbumList
+        color={
+          pathname.startsWith("/add_album") ||
+          pathname.startsWith("/album_list")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
     items: [
       {
         title: "Add Album",
         link: "/add_album",
-        icon: (
-          <AddAlbum
-            color={pathname === "/add_album" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
       {
         title: "Album List",
         link: "/album_list",
-        icon: (
-          <AlbumList
-            color={pathname === "/album_list" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
     ],
   },
   {
     title: "Notice",
+    icon: (
+      <NoticeList
+        color={
+          pathname.startsWith("/add_notice") ||
+          pathname.startsWith("/notice_list")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
     items: [
       {
         title: "Add Notice",
         link: "/add_notice",
-        icon: (
-          <AddNotice
-            color={pathname === "/add_notice" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
       {
         title: "Notice List",
         link: "/notice_list",
-        icon: (
-          <NoticeList
-            color={pathname === "/notice_list" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
     ],
   },
   {
     title: "Members",
+    icon: (
+      <MemberList
+        color={
+          pathname.startsWith("/add-member") || pathname.startsWith("/members")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
     items: [
       {
         title: "Add Member",
         link: "/add-member",
-        icon: (
-          <AddMember
-            color={pathname === "/add-member" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
       {
         title: "Member List",
         link: "/members",
-        icon: (
-          <MemberList
-            color={pathname === "/members" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
+      },
+    ],
+  },
+  {
+    title: "Journals",
+    icon: (
+      <JournalList
+        color={
+          pathname.startsWith("/add-journal") ||
+          pathname.startsWith("/journal-list")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
+    items: [
+      {
+        title: "Add Journal",
+        link: "/add-journal",
+      },
+      {
+        title: "Journal List",
+        link: "/journal-list",
       },
     ],
   },
   {
     title: "Executive Committee",
+    icon: (
+      <UserList
+        color={
+          pathname.startsWith("/set-committee") ||
+          pathname.startsWith("/committee-list")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
     items: [
       {
         title: "Set Committee",
         link: "/set-committee",
-        icon: (
-          <AddUser
-            color={pathname === "/set-committee" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
       {
         title: "Committee List",
         link: "/committee-list",
-        icon: (
-          <UserList
-            color={pathname === "/committee-list" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
     ],
   },
   {
     title: "User",
+    icon: (
+      <Users
+        color={
+          pathname.startsWith("/add_user") || pathname.startsWith("/user_list")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
     items: [
       {
         title: "Add User",
         link: "/add_user",
-        icon: (
-          <AddUser
-            color={pathname === "/add_user" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
       {
         title: "User List",
         link: "/user_list",
-        icon: (
-          <UserList
-            color={pathname === "/user_list" ? "#00AE60" : "#637381"}
-            size={24}
-          />
-        ),
       },
     ],
   },

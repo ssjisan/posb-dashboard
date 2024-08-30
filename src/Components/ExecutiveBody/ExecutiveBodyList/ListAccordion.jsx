@@ -101,7 +101,7 @@ import { Link, useNavigate } from "react-router-dom";
                   {data.members.map((memberDetail, idx) => (
                     <Box key={idx} sx={{ mb: 2 }}>
                       <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                        {memberDetail.member.name}
+                        {memberDetail?.member?.name}
                       </Typography>
                       <Typography variant="body2">
                         {memberDetail.position}
