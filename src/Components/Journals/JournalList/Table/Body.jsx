@@ -6,35 +6,31 @@ import {
   TableBody,
   TableRow,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
 import { Update, Remove, More } from "../../../../assets/IconSet";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NoticeModal from "../../RemoveNotice/NoticeModal";
 import toast from "react-hot-toast";
 import axios from "axios";
+import RemoveJournalModal from "../../RemoveJournal/RemoveJournalModal";
 
 export default function Body({
-  notices,
+  journals,
   page,
   rowsPerPage,
-  selectedNotice,
-  setSelectedNotice,
-  isOpen,
-  noticeTitle,
-  handleClose,
+  selectedJournal,
+  setSelectedJournal
 }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
-  const [noticeToDelete, setNoticeToDelete] = useState(null);
+  const [journalToDelete, setJournalToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenMenu = (event, events) => {
     setOpen(event.currentTarget);
-    setSelectedNotice(events);
+    setSelectedJournal(events);
   };
 
   const handleCloseMenu = () => {
@@ -43,39 +39,44 @@ export default function Body({
 
   const redirectEdit = (event, data) => {
     event.preventDefault();
-    navigate(`/notice/${data._id}`);
-  };
-  const removeNotice = async (id) => {
-    try {
-      const { data } = await axios.delete(`/notice/${id}`);
-      toast.success("Notice deleted successfully");
-      window.location.reload(); // Reloading the page to reflect the changes
-    } catch (err) {
-      console.error(err);
-      toast.error("Unable to delete notice at the moment.");
-    }
+    navigate(`/journal/${data._id}`);
   };
 
+  const removeJournal = async (id) => {
+    try {
+      // Make a DELETE request to the backend to delete the journal by its ID
+      const { data } = await axios.delete(`/journal/${id}`);
+      
+      // Notify the user of the successful deletion
+      toast.success(data.message || "Journal deleted successfully");
+      
+      // Reload the page to reflect the changes
+      window.location.reload();
+    } catch (err) {
+      console.error("Error deleting journal:", err);
+      toast.error("Unable to delete journal at the moment.");
+    }
+  };
+  
+
   const handleRemove = () => {
-    if (noticeToDelete) {
-      removeNotice(noticeToDelete._id);
+    if (journalToDelete) {
+      // Call the removeJournal function with the ID of the journal to delete
+      removeJournal(journalToDelete._id);
+      
+      // Close the modal and reset the journalToDelete state
       setIsModalOpen(false);
-      setNoticeToDelete(null);
+      setJournalToDelete(null);
     }
   };
   return (
     <TableBody>
-      {notices
+      {journals
         ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((data) => (
           <TableRow key={data._id}>
-            <TableCell component="th" scope="row" padding="none">
-              <Typography variant="subtitle2" noWrap>
-                {data.title}
-              </Typography>
-            </TableCell>
-            <TableCell align="left" sx={{ width: "320px" }}>
-              <Tooltip title={data.description}>
+            <TableCell align="left">
+              <Tooltip title={data.title}>
                 <Box
                   sx={{
                     whiteSpace: "nowrap",
@@ -84,14 +85,19 @@ export default function Body({
                     width: "320px",
                   }}
                 >
-                  {data.description}
+                  {data.title}
                 </Box>
               </Tooltip>
             </TableCell>
-            <TableCell align="left">{data?.author?.name}</TableCell>
             <TableCell align="left">
-              {" "}
-              {new Date(data.createdAt).toLocaleString()}
+              {new Date(data.publishedDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </TableCell>
+            <TableCell align="left">
+              <a href={data.link}>Preview</a>
             </TableCell>
             <TableCell align="center">
               <Tooltip title="Actions">
@@ -117,7 +123,7 @@ export default function Body({
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
-          onClick={(e) => redirectEdit(e, selectedNotice)}
+          onClick={(e) => redirectEdit(e, selectedJournal)}
         >
           <Update color="#919EAB" size={24} />
           Edit
@@ -130,7 +136,7 @@ export default function Body({
             borderRadius: "8px",
           }}
           onClick={() => {
-            setNoticeToDelete(selectedNotice);
+            setJournalToDelete(selectedJournal);
             setIsModalOpen(true);
             handleCloseMenu(); // Close popover
           }}
@@ -138,10 +144,10 @@ export default function Body({
           <Remove color="red" size={24} /> Delete
         </MenuItem>
       </Popover>
-      <NoticeModal
+      <RemoveJournalModal
         isOpen={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
-        noticeTitle={noticeToDelete ? noticeToDelete.title : ""}
+        journalTitle={journalToDelete ? journalToDelete.title : ""}
         handleRemove={handleRemove}
       />
     </TableBody>
@@ -149,16 +155,16 @@ export default function Body({
 }
 
 Body.propTypes = {
-  notices: PropTypes.any,
+  journals: PropTypes.any,
   page: PropTypes.any,
   rowsPerPage: PropTypes.any,
   handleRemove: PropTypes.any,
   isModalOpen: PropTypes.any,
   showModal: PropTypes.any,
-  setSelectedNotice: PropTypes.any,
-  selectedNotice: PropTypes.any,
-  setNoticeToDelete: PropTypes.any,
-  noticeTitle: PropTypes.any,
+  setSelectedJournal: PropTypes.any,
+  selectedJournal: PropTypes.any,
+  setJournalToDelete: PropTypes.any,
+  journalTitle: PropTypes.any,
   handleClose: PropTypes.any,
   isOpen: PropTypes.any,
   setIsModalOpen: PropTypes.any,

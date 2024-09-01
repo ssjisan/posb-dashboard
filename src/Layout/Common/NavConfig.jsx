@@ -111,6 +111,30 @@ const navConfig = ({ pathname }) => [
     ],
   },
   {
+    title: "Journals",
+    icon: (
+      <JournalList
+      color={
+        pathname.startsWith("/add_journal") ||
+        pathname.startsWith("/journals")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
+    items: [
+      {
+        title: "Add Journal",
+        link: "/add_journal",
+      },
+      {
+        title: "Journal List",
+        link: "/journals",
+      },
+    ],
+  },
+  {
     title: "Members",
     icon: (
       <MemberList
@@ -130,30 +154,6 @@ const navConfig = ({ pathname }) => [
       {
         title: "Member List",
         link: "/members",
-      },
-    ],
-  },
-  {
-    title: "Journals",
-    icon: (
-      <JournalList
-        color={
-          pathname.startsWith("/add-journal") ||
-          pathname.startsWith("/journal-list")
-            ? "#00AE60"
-            : "#637381"
-        }
-        size={20}
-      />
-    ),
-    items: [
-      {
-        title: "Add Journal",
-        link: "/add-journal",
-      },
-      {
-        title: "Journal List",
-        link: "/journal-list",
       },
     ],
   },

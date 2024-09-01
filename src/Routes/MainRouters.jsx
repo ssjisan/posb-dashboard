@@ -23,6 +23,9 @@ import ExecutiveBody from "../Page/ExecutiveBody";
 import UpdateExecutiveBody from "../Page/UpdateExecutiveBody";
 import AllMessages from "../Page/AllMessages";
 import UpdateContact from "../Page/UpdateContact";
+import AddJournal from "../Page/AddJournal";
+import JournalList from "../Page/JournalList";
+import UpdateJournal from "../Page/UpdateJournal";
 
 export default function MainRouters() {
   return (
@@ -44,14 +47,20 @@ export default function MainRouters() {
           <Route path="add_notice" element={<AddNotice />} />
           <Route path="notice_list" element={<NoticeList />} />
           <Route path="notice/:noticeId" element={<UpdateNotice />} />
-          <Route path="add-member" element={<AddMember/>} />
-          <Route path="members" element={<MemberList/>} />
-          <Route path="member/:id" element={<UpdateMember/>} />
-          <Route path="set-committee" element={<CreateExecutiveBody/>} />
-          <Route path="committee-list" element={<ExecutiveBody/>} />
-          <Route path="committee-list/:slug" element={<UpdateExecutiveBody/>} />
-          <Route path="all-messages" element={<AllMessages/>} />
-          <Route path="update_contact" element={<UpdateContact/>} />
+          <Route path="add-member" element={<AddMember />} />
+          <Route path="members" element={<MemberList />} />
+          <Route path="member/:id" element={<UpdateMember />} />
+          <Route path="set-committee" element={<CreateExecutiveBody />} />
+          <Route path="committee-list" element={<ExecutiveBody />} />
+          <Route
+            path="committee-list/:slug"
+            element={<UpdateExecutiveBody />}
+          />
+          <Route path="all-messages" element={<AllMessages />} />
+          <Route path="update_contact" element={<UpdateContact />} />
+          <Route path="add_journal" element={<AddJournal />} />
+          <Route path="journals" element={<JournalList />} />
+          <Route path="journal/:journalId" element={<UpdateJournal />} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>
