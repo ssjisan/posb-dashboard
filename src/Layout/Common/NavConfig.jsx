@@ -8,6 +8,7 @@ import {
   JournalList,
   Users,
   UpdateContact,
+  Form,
 } from "../../assets/IconSet";
 
 const navConfig = ({ pathname }) => [
@@ -131,6 +132,30 @@ const navConfig = ({ pathname }) => [
       {
         title: "Journal List",
         link: "/journals",
+      },
+    ],
+  },
+  {
+    title: "Forms",
+    icon: (
+      <Form
+      color={
+        pathname.startsWith("/add_form") ||
+        pathname.startsWith("/forms")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
+    items: [
+      {
+        title: "Add Form",
+        link: "/add_form",
+      },
+      {
+        title: "Form List",
+        link: "/forms",
       },
     ],
   },
