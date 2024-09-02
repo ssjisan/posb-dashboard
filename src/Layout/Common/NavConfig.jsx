@@ -140,7 +140,7 @@ const navConfig = ({ pathname }) => [
     icon: (
       <Form
       color={
-        pathname.startsWith("/add_form") ||
+        pathname.startsWith("/upload_form") ||
         pathname.startsWith("/forms")
             ? "#00AE60"
             : "#637381"
@@ -150,8 +150,8 @@ const navConfig = ({ pathname }) => [
     ),
     items: [
       {
-        title: "Add Form",
-        link: "/add_form",
+        title: "Upload Form",
+        link: "/upload_form",
       },
       {
         title: "Form List",

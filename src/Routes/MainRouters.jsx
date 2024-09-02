@@ -28,6 +28,7 @@ import JournalList from "../Page/JournalList";
 import UpdateJournal from "../Page/UpdateJournal";
 import AddForm from "../Page/AddForm";
 import FormList from "../Page/FormList";
+import UpdateForm from "../Page/UpdateForm";
 
 export default function MainRouters() {
   return (
@@ -63,9 +64,9 @@ export default function MainRouters() {
           <Route path="add_journal" element={<AddJournal />} />
           <Route path="journals" element={<JournalList />} />
           <Route path="journal/:journalId" element={<UpdateJournal />} />
-          <Route path="add_form" element={<AddForm />} />
+          <Route path="upload_form" element={<AddForm />} />
           <Route path="forms" element={<FormList />} />
-          <Route path="form/:formId" element={<UpdateJournal />} />
+          <Route path="form/:formId" element={<UpdateForm />} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>

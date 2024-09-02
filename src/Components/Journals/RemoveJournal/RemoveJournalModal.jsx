@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { Warning } from "../../../assets/IconSet";
 
 export default function RemoveJournalModal({
   isOpen,
@@ -17,31 +18,48 @@ export default function RemoveJournalModal({
           left: "50%",
           transform: "translate(-50%, -50%)",
           backgroundColor: "white",
-          padding: "20px",
           borderRadius: "8px",
-          maxWidth: "480px",
+          width: "480px",
+          maxWidth: "90%",
         }}
       >
-        <Typography variant="h6" gutterBottom>
-          Delete Journal
-        </Typography>
-        <Typography variant="body1">
-          Are you sure you want to delete <strong>&quot;{journalTitle}&quot;</strong>?
-        </Typography>
-        <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "space-between",
+        <Box
+          sx={{
+            p: "16px",
+            borderBottom: "1px solid rgba(145, 158, 171, 0.24)",
           }}
         >
-          <Button onClick={handleClose} variant="outlined">
+          <Typography variant="h6" gutterBottom>
+            Delete Journal
+          </Typography>
+        </Box>
+        <Stack
+          gap="16px"
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{
+            p: "24px 16px",
+          }}
+        >
+          <Warning size="48px" color="#dc3545" />
+          <Typography variant="body1" sx={{ textAlign: "center" }}>
+            Are you sure you want to delete{" "}
+            <strong>&quot;{journalTitle}&quot;</strong>?
+          </Typography>
+        </Stack>
+        <Stack
+          direction={"row"}
+          gap="16px"
+          justifyContent={"flex-end"}
+          sx={{ p: "16px", borderTop: "1px solid rgba(145, 158, 171, 0.24)" }}
+        >
+          <Button onClick={handleClose} color="inherit">
             Cancel
           </Button>
           <Button onClick={handleRemove} variant="contained" color="error">
             Yes, Delete
           </Button>
-        </div>
+        </Stack>
       </div>
     </Modal>
   );
@@ -51,5 +69,5 @@ RemoveJournalModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
-  journalTitle: PropTypes.string.isRequired
+  journalTitle: PropTypes.string.isRequired,
 };

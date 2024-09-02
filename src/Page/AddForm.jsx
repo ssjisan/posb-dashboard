@@ -1,6 +1,6 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import AddAJournal from "../Components/Journals/AddJournal/AddAJournal";
+import AddAForm from "../Components/Forms/AddJournal/AddAForm";
 export default function AddForm() {
   const drawerWidth = 280;
 
@@ -16,7 +16,7 @@ export default function AddForm() {
         }}
       >
         <Toolbar />
-        <AddAJournal />
+        <AddAForm />
       </Box>
     </Box>
   );

@@ -3,10 +3,10 @@ import Modal from "@mui/material/Modal";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Warning } from "../../../assets/IconSet";
 
-export default function RemoveAlbumModal({
+export default function RemoveFormModal({
   isOpen,
   handleClose,
-  eventName,
+  formTitle,
   handleRemove,
 }) {
   return (
@@ -30,7 +30,7 @@ export default function RemoveAlbumModal({
           }}
         >
           <Typography variant="h6" gutterBottom>
-            Delete Album
+            Delete Form
           </Typography>
         </Box>
         <Stack
@@ -44,7 +44,7 @@ export default function RemoveAlbumModal({
           <Warning size="48px" color="#dc3545" />
           <Typography variant="body1" sx={{ textAlign: "center" }}>
             Are you sure you want to delete{" "}
-            <strong>&quot;{eventName}&quot;</strong>?
+            <strong>&quot;{formTitle}&quot;</strong>?
           </Typography>
         </Stack>
         <Stack
@@ -65,9 +65,9 @@ export default function RemoveAlbumModal({
   );
 }
 
-RemoveAlbumModal.propTypes = {
+RemoveFormModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  eventName: PropTypes.string.isRequired,
   handleRemove: PropTypes.func.isRequired,
+  formTitle: PropTypes.string.isRequired,
 };

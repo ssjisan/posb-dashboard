@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "../Layout/Sidebar";
-import AllFormsList from "../Components/Forms/FormList/AllFormsList";
-export default function FormList() {
+import UpdateAForm from "../Components/Forms/UpdateForm/UpdateAForm";
+export default function UpdateForm() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +16,7 @@ export default function FormList() {
         }}
       >
         <Toolbar />
-        <AllFormsList />
+        <UpdateAForm />
       </Box>
     </Box>
   );
