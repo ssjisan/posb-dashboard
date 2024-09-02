@@ -53,7 +53,7 @@ function Sidebar(props) {
   const ListItemButtonSx = {
     display: "flex",
     justifyContent: "flex-start",
-    borderRadius: "4px",
+    borderRadius: "8px",
     width: "100%",
     padding: "8px 16px",
     height: "36px",
@@ -85,7 +85,7 @@ function Sidebar(props) {
                   width: "100%",
                   padding: "8px 16px",
                   height: "44px",
-                  mb:"8px",
+                  mb: "8px",
                   background:
                     pathname === section.items[0].link &&
                     "rgba(6, 4, 21, 0.04)",
@@ -116,8 +116,12 @@ function Sidebar(props) {
                   section.items.some((item) => pathname === item.link)
                 }
                 sx={{
+                  borderRadius:"8px",
+                  overflow:"hidden",
+                  background: "none",
                   "&::before": {
                     content: "none",
+
                   },
                   boxShadow: "none",
                   margin: "8px 0px",
@@ -142,6 +146,9 @@ function Sidebar(props) {
                     )
                       ? "rgba(0 ,174, 96, 0.12)"
                       : "transparent",
+                    "&:hover": {
+                      backgroundColor: "#EFF0F1", // Background color on hover
+                    },
                     "&.Mui-expanded": {
                       minHeight: "44px",
                       height: "44px",
