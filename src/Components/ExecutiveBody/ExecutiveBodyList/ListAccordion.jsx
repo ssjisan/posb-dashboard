@@ -10,7 +10,7 @@ import {
   import axios from "axios";
   import { useEffect, useState } from "react";
   import toast from "react-hot-toast";
-  import { DownArrow, Remove, Update } from "../../../assets/IconSet";
+  import { DownArrow, Remove, Edit } from "../../../assets/IconSet";
   import RemoveModal from "../RemoveExecutiveBody/RemoveModal";
 import { Link, useNavigate } from "react-router-dom";
   
@@ -86,11 +86,11 @@ import { Link, useNavigate } from "react-router-dom";
                 <Stack direction="row">
                 <Link to={`/committee-list/${data.slug}`}>
                 <IconButton>
-                    <Update color="#918EAF" size={24} />
+                    <Edit color="#918EAF" size={20} />
                   </IconButton>
                 </Link>
                   <IconButton onClick={() => handleOpen(data._id, data.title)}>
-                    <Remove color="#FF4842" size={24} />
+                    <Remove color="#FF4842" size={20} />
                   </IconButton>
                 </Stack>
               </Stack>

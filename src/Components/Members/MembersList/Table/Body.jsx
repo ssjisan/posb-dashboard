@@ -1,4 +1,4 @@
-import { More, Remove, Update } from "../../../../assets/IconSet";
+import { Edit, More, Remove, Update } from "../../../../assets/IconSet";
 import {
   Box,
   IconButton,
@@ -125,14 +125,13 @@ export default function Body({
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
-          sx: { width: 160, p: "8px", borderRadius: "8px" },
-        }}
+          sx: { width: 160, p: "8px", borderRadius: "8px",boxShadow: "-20px 20px 40px -4px rgba(145, 158, 171, 0.24)", },        }}
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
           onClick={(e) => redirectEdit(e, selectedMember)}
         >
-          <Update color="#919EAB" size={24} />
+          <Edit color="#919EAB" size={20} />
           Edit
         </MenuItem>
         <MenuItem
@@ -148,7 +147,7 @@ export default function Body({
             handleCloseMenu(); // Close popover
           }}
         >
-          <Remove color="red" size={24} /> Delete
+          <Remove color="red" size={20} /> Delete
         </MenuItem>
       </Popover>
       <RemoveMemberModal

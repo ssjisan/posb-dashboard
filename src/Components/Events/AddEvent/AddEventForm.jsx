@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, TextField } from "@mui/material";
 import {
   DesktopDatePicker,
   LocalizationProvider,
@@ -9,7 +9,6 @@ import { renderTimeViewClock } from "@mui/x-date-pickers/timeViewRenderers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Calender, Clock } from "../../../assets/IconSet";
 import EventCover from "./EventCover";
-import AntSwitch from "../../Common/AntSwitch";
 import { useState } from "react";
 import dayjs from "dayjs";
 import axios from "axios";
@@ -32,7 +31,7 @@ export default function AddEventForm() {
   const [eventDate, setEventDate] = useState(dayjs());
   const [eventTime, setEventTime] = useState(dayjs());
   const [eventDescription, setEventDescription] = useState("");
-  const [published, setPublished] = useState(true);
+  const [registrationLink, setRegistrationLink] = useState("");
   const [imageCover, setImageCover] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -50,7 +49,7 @@ export default function AddEventForm() {
       eventData.append("location", eventLocation);
       eventData.append("eventDate", eventDate.toISOString());
       eventData.append("eventTime", eventTime.format("HH:mm"));
-      eventData.append("published", published);
+      eventData.append("registrationLink", registrationLink);
 
       const { data } = await axios.post("/event", eventData);
       if (data?.error) {
@@ -112,19 +111,19 @@ export default function AddEventForm() {
               </LocalizationProvider>
             </Stack>
             <TextField
+              label="Registration Link"
+              variant="outlined"
+              fullWidth
+              value={registrationLink}
+              onChange={(e) => setRegistrationLink(e.target.value)}
+            />
+            <TextField
               label="Event Description"
               multiline
               rows={4}
               value={eventDescription}
               onChange={(e) => setEventDescription(e.target.value)}
             />
-            <Stack direction="row" spacing={1} alignItems="center">
-              <AntSwitch
-                checked={published}
-                onChange={(e) => setPublished(e.target.checked)}
-              />
-              <Typography>Publish Event</Typography>
-            </Stack>
             <Button
               variant="contained"
               color="primary"

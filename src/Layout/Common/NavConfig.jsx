@@ -228,7 +228,7 @@ const navConfig = ({ pathname }) => [
         link: "/user_list",
       },
     ],
-  },
+  }
 ];
 
 export default navConfig;

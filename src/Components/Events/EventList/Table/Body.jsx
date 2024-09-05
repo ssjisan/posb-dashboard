@@ -1,5 +1,6 @@
 import {
   Box,
+  Chip,
   IconButton,
   MenuItem,
   Popover,
@@ -11,7 +12,7 @@ import {
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
-import { Update, Remove, More } from "../../../../assets/IconSet";
+import { Remove, More, Edit } from "../../../../assets/IconSet";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -71,7 +72,11 @@ export default function Body({
         ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((data) => (
           <TableRow key={data._id}>
-            <TableCell component="th" scope="row" padding="none">
+            <TableCell
+              component="th"
+              scope="row"
+              sx={{ padding: "16px", width: "360px" }}
+            >
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Box
                   sx={{
@@ -98,7 +103,7 @@ export default function Body({
                       whiteSpace: "nowrap",
                       textOverflow: "ellipsis",
                       overflow: "hidden",
-                      width: "320px",
+                      width: "274px",
                     }}
                   >
                     {data.name}
@@ -106,13 +111,48 @@ export default function Body({
                 </Typography>
               </Stack>
             </TableCell>
-            <TableCell align="left">{data.location}</TableCell>
-            <TableCell align="left">
+            <TableCell align="left" sx={{ padding: "16px", width: "420px" }}>
+              <Tooltip title={data.description}>
+                <Box
+                  sx={{
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    width: "320px",
+                  }}
+                >
+                  {data.description}
+                </Box>
+              </Tooltip>
+            </TableCell>
+            <TableCell align="left" sx={{ padding: "16px", width: "360px" }}>
+              {data.location}
+            </TableCell>
+            <TableCell align="left" sx={{ padding: "16px", width: "200px" }}>
               {format(new Date(data.eventDate), "dd/MM/yyyy")}
             </TableCell>
-            <TableCell align="left">{data.eventTime}</TableCell>
-            <TableCell align="left">
-              {data.published === true ? "Published" : "Hold"}
+            <TableCell align="left" sx={{ padding: "16px", width: "160px" }}>
+              {data.eventTime}
+            </TableCell>
+            <TableCell align="left" sx={{ padding: "16px", width: "140px" }}>
+              {data.registrationLink && data.registrationLink.trim() !== "" ? (
+                <a
+                  href={data.registrationLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Click Here
+                </a>
+              ) : (
+                "None"
+              )}
+            </TableCell>
+            <TableCell align="left" sx={{ padding: "16px" }}>
+              {data.linkExpire === true ? (
+                <Chip label="Expired" color="error" variant="outlined" />
+              ) : (
+                <Chip label="Running" color="primary" variant="outlined" />
+              )}
             </TableCell>
             <TableCell align="center">
               <Tooltip title="Actions">
@@ -133,21 +173,21 @@ export default function Body({
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
-          sx: { width: 160, p: "8px", borderRadius: "8px" },
+          sx: { width: 160, p: "8px", borderRadius: "8px",boxShadow: "-20px 20px 40px -4px rgba(145, 158, 171, 0.24)", },
         }}
       >
         <MenuItem
-          sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+          sx={{ display: "flex", gap: "16px", mb: "8px", borderRadius: "8px" }}
           onClick={(e) => redirectEdit(e, selectedEvents)}
         >
-          <Update color="#919EAB" size={24} />
+          <Edit color="#919EAB" size={20} />
           Edit
         </MenuItem>
         <MenuItem
           sx={{
             color: "error.main",
             display: "flex",
-            gap: "8px",
+            gap: "16px",
             borderRadius: "8px",
           }}
           onClick={() => {
@@ -156,7 +196,7 @@ export default function Body({
             handleCloseMenu(); // Close popover
           }}
         >
-          <Remove color="red" size={24} /> Delete
+          <Remove color="red" size={20} /> Delete
         </MenuItem>
       </Popover>
       <EventModal

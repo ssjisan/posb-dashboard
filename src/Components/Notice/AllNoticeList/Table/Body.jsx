@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import PropTypes from "prop-types";
-import { Update, Remove, More } from "../../../../assets/IconSet";
+import { Update, Remove, More, Edit } from "../../../../assets/IconSet";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NoticeModal from "../../RemoveNotice/NoticeModal";
@@ -112,14 +112,14 @@ export default function Body({
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
-          sx: { width: 160, p: "8px", borderRadius: "8px" },
+          sx: { width: 160, p: "8px", borderRadius: "8px",boxShadow: "-20px 20px 40px -4px rgba(145, 158, 171, 0.24)", },
         }}
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
           onClick={(e) => redirectEdit(e, selectedNotice)}
         >
-          <Update color="#919EAB" size={24} />
+          <Edit color="#919EAB" size={20} />
           Edit
         </MenuItem>
         <MenuItem
@@ -135,7 +135,7 @@ export default function Body({
             handleCloseMenu(); // Close popover
           }}
         >
-          <Remove color="red" size={24} /> Delete
+          <Remove color="red" size={20} /> Delete
         </MenuItem>
       </Popover>
       <NoticeModal
