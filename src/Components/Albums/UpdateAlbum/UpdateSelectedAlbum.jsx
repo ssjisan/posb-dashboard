@@ -23,9 +23,7 @@ export default function UpdateSelectedAlbum() {
 
   const loadAlbum = async () => {
     try {
-      const { data } = await axios.get(
-        `/album/${params.slug}`
-      );
+      const { data } = await axios.get(`/album/${params.slug}`);
       setAlbumName(data.name);
       const formattedImages = data.images.map((image) => ({
         src: image.url,

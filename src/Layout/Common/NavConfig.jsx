@@ -9,6 +9,7 @@ import {
   Users,
   UpdateContact,
   Form,
+  Blog,
 } from "../../assets/IconSet";
 
 const navConfig = ({ pathname }) => [
@@ -36,6 +37,30 @@ const navConfig = ({ pathname }) => [
       {
         title: "Update Contact",
         link: "/update_contact",
+      },
+    ],
+  },
+  {
+    title: "Blog",
+    icon: (
+      <Blog
+        color={
+          pathname.startsWith("/create-blog") ||
+          pathname.startsWith("/all_blog")
+            ? "#00AE60"
+            : "#637381"
+        }
+        size={20}
+      />
+    ),
+    items: [
+      {
+        title: "Create Blog",
+        link: "/create_blog",
+      },
+      {
+        title: "All Blog",
+        link: "/all_blog",
       },
     ],
   },

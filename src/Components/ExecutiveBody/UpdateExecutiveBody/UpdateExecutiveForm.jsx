@@ -6,19 +6,22 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Minus, Plus } from "../../../assets/IconSet";
+import { useEffect, useState, useRef } from "react";
+import { Minus, Plus, Drag } from "../../../assets/IconSet"; // Ensure Drag icon is imported
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function UpdateExecutiveForm() {
   const [committeeName, setCommitteeName] = useState("");
-  const [members, setMembers] = useState([]); // To load available members from the API
+  const [members, setMembers] = useState([]);
   const [executiveBody, setExecutiveBody] = useState([{ member: null, position: "" }]);
   const navigate = useNavigate();
-  const params = useParams(); // Extract the committee ID
-  const [id,setId]=useState(null)
+  const params = useParams();
+  const [id, setId] = useState(null);
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
+
   useEffect(() => {
     loadExecutiveBody();
     loadMembers();
@@ -28,13 +31,11 @@ export default function UpdateExecutiveForm() {
     try {
       const { data } = await axios.get(`/executive-committee/${params.slug}`);
       setCommitteeName(data.title);
-      setId(data._id)
-      setExecutiveBody(
-        data.members.map((member) => ({
-          member: member.member,
-          position: member.position,
-        }))
-      );
+      setId(data._id);
+      setExecutiveBody(data.members.map((member) => ({
+        member: member.member,
+        position: member.position,
+      })));
     } catch (error) {
       console.error('Failed to fetch committee data:', error);
     }
@@ -42,7 +43,7 @@ export default function UpdateExecutiveForm() {
 
   const loadMembers = async () => {
     try {
-      const { data } = await axios.get("/members"); // Adjust endpoint as per your API
+      const { data } = await axios.get("/members");
       setMembers(data);
     } catch (error) {
       console.error('Failed to load members:', error);
@@ -65,56 +66,69 @@ export default function UpdateExecutiveForm() {
     setExecutiveBody([...executiveBody, { member: null, position: "" }]);
   };
 
+  const handleRemoveMember = (index) => {
+    const newExecutiveBody = [...executiveBody];
+    newExecutiveBody.splice(index, 1);
+    setExecutiveBody(newExecutiveBody);
+  };
+
+  // Drag and Drop Functions
+  const handleDragStart = (index) => {
+    dragItem.current = index;
+  };
+
+  const handleDragEnter = (index) => {
+    dragOverItem.current = index;
+  };
+
+  const handleDrop = () => {
+    const dragIndex = dragItem.current;
+    const hoverIndex = dragOverItem.current;
+
+    const copiedExecutiveBody = [...executiveBody];
+    const draggedItem = copiedExecutiveBody[dragIndex];
+
+    copiedExecutiveBody.splice(dragIndex, 1);
+    copiedExecutiveBody.splice(hoverIndex, 0, draggedItem);
+
+    setExecutiveBody(copiedExecutiveBody);
+
+    dragItem.current = null;
+    dragOverItem.current = null;
+  };
+
   const handleUpdateCommittee = async () => {
+    // Validate and prepare the updated committee data
+    const updatedMembers = executiveBody.map((item) => ({
+      memberId: item.member ? item.member._id : null,
+      position: item.position,
+    })).filter(member => member.memberId);
+
+    const updatedCommittee = {
+      title: committeeName,
+      members: updatedMembers,
+    };
+
     try {
-      // Validate and extract member IDs from executiveBody
-      const updatedMembers = executiveBody.map((item, index) => {
-        console.log(`Processing Member at index ${index}:`, item.member); // Log member object
-  
-        const memberId = item.member ? item.member._id : null; // Correctly extract memberId
-        if (!memberId) {
-          console.warn(`Skipping member at index ${index} due to invalid memberId: ${item.member}`);
-        }
-  
-        return {
-          memberId,
-          position: item.position
-        };
-      }).filter(member => member.memberId); // Only include members with valid IDs
-  
-      // Check the final list of members
-      console.log("Final Members List:", updatedMembers);
-  
-      const updatedCommittee = {
-        title: committeeName,
-        members: updatedMembers,
-      };
-  
-      // Log the complete updated committee payload
-      console.log("Updated Committee Payload:", updatedCommittee);
-  
-      // Make the API call to update the committee
-      const { data } = await axios.put(`/executive-committee/${id}`, updatedCommittee);
-  
-      // Success notification and navigation
+      await axios.put(`/executive-committee/${id}`, updatedCommittee);
       toast.success("Committee updated successfully");
       navigate("/committee-list");
     } catch (error) {
-      // Log any errors
       console.error("Error updating committee:", error);
       toast.error("Failed to update committee");
     }
   };
-  
-  
-  
-  
 
   const getAvailableMembers = (index) => {
-    const selectedMemberIds = executiveBody
-      .map((item, i) => i !== index ? item.member?.id : null)
+    // Get names of selected members except for the current index
+    const selectedMemberNames = executiveBody
+      .map((item, i) => (i !== index ? item.member?.name : null))
       .filter(Boolean);
-    return members.filter((member) => !selectedMemberIds.includes(member.id) || member.id === executiveBody[index].member?.id);
+
+    // Filter the members to only include those not already selected
+    return members.filter((member) => 
+      !selectedMemberNames.includes(member.name) || member.name === executiveBody[index].member?.name
+    );
   };
 
   return (
@@ -136,7 +150,15 @@ export default function UpdateExecutiveForm() {
             direction="row"
             alignItems="center"
             sx={{ width: "100%", maxWidth: "820px", mb: "24px" }}
+            draggable={executiveBody.length > 1}
+            onDragStart={() => handleDragStart(index)}
+            onDragEnter={() => handleDragEnter(index)}
+            onDragEnd={handleDrop}
+            onDrop={handleDrop}
           >
+            <IconButton onMouseDown={() => handleDragStart(index)} onDragEnter={() => handleDragEnter(index)}>
+              <Drag color="#000" size="24px" />
+            </IconButton>
             <Autocomplete
               disablePortal
               fullWidth
