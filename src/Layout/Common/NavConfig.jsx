@@ -137,12 +137,12 @@ const navConfig = ({ pathname }) => [
     ],
   },
   {
-    title: "Journals",
+    title: "Links",
     icon: (
       <JournalList
       color={
-        pathname.startsWith("/add_journal") ||
-        pathname.startsWith("/journals")
+        pathname.startsWith("/add_link") ||
+        pathname.startsWith("/links")
             ? "#00AE60"
             : "#637381"
         }
@@ -151,12 +151,12 @@ const navConfig = ({ pathname }) => [
     ),
     items: [
       {
-        title: "Add Journal",
-        link: "/add_journal",
+        title: "Add a Link",
+        link: "/add_link",
       },
       {
-        title: "Journal List",
-        link: "/journals",
+        title: "All Links",
+        link: "/links",
       },
     ],
   },

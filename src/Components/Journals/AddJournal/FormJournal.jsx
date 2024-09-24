@@ -26,7 +26,7 @@ export default function FormJournal() {
       }
   
       try {
-        const response = await axios.post("/add_journal", {
+        const response = await axios.post("/add_link", {
           title,
           publishedDate: publishedDate.toISOString(), // Convert date to string format
           link,
@@ -40,11 +40,11 @@ export default function FormJournal() {
           setTitle("");
           setPublishedDate(null);
           setLink("");
-          navigate("/journals")
+          navigate("/links")
         }
       } catch (error) {
-        toast.error("Failed to create journal");
-        console.error("Error creating journal:", error);
+        toast.error("Failed to create link");
+        console.error("Error creating link:", error);
       }
     };
   

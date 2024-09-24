@@ -39,13 +39,13 @@ export default function Body({
 
   const redirectEdit = (event, data) => {
     event.preventDefault();
-    navigate(`/journal/${data._id}`);
+    navigate(`/link/${data._id}`);
   };
 
   const removeJournal = async (id) => {
     try {
       // Make a DELETE request to the backend to delete the journal by its ID
-      const { data } = await axios.delete(`/journal/${id}`);
+      const { data } = await axios.delete(`/link/${id}`);
       
       // Notify the user of the successful deletion
       toast.success(data.message || "Journal deleted successfully");
@@ -53,8 +53,8 @@ export default function Body({
       // Reload the page to reflect the changes
       window.location.reload();
     } catch (err) {
-      console.error("Error deleting journal:", err);
-      toast.error("Unable to delete journal at the moment.");
+      console.error("Error deleting link:", err);
+      toast.error("Unable to delete link at the moment.");
     }
   };
   

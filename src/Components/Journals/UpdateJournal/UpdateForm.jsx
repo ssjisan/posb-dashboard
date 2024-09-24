@@ -9,7 +9,7 @@ import { Calender } from "../../../assets/IconSet";
 import dayjs from "dayjs";
 
 export default function UpdateJournal() {
-  const { journalId } = useParams(); // Get the journal ID from the URL
+  const { linkId } = useParams(); // Get the journal ID from the URL
   const navigate = useNavigate();
 
   const [journalData, setJournalData] = useState({
@@ -20,7 +20,7 @@ export default function UpdateJournal() {
   useEffect(() => {
     const fetchJournal = async () => {
       try {
-        const response = await axios.get(`/journal/${journalId}`);
+        const response = await axios.get(`/link/${linkId}`);
         setJournalData({
           title: response.data.title,
           publishedDate: dayjs(response.data.publishedDate),
@@ -32,7 +32,7 @@ export default function UpdateJournal() {
     };
 
     fetchJournal();
-  }, [journalId]);
+  }, [linkId]);
 
   const [isUpdating, setIsUpdating] = useState(false); // State to manage button disabled status
 
@@ -45,11 +45,11 @@ const handleUpdate = async (event) => {
       ...journalData,
       publishedDate: journalData.publishedDate.toISOString(), // Convert date to ISO string
     };
-    await axios.put(`/journal/${journalId}`, updatedData);
+    await axios.put(`/link/${linkId}`, updatedData);
     toast.success("Journal updated successfully");
-    navigate("/journals"); // Redirect to the journals route
+    navigate("/links"); // Redirect to the journals route
   } catch (err) {
-    toast.error("Failed to update journal");
+    toast.error("Failed to update link");
   } finally {
     setIsUpdating(false); // Re-enable the button
   }

@@ -21,10 +21,10 @@ export default function NoticeListTable() {
 
   const loadJournals = async () => {
     try {
-      const { data } = await axios.get("/journals");
+      const { data } = await axios.get("/links");
       setJournals(data);
     } catch (err) {
-      toast.error("Journals can't load");
+      toast.error("Here Links can't load");
     }
   };
   const [page, setPage] = useState(0);

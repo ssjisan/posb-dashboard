@@ -62,13 +62,12 @@ export default function MainRouters() {
           />
           <Route path="all-messages" element={<AllMessages />} />
           <Route path="update_contact" element={<UpdateContact />} />
-          <Route path="add_journal" element={<AddJournal />} />
-          <Route path="journals" element={<JournalList />} />
-          <Route path="journal/:journalId" element={<UpdateJournal />} />
+          <Route path="add_link" element={<AddJournal />} />
+          <Route path="links" element={<JournalList />} />
+          <Route path="link/:linkId" element={<UpdateJournal />} />
           <Route path="upload_form" element={<AddForm />} />
           <Route path="forms" element={<FormList />} />
           <Route path="form/:formId" element={<UpdateForm />} />
-          <Route path="create_blog" element={<CreateBlog />} />
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>
