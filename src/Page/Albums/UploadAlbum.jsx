@@ -1,7 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
-import Sidebar from "../Layout/Sidebar";
-import AddNewAlbum from "../Components/Albums/AddNewAlbum/AddNewAlbum";
-export default function AddAlbum() {
+import Sidebar from "../../Layout/Sidebar";
+import UploadNewAlbum from "../../Components/Albums/UploadAlbum/UploadNewAlbum";
+export default function UploadAlbum() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +16,9 @@ export default function AddAlbum() {
         }}
       >
         <Toolbar />
-        <AddNewAlbum/>
+        <Box>
+          <UploadNewAlbum />
+        </Box>
       </Box>
     </Box>
   );

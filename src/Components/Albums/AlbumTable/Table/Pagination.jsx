@@ -2,7 +2,7 @@ import { TablePagination } from "@mui/material";
 import PropTypes from "prop-types";
 
 export default function Pagination({
-  events,
+  albums,
   rowsPerPage,
   page,
   handleChangePage,
@@ -10,9 +10,8 @@ export default function Pagination({
 }) {
   return (
     <TablePagination
-      rowsPerPageOptions={[5]}
-      component="div"
-      count={events.length}
+      rowsPerPageOptions={[20]}
+      count={albums.length}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handleChangePage}
@@ -25,7 +24,7 @@ export default function Pagination({
   );
 }
 Pagination.propTypes = {
-  events: PropTypes.any,
+  albums: PropTypes.any,
   rowsPerPage: PropTypes.any,
   page: PropTypes.func,
   handleChangePage: PropTypes.any,

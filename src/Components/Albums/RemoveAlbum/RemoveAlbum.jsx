@@ -3,14 +3,14 @@ import Modal from "@mui/material/Modal";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Warning } from "../../../assets/IconSet";
 
-export default function RemoveAlbumModal({
-  isOpen,
-  handleClose,
-  eventName,
-  handleRemove,
+export default function RemoveAlbum({
+  confirmationModalOpen,
+  handleConfirmRemove,
+  albumName,
+  handleCloseRemoveAlbum,
 }) {
   return (
-    <Modal open={isOpen} onClose={handleClose}>
+    <Modal open={confirmationModalOpen} onClose={handleCloseRemoveAlbum}>
       <div
         style={{
           position: "absolute",
@@ -44,7 +44,7 @@ export default function RemoveAlbumModal({
           <Warning size="48px" color="#dc3545" />
           <Typography variant="body1" sx={{ textAlign: "center" }}>
             Are you sure you want to delete{" "}
-            <strong>&quot;{eventName}&quot;</strong>?
+            <strong>&quot;{albumName}&quot;</strong>?
           </Typography>
         </Stack>
         <Stack
@@ -53,10 +53,14 @@ export default function RemoveAlbumModal({
           justifyContent={"flex-end"}
           sx={{ p: "16px", borderTop: "1px solid rgba(145, 158, 171, 0.24)" }}
         >
-          <Button onClick={handleClose} color="inherit">
+          <Button onClick={handleCloseRemoveAlbum} color="inherit">
             Cancel
           </Button>
-          <Button onClick={handleRemove} variant="contained" color="error">
+          <Button
+            onClick={handleConfirmRemove}
+            variant="contained"
+            color="error"
+          >
             Yes, Delete
           </Button>
         </Stack>
@@ -65,9 +69,10 @@ export default function RemoveAlbumModal({
   );
 }
 
-RemoveAlbumModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+RemoveAlbum.propTypes = {
+  confirmationModalOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  eventName: PropTypes.string.isRequired,
-  handleRemove: PropTypes.func.isRequired,
+  albumName: PropTypes.string.isRequired,
+  handleConfirmRemove: PropTypes.func.isRequired,
+  handleCloseRemoveAlbum: PropTypes.func.isRequired,
 };

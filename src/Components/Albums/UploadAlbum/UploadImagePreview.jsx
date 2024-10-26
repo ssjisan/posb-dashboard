@@ -6,22 +6,23 @@ import {
   Typography,
 } from "@mui/material";
 import { Cross, Drag } from "../../../assets/IconSet";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import PropTypes from "prop-types";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-export default function UpdateImagePreview({ images, setImages, isLoading }) {
+export default function UploadImagePreview({
+  images,
+  setImages,
+  handleRemoveImage,
+  isSubmitting,
+}) {
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
-    const reorderedImages = Array.from(images);
-    const [movedImage] = reorderedImages.splice(result.source.index, 1);
-    reorderedImages.splice(result.destination.index, 0, movedImage);
+    const items = Array.from(images);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-    setImages(reorderedImages); // Update images state with reordered images
-  };
-
-  const handleRemoveImage = (index) => {
-    const updatedImages = images.filter((_, imgIndex) => imgIndex !== index);
-    setImages(updatedImages); // Update images array without the removed image
+    setImages(items);
   };
 
   return (
@@ -29,41 +30,36 @@ export default function UpdateImagePreview({ images, setImages, isLoading }) {
       <Droppable droppableId="images">
         {(provided) => (
           <Stack
-            direction="column"
-            gap="16px"
-            sx={{ mt: "40px" }}
             {...provided.droppableProps}
             ref={provided.innerRef}
+            sx={{ p: "40px 0px" }}
           >
             {images.map((data, index) => (
-              <Draggable
-                key={data._id || data.name} // Use unique key
-                draggableId={data._id || data.name}
-                index={index}
-              >
+              <Draggable key={data.id} draggableId={data.id} index={index}>
                 {(provided) => (
                   <Stack
                     direction="row"
                     justifyContent="space-between"
                     alignItems="center"
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
                     sx={{
                       border: "1px solid #DBDCDC",
                       borderRadius: "12px",
                       p: "8px 4px",
+                      mt: 2,
                       backgroundColor: "white",
                     }}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
                   >
                     <Stack direction="row" alignItems="center" gap="12px">
-                      <IconButton {...provided.dragHandleProps}>
+                      <IconButton {...provided.dragHandleProps} disabled={isSubmitting}>
                         <Drag size={24} color="#000" />
                       </IconButton>
                       <Stack>
                         <img
                           src={data.src}
-                          alt={data.name}
+                          alt="Uploaded"
                           style={{
                             width: "80px",
                             height: "48px",
@@ -72,32 +68,17 @@ export default function UpdateImagePreview({ images, setImages, isLoading }) {
                           }}
                         />
                       </Stack>
-                      <Box
-                        sx={{
-                          width: "272px",
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          {data.name}
-                        </Typography>
-                      </Box>
+                      <Typography variant="body1">{data.name}</Typography>
                     </Stack>
                     <Stack direction="row" alignItems="center" gap="12px">
                       <Typography variant="body1">{data.size} MB</Typography>
-                      {isLoading ? (
+                      {isSubmitting ? (
                         <Box sx={{ height: "24px", width: "36px" }}>
                           <CircularProgress size={20} />
                         </Box>
                       ) : (
-                        <IconButton onClick={() => handleRemoveImage(index)}>
-                          <Cross size={24} color="#F15555" />
+                        <IconButton onClick={() => handleRemoveImage(data.id)}>
+                          <Cross size={24} color="red" />
                         </IconButton>
                       )}
                     </Stack>
@@ -112,3 +93,10 @@ export default function UpdateImagePreview({ images, setImages, isLoading }) {
     </DragDropContext>
   );
 }
+
+UploadImagePreview.propTypes = {
+  images: PropTypes.array.isRequired,
+  setImages: PropTypes.func.isRequired,
+  handleRemoveImage: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.func.isRequired,
+};

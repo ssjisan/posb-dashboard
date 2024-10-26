@@ -1,7 +1,8 @@
 import { Box, Toolbar } from "@mui/material";
-import Sidebar from "../Layout/Sidebar";
-import UpdateSelectedAlbum from "../Components/Albums/UpdateAlbum/UpdateSelectedAlbum";
-export default function UpdateAlbum() {
+import Sidebar from "../../Layout/Sidebar";
+import AllAlbums from "../../Components/Albums/AlbumTable/AllAlbums";
+
+export default function AlbumList() {
   const drawerWidth = 280;
 
   return (
@@ -16,7 +17,9 @@ export default function UpdateAlbum() {
         }}
       >
         <Toolbar />
-        <UpdateSelectedAlbum />
+        <Box>
+          <AllAlbums />
+        </Box>
       </Box>
     </Box>
   );
