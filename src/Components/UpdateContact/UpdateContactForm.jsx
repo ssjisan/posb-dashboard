@@ -4,7 +4,7 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import toast from "react-hot-toast";
 
 export default function UpdateContactForm() {
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(""); // Initialize as empty strings
   const [whatsapp, setWhatsapp] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -13,8 +13,8 @@ export default function UpdateContactForm() {
     const fetchContactInfo = async () => {
       try {
         const response = await axios.get("/contact-info");
-        const { phoneNumber, whatsapp } = response.data;
-        setPhone(phoneNumber || "");
+        const { phoneNumber, whatsapp } = response.data || {}; // Handle undefined response data
+        setPhone(phoneNumber || ""); // Default to empty string if not found
         setWhatsapp(whatsapp || "");
       } catch (err) {
         toast.error("Failed to fetch contact information");
@@ -27,18 +27,27 @@ export default function UpdateContactForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!phone.trim() || !whatsapp.trim()) {
-      toast.error("Phone number and WhatsApp number are required");
-      window.location.reload();
+
+    // Validate that phone and WhatsApp are valid numbers
+    if (!phone || !whatsapp || isNaN(phone) || isNaN(whatsapp)) {
+      toast.error("Phone number and WhatsApp number must be valid numbers.");
       return;
     }
+
     try {
-      await axios.post("/contact-info", { phoneNumber: phone, whatsapp });
+      const response = await axios.post("/contact-info", {
+        phoneNumber: Number(phone),
+        whatsapp: Number(whatsapp),
+      });
+
+      // Update the state with new values from response
+      const { phoneNumber, whatsapp: updatedWhatsapp } = response.data;
+      setPhone(phoneNumber);
+      setWhatsapp(updatedWhatsapp);
+
       toast.success("Contact information updated successfully");
-      // Reload the page
-      window.location.reload();
     } catch (err) {
-      toast.error("Failed to update contact information");
+      toast.error(err.response?.data?.error || "Failed to update contact information");
     }
   };
 
@@ -62,29 +71,27 @@ export default function UpdateContactForm() {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           sx={{
-            "& input[type='number']::-webkit-inner-spin-button, & input[type='number']::-webkit-outer-spin-button":
-              {
-                WebkitAppearance: "none",
-                margin: 0,
-              },
+            "& input[type='number']::-webkit-inner-spin-button, & input[type='number']::-webkit-outer-spin-button": {
+              WebkitAppearance: "none",
+              margin: 0,
+            },
             "& input[type='number']": {
               MozAppearance: "textfield",
             },
           }}
         />
         <TextField
-          label="Whatsapp Number"
+          label="WhatsApp Number"
           variant="outlined"
           fullWidth
           type="number"
           value={whatsapp}
           onChange={(e) => setWhatsapp(e.target.value)}
           sx={{
-            "& input[type='number']::-webkit-inner-spin-button, & input[type='number']::-webkit-outer-spin-button":
-              {
-                WebkitAppearance: "none",
-                margin: 0,
-              },
+            "& input[type='number']::-webkit-inner-spin-button, & input[type='number']::-webkit-outer-spin-button": {
+              WebkitAppearance: "none",
+              margin: 0,
+            },
             "& input[type='number']": {
               MozAppearance: "textfield",
             },
