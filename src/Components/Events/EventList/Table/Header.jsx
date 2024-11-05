@@ -11,9 +11,8 @@ export default function Header() {
         <TableCell align="left">Description</TableCell>
         <TableCell align="left">Location</TableCell>
         <TableCell align="left">Date</TableCell>
-        <TableCell align="left">Time</TableCell>
         <TableCell align="left">Reg. Link</TableCell>
-        <TableCell align="left">Status</TableCell>
+        <TableCell align="left">Event Status</TableCell>
         <TableCell align="center"></TableCell>
       </TableRow>
     </TableHead>

@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { MatrixIconBlog } from "../../../assets/Icons/MatrixIconBlog";
 
 export default function NoticeNewsCount() {
   const [notices, setNotices] = useState([]);
@@ -31,7 +32,7 @@ export default function NoticeNewsCount() {
         alignItems: "center",
       }}
     >
-      <img src="/dashboard/noticeNews.png" alt="event_illustration" />
+      <MatrixIconBlog/>
       <Stack>
         <Typography variant="h4">{notices.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">

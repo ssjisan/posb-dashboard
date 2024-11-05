@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -83,7 +84,7 @@ export default function InputFields() {
         gap: "20px",
         width: "100%",
         mt: "40px",
-        mb:forBelow776? "80px" : "160px",
+        mb: forBelow776 ? "80px" : "160px",
       }}
     >
       <TextField
@@ -135,7 +136,9 @@ export default function InputFields() {
       <Button
         variant="contained"
         onClick={handleLogin}
-        endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+        endIcon={
+          loading ? <CircularProgress color="inherit" size={24} /> : null
+        }
         disabled={loading}
       >
         Login

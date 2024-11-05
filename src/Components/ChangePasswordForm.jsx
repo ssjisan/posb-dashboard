@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   IconButton,
   InputAdornment,
@@ -16,8 +17,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function ChangePasswordForm() {
-  const { auth,setAuth, handleMouseDownPassword } =
-    useContext(DataContext);
+  const { auth, setAuth, handleMouseDownPassword } = useContext(DataContext);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,20 +27,21 @@ export default function ChangePasswordForm() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate= useNavigate()
-  
+  const navigate = useNavigate();
+
   const handleChangePassword = async () => {
     setLoading(true);
-    try {  
-      const { data } = await axios.post(
-        "/change-password",
-        { oldPassword, newPassword, confirmPassword },
-      );
+    try {
+      const { data } = await axios.post("/change-password", {
+        oldPassword,
+        newPassword,
+        confirmPassword,
+      });
       if (data?.error) {
         toast.error(data.error);
       } else {
         toast.success(data.message || "Password changed successfully!");
-        navigate("/")
+        navigate("/");
       }
     } catch (error) {
       if (error.response?.status === 401) {
@@ -154,7 +155,9 @@ export default function ChangePasswordForm() {
           variant="contained"
           onClick={handleChangePassword}
           disabled={loading}
-          endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+          endIcon={
+            loading ? <CircularProgress color="inherit" size={24} /> : null
+          }
         >
           Change
         </Button>

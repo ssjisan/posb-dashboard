@@ -52,6 +52,7 @@ export default function EventListTable() {
           <Header />
           <Body
             events={events}
+            setEvents={setEvents}
             page={page}
             rowsPerPage={rowsPerPage}
             isModalOpen={isModalOpen}

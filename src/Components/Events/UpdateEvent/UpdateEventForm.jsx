@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Stack, TextField } from "@mui/material";
 import {
   DesktopDatePicker,
   LocalizationProvider,
@@ -26,12 +26,12 @@ export default function UpdateEventForm() {
   const [eventTime, setEventTime] = useState(dayjs());
   const [eventDescription, setEventDescription] = useState("");
   const [registrationLink, setRegistrationLink] = useState("");
+  const [linkExpireDate, setLinkExpireDate] = useState(dayjs()); // Initialize with today's date
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState("");
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params);
 
   useEffect(() => {
     loadEvent();
@@ -48,10 +48,28 @@ export default function UpdateEventForm() {
       setRegistrationLink(data.registrationLink);
       setId(data._id);
       setImage(data.image);
+
+      // Set linkExpireDate based on existing value or default logic
+      if (data.registrationLink) {
+        if (data.linkExpireDate) {
+          setLinkExpireDate(dayjs(data.linkExpireDate)); // Set to the existing linkExpireDate from the database
+        } else {
+          // If no linkExpireDate exists, set it to the event date if it's in the future
+          if (dayjs(data.eventDate).isAfter(dayjs())) {
+            setLinkExpireDate(dayjs(data.eventDate)); // Set to event date if it is in the future
+          } else {
+            setLinkExpireDate(dayjs().add(1, "day")); // Default to tomorrow if the event is today or in the past
+          }
+        }
+      } else {
+        // If there's no registration link, reset linkExpireDate
+        setLinkExpireDate(dayjs());
+      }
     } catch (err) {
       toast.error("Failed to load event data");
     }
   };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,30 +82,38 @@ export default function UpdateEventForm() {
       eventData.append("location", eventLocation);
       eventData.append("eventDate", eventDate.toISOString());
       eventData.append("eventTime", eventTime.format("HH:mm"));
+      if (linkExpireDate) {
+        eventData.append("linkExpireDate", linkExpireDate.toISOString());
+      }
 
       const { data } = await axios.put(`/event/${id}`, eventData);
       if (data?.error) {
         setLoading(false);
-
         toast.error(data.error);
       } else {
         setLoading(false);
-
-        toast.success("Event Updated");
         navigate("/events_list");
-        window.location.reload();
+        toast.success("Event Updated");
       }
     } catch (err) {
       setLoading(false);
-
       toast.error("Event update failed");
     }
   };
 
   return (
     <Box>
-      <Grid container spacing={3} direction={{ xs: "column-reverse", sm: "column-reverse", md: "row", lg: "row" }}>
-      <Grid item xs={12} sm={12} md={7} lg={5}>
+      <Grid
+        container
+        spacing={3}
+        direction={{
+          xs: "column-reverse",
+          sm: "column-reverse",
+          md: "row",
+          lg: "row",
+        }}
+      >
+        <Grid item xs={12} sm={12} md={7} lg={5}>
           <Stack spacing={3}>
             <TextField
               label="Event Name"
@@ -106,19 +132,25 @@ export default function UpdateEventForm() {
             <Stack direction="row" spacing={3}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
-                  slots={{
-                    openPickerIcon: CalenderIcon,
-                  }}
+                  slots={{ openPickerIcon: CalenderIcon }}
                   value={eventDate}
-                  onChange={(date) => setEventDate(dayjs(date))}
+                  minDate={dayjs()}
+                  onChange={(date) => {
+                    const newDate = dayjs(date);
+                    setEventDate(newDate);
+                    // Update linkExpireDate logic
+                    if (newDate.isAfter(dayjs())) {
+                      setLinkExpireDate(newDate);
+                    } else {
+                      setLinkExpireDate(dayjs().add(1, "day")); // Default to tomorrow if selected date is today or in the past
+                    }
+                  }}
                   slotProps={{ textField: { fullWidth: true } }}
                 />
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <TimePicker
-                  slots={{
-                    openPickerIcon: ClockIcon,
-                  }}
+                  slots={{ openPickerIcon: ClockIcon }}
                   value={eventTime}
                   onChange={(time) => setEventTime(dayjs(time))}
                   viewRenderers={{
@@ -134,12 +166,29 @@ export default function UpdateEventForm() {
               variant="outlined"
               fullWidth
               value={registrationLink}
-              onChange={(e) => setRegistrationLink(e.target.value)}
+              onChange={(e) => {
+                setRegistrationLink(e.target.value);
+                if (!e.target.value) {
+                  setLinkExpireDate(dayjs()); // Reset to today if registration link is removed
+                }
+              }}
             />
+            {registrationLink && (
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DesktopDatePicker
+                  slots={{ openPickerIcon: CalenderIcon }}
+                  value={linkExpireDate}
+                  minDate={dayjs().add(1, "day")}
+                  maxDate={eventDate}
+                  onChange={(date) => setLinkExpireDate(dayjs(date))}
+                  slotProps={{ textField: { fullWidth: true } }}
+                />
+              </LocalizationProvider>
+            )}
             <TextField
               label="Event Description"
               multiline
-              minRows={2} // Minimum number of rows
+              minRows={2}
               maxRows={10}
               value={eventDescription}
               onChange={(e) => setEventDescription(e.target.value)}
@@ -148,7 +197,7 @@ export default function UpdateEventForm() {
               variant="contained"
               color="primary"
               onClick={handleUpdate}
-              endIcon={loading ? <img src="/spinner.gif" width="24px" /> : null}
+              endIcon={loading ? <CircularProgress color="inherit" size={24} /> : null}
             >
               {loading ? "Updating" : "Update"}
             </Button>

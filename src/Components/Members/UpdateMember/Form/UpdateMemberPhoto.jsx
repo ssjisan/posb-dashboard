@@ -18,7 +18,7 @@ export default function UpdateMemberPhoto({ image, handleImageUpload,handleRemov
         }}
       >
         <img
-          src={image || "/dp.png"}
+          src={image || "https://res.cloudinary.com/dzdjgu1vc/image/upload/v1730688763/posb/members/b2e5qajsnjqjtlel2xx3.png"}
           alt="Profile"
           width="100%"
           height="100%"

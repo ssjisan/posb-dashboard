@@ -19,7 +19,11 @@ export default function AddMemberPhoto({ image, setImage, handleImageUpload }) {
         }}
       >
         <img
-          src={image ? URL.createObjectURL(image) : "/dp.png"}
+          src={
+            image
+              ? URL.createObjectURL(image)
+              : "https://res.cloudinary.com/dzdjgu1vc/image/upload/v1730688763/posb/members/b2e5qajsnjqjtlel2xx3.png"
+          }
           alt="Profile"
           width="100%"
           height="100%"

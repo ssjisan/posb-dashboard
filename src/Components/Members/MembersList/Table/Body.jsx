@@ -27,7 +27,7 @@ export default function Body({
   handleCloseMenu,
   selectedMember,
 }) {
-  const defaultAvatar = "/dp.png"; // Replace with the path to your default avatar
+  const defaultAvatar = "https://res.cloudinary.com/dzdjgu1vc/image/upload/v1730688763/posb/members/b2e5qajsnjqjtlel2xx3.png"; // Replace with the path to your default avatar
   const [openRemoveModal,setOpenRemoveModal] = useState(false)
   const [memberForDelete, setMemberForDelete] = useState(null);
   const navigate = useNavigate()

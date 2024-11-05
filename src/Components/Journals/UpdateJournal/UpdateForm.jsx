@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Box, Button, Grid, Stack, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Stack, TextField } from "@mui/material";
 import toast from "react-hot-toast";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -101,7 +101,8 @@ const handleUpdate = async (event) => {
               variant="contained"
               type="submit"
               disabled={isUpdating}
-              endIcon={isUpdating ? <img src="/spinner.gif" width="24px" /> : null}
+              endIcon={isUpdating ? <CircularProgress color="inherit" size={24} /> : null}
+
             >
               {isUpdating ? "Updating" : "Update"}
             </Button>

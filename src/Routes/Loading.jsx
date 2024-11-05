@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import loaderAnimation from "../assets/loader.json"; // Import your animation JSON
+import Lottie from "lottie-react";
 
 export default function Loading() {
   const [counter, setCounter] = useState(3);
@@ -29,8 +31,11 @@ export default function Loading() {
         textAlign: "center",
       }}
     >
-      <img src="/loader02.gif" alt="Loader" width="200px"/>
-      {/* Wait {counter} */}
+      <Lottie
+        animationData={loaderAnimation} // Use imported animation JSON directly
+        loop
+        style={{ width: 300, height: 300 }} // Adjust dimensions as needed
+      />
     </div>
   );
 }

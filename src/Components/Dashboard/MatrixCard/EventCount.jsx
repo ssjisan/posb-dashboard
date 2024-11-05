@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { MatrixIconAppointment } from "../../../assets/Icons/MatrixIconAppointment";
 
 export default function EventCount() {
   const [events, setEvents] = useState([]);
@@ -29,7 +30,7 @@ export default function EventCount() {
         alignItems: "center",
       }}
     >
-      <img src="/dashboard/events.png" alt="event_illustration" />
+      <MatrixIconAppointment />
       <Stack>
         <Typography variant="h4">{events.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">

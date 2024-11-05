@@ -2,9 +2,10 @@ import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { MatrixIconAlbum } from "../../../assets/Icons/MatrixIconAlbum";
 
 export default function AlbumCount() {
-  const [albums,setAlbums]=useState([])
+  const [albums, setAlbums] = useState([]);
   useEffect(() => {
     loadEvents();
   }, []);
@@ -29,7 +30,7 @@ export default function AlbumCount() {
         alignItems: "center",
       }}
     >
-      <img src="/dashboard/album.png" alt="event_illustration" />
+      <MatrixIconAlbum />
       <Stack>
         <Typography variant="h4">{albums.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">

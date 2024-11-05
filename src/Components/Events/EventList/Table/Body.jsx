@@ -22,6 +22,7 @@ import toast from "react-hot-toast";
 
 export default function Body({
   events,
+  setEvents,
   page,
   rowsPerPage,
   selectedEvents,
@@ -48,10 +49,10 @@ export default function Body({
 
   const removeProduct = async (id) => {
     try {
-      const loadingToastId = toast.loading("Deleting album...");
-      const { data } = await axios.delete(`/event/${id}`);
-      toast.success("Event deleted successfully", { id: loadingToastId });
-      window.location.reload(); // Reloading the page to reflect the changes
+      await axios.delete(`/event/${id}`);
+      // Update the events state by filtering out the deleted event
+      setEvents((prevEvents) => prevEvents.filter((event) => event._id !== id));
+      toast.success("Event deleted successfully");
     } catch (err) {
       toast.error("Unable to delete event at the moment.");
     }
@@ -75,7 +76,7 @@ export default function Body({
             <TableCell
               component="th"
               scope="row"
-              sx={{ padding: "16px", width: "360px" }}
+              sx={{ padding: "16px", width: "320px" }}
             >
               <Stack direction="row" alignItems="center" spacing={2}>
                 <Box
@@ -111,7 +112,7 @@ export default function Body({
                 </Typography>
               </Stack>
             </TableCell>
-            <TableCell align="left" sx={{ padding: "16px", width: "420px" }}>
+            <TableCell align="left" sx={{ padding: "16px", width: "320px" }}>
               <Tooltip title={data.description}>
                 <Box
                   sx={{
@@ -125,14 +126,11 @@ export default function Body({
                 </Box>
               </Tooltip>
             </TableCell>
-            <TableCell align="left" sx={{ padding: "16px", width: "360px" }}>
+            <TableCell align="left" sx={{ padding: "16px", width: "280px" }}>
               {data.location}
             </TableCell>
             <TableCell align="left" sx={{ padding: "16px", width: "200px" }}>
-              {format(new Date(data.eventDate), "dd/MM/yyyy")}
-            </TableCell>
-            <TableCell align="left" sx={{ padding: "16px", width: "160px" }}>
-              {data.eventTime}
+              {format(new Date(data.eventDate), "dd/MM/yyyy")}, {data.eventTime}
             </TableCell>
             <TableCell align="left" sx={{ padding: "16px", width: "140px" }}>
               {data.registrationLink && data.registrationLink.trim() !== "" ? (
@@ -148,10 +146,10 @@ export default function Body({
               )}
             </TableCell>
             <TableCell align="left" sx={{ padding: "16px" }}>
-              {data.linkExpire === true ? (
-                <Chip label="Expired" color="error" variant="outlined" />
-              ) : (
+              {data.eventExpired === false ? (
                 <Chip label="Running" color="primary" variant="outlined" />
+              ) : (
+                <Chip label="Expired" color="error" variant="outlined" />
               )}
             </TableCell>
             <TableCell align="center">
@@ -173,7 +171,12 @@ export default function Body({
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         PaperProps={{
-          sx: { width: 160, p: "8px", borderRadius: "8px",boxShadow: "-20px 20px 40px -4px rgba(145, 158, 171, 0.24)", },
+          sx: {
+            width: 160,
+            p: "8px",
+            borderRadius: "8px",
+            boxShadow: "-20px 20px 40px -4px rgba(145, 158, 171, 0.24)",
+          },
         }}
       >
         <MenuItem
@@ -211,6 +214,7 @@ export default function Body({
 
 Body.propTypes = {
   events: PropTypes.any,
+  setEvents: PropTypes.any,
   page: PropTypes.any,
   rowsPerPage: PropTypes.any,
   handleRemove: PropTypes.any,
