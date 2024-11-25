@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
@@ -25,7 +25,6 @@ function Sidebar(props) {
   //eslint-disable-next-line
   const { window } = props;
   const { pathname } = useLocation();
-  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -35,11 +34,6 @@ function Sidebar(props) {
 
   const handleAccordionChange = (section) => (event, isExpanded) => {
     setExpanded(isExpanded ? section.title : false);
-  };
-
-  const handleItemClick = (link) => {
-    navigate(link);
-    setMobileOpen(false);
   };
 
   const ListItemSx = {
@@ -75,8 +69,10 @@ function Sidebar(props) {
         <List>
           {navConfig({ pathname }).map((section) =>
             section.items.length === 1 ? (
-              // Render ListItemButton directly if only one item
+              // Render ListItemButton directly if only one item, using Link
               <ListItemButton
+                component={Link}
+                to={section.items[0].link}
                 key={section.items[0].title}
                 sx={{
                   display: "flex",
@@ -92,7 +88,6 @@ function Sidebar(props) {
                   color:
                     pathname === section.items[0].link ? "#00AE60" : "#637381",
                 }}
-                onClick={() => handleItemClick(section.items[0].link)}
               >
                 <ListItemIcon sx={{ minWidth: "36px" }}>
                   {section.icon}
@@ -116,12 +111,11 @@ function Sidebar(props) {
                   section.items.some((item) => pathname === item.link)
                 }
                 sx={{
-                  borderRadius:"8px",
-                  overflow:"hidden",
+                  borderRadius: "8px",
+                  overflow: "hidden",
                   background: "none",
                   "&::before": {
                     content: "none",
-
                   },
                   boxShadow: "none",
                   margin: "8px 0px",
@@ -171,6 +165,15 @@ function Sidebar(props) {
                         ? "#00AE60"
                         : "#637381"
                     }
+                    sx={{
+                      fontSize: "14px",
+                      textTransform: "none", // Prevents uppercase transformation
+                      fontWeight: section.items.some(
+                        (item) => pathname === item.link
+                      )
+                        ? 600
+                        : 500,
+                    }}
                   >
                     {section.title}
                   </Typography>
@@ -186,9 +189,10 @@ function Sidebar(props) {
                           pathname === item.link && "rgba(6, 4, 21, 0.04)",
                       }}
                       key={item.title}
-                      onClick={() => handleItemClick(item.link)}
                     >
                       <ListItemButton
+                        component={Link}
+                        to={item.link}
                         sx={{
                           ...ListItemButtonSx,
                           color: pathname === item.link ? "#060415" : "#637381",

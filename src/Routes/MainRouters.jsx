@@ -20,15 +20,18 @@ import ExecutiveBody from "../Page/ExecutiveBody";
 import UpdateExecutiveBody from "../Page/UpdateExecutiveBody";
 import AllMessages from "../Page/AllMessages";
 import UpdateContact from "../Page/UpdateContact";
-import AddJournal from "../Page/AddJournal";
-import JournalList from "../Page/JournalList";
-import UpdateJournal from "../Page/UpdateJournal";
-import AddForm from "../Page/AddForm";
-import FormList from "../Page/FormList";
-import UpdateForm from "../Page/UpdateForm";
 import UploadAlbum from "../Page/Albums/UploadAlbum";
 import AlbumList from "../Page/Albums/AlbumList";
 import UpdateAlbum from "../Page/Albums/UpdateAlbum";
+import UploadVideo from "../Page/Videos/UploadVideo";
+import VideoList from "../Page/Videos/VideoList";
+import UpdateVideo from "../Page/Videos/UpdateVideo";
+import UpdateLink from "../Page/Links/UpdateLink";
+import LinksList from "../Page/Links/LinksList";
+import AddLink from "../Page/Links/AddLink";
+import AddForm from "../Page/Forms/AddForm";
+import FormList from "../Page/Forms/FormList";
+import UpdateForm from "../Page/Forms/UpdateForm";
 
 export default function MainRouters() {
   return (
@@ -44,7 +47,7 @@ export default function MainRouters() {
           <Route path="add_events" element={<AddEvent />} />
           <Route path="event/:slug" element={<UpdateEvent />} />
           <Route path="events_list" element={<EventList />} />
-          
+
           <Route path="add_album" element={<UploadAlbum />} />
           <Route path="album_list" element={<AlbumList />} />
           <Route path="album/:albumId" element={<UpdateAlbum />} />
@@ -63,12 +66,24 @@ export default function MainRouters() {
           />
           <Route path="all-messages" element={<AllMessages />} />
           <Route path="update_contact" element={<UpdateContact />} />
-          <Route path="add_link" element={<AddJournal />} />
-          <Route path="links" element={<JournalList />} />
-          <Route path="link/:linkId" element={<UpdateJournal />} />
+
+          {/* Forms Routes Start */}
           <Route path="upload_form" element={<AddForm />} />
           <Route path="forms" element={<FormList />} />
           <Route path="form/:formId" element={<UpdateForm />} />
+          {/* Forms Routes End */}
+
+          {/* Links Routes Start */}
+          <Route path="add_link" element={<AddLink />} />
+          <Route path="links" element={<LinksList />} />
+          <Route path="link/:linkId" element={<UpdateLink />} />
+          {/* Links Routes End */}
+
+          {/* Videos Routes Start */}
+          <Route path="/upload_video" element={<UploadVideo />} />
+          <Route path="/video_list" element={<VideoList />} />
+          <Route path="/video/:slug" element={<UpdateVideo />} />
+          {/* Videos Routes End */}
         </Route>
         {/* <Route path="*" element={<ErrorPage />} replace /> */}
       </Routes>

@@ -96,18 +96,19 @@ export default function TableView() {
     }
   };
 
-  // Edit Album COntroller Start
+  // Edit Album Controller Start
 
   const redirectEdit = (e, selectedAlbum) => {
     navigate(`/album/${selectedAlbum._id}`);
   };
 
+  // Dragging and reorder
   const onDragEnd = async (result) => {
     if (!result.destination) return;
 
     const reorderedAlbums = Array.from(albums);
-    const [movedVideo] = reorderedAlbums.splice(result.source.index, 1);
-    reorderedAlbums.splice(result.destination.index, 0, movedVideo);
+    const [movedAlbum] = reorderedAlbums.splice(result.source.index, 1);
+    reorderedAlbums.splice(result.destination.index, 0, movedAlbum);
     setAlbums(reorderedAlbums);
 
     // Send reordered video IDs to the backend

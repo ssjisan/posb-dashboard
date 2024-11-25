@@ -2,9 +2,10 @@ import { Box, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { MatrixIconMember } from "../../../assets/Icons/MatrixIconMember";
 
 export default function MemberCount() {
-   const [members,setMembers]=useState([])
+  const [members, setMembers] = useState([]);
   useEffect(() => {
     loadMembers();
   }, []);
@@ -30,7 +31,8 @@ export default function MemberCount() {
         alignItems: "center",
       }}
     >
-      <img src="/dashboard/member.png" alt="event_illustration" />
+      <MatrixIconMember />
+
       <Stack>
         <Typography variant="h4">{members.length}</Typography>
         <Typography variant="subtitle2" color="text.secondary">

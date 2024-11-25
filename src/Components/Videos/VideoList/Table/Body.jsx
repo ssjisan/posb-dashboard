@@ -11,39 +11,43 @@ import {
   Typography,
 } from "@mui/material";
 import { Drag, Edit, EyeBold, More, Remove } from "../../../../assets/IconSet";
-import { format } from "date-fns";
 import PropTypes from "prop-types";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 export default function Body({
-  albums,
+  videos,
   page,
-  rowsPerPage,
   open,
+  rowsPerPage,
   handleOpenMenu,
   handleCloseMenu,
-  handlePreviewAlbum,
+  formatDate,
   showConfirmationModal,
+  selectedVideo,
+  handleVideoPlay,
   redirectEdit,
-  selectedAlbum,
-  onDragEnd,
+  onDragEnd, // Callback to handle the drag end event
 }) {
+  const getVideoId = (url) => {
+    const videoIdRegex =
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|(?:\S+\?v=))|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(videoIdRegex);
+    return match ? match[1] : null; // Return video ID or null
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="albums">
+      <Droppable droppableId="videosDroppable">
         {(provided) => (
           <TableBody ref={provided.innerRef} {...provided.droppableProps}>
-            {albums
+            {videos
               ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((data, index) => {
-                // For Image size
-                const imageArray = Array.isArray(data.images)
-                  ? data.images
-                  : [];
-                const totalSize = imageArray.reduce(
-                  (acc, image) => acc + image.size,
-                  0
-                );
+                const videoId = getVideoId(data.url); // Get video ID from URL
+                const thumb =
+                  data.videoType === "google-drive"
+                    ? data.thumbnail[0]?.url
+                    : `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
                 return (
                   <Draggable
                     key={data._id}
@@ -55,6 +59,7 @@ export default function Body({
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        sx={{ overflow: "hidden" }}
                       >
                         <TableCell align="center">
                           <Tooltip title="Drag">
@@ -69,37 +74,32 @@ export default function Body({
                             alignItems="center"
                             spacing={2}
                           >
-                            {data?.images?.length > 0 && ( // Check if images array is not empty
-                              <Box
-                                sx={{
-                                  width: "80px",
-                                  height: "48px",
-                                  borderRadius: "8px",
-                                  overflow: "hidden",
-                                }}
-                              >
-                                <img
-                                  src={data.images[0].src}
-                                  alt="First Image"
-                                  width="100%"
-                                  height="100%"
-                                  style={{ objectFit: "cover" }}
-                                />
-                              </Box>
-                            )}
+                            <Box
+                              sx={{
+                                width: "80px",
+                                height: "48px",
+                                borderRadius: "8px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              <img
+                                src={thumb} // Reference the thumbnail URL here
+                                alt="First Image"
+                                width="100%"
+                                height="100%"
+                                style={{ objectFit: "cover" }}
+                              />
+                            </Box>
                             <Typography variant="subtitle2" align="left">
-                              {data.name}
+                              {data.title}
                             </Typography>
                           </Stack>
                         </TableCell>
                         <TableCell align="left" sx={{ p: "16px" }}>
-                          {format(new Date(data.createdAt), "dd MMM, yy")}
+                          {data.videoType}
                         </TableCell>
-                        <TableCell align="center" sx={{ p: "16px" }}>
-                          {data?.images?.length}
-                        </TableCell>
-                        <TableCell align="center" sx={{ p: "16px" }}>
-                          {totalSize.toFixed(2)} MB
+                        <TableCell align="left" sx={{ p: "16px" }}>
+                          {formatDate(data.createdAt)}
                         </TableCell>
                         <TableCell align="center" sx={{ p: "16px" }}>
                           <Tooltip title="Actions">
@@ -137,14 +137,14 @@ export default function Body({
       >
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
-          onClick={handlePreviewAlbum}
+          onClick={handleVideoPlay}
         >
           <EyeBold color="#919EAB" size={20} />
           Preview
         </MenuItem>
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
-          onClick={(e) => redirectEdit(e, selectedAlbum)}
+          onClick={(e) => redirectEdit(e, selectedVideo)}
         >
           <Edit color="#919EAB" size={20} />
           Edit
@@ -166,18 +166,16 @@ export default function Body({
 }
 
 Body.propTypes = {
-  albums: PropTypes.any,
+  videos: PropTypes.any,
   page: PropTypes.any,
   rowsPerPage: PropTypes.any,
   open: PropTypes.any,
   handleOpenMenu: PropTypes.any,
   handleCloseMenu: PropTypes.any,
-  selectedAlbum: PropTypes.any,
-  albumOpen: PropTypes.any,
-  setAlbumOpen: PropTypes.any,
-  handlePreviewAlbum: PropTypes.any,
-  handleAlbumClose: PropTypes.any,
-  showConfirmationModal: PropTypes.any,
-  redirectEdit: PropTypes.any,
-  onDragEnd: PropTypes.func.isRequired, // Updated to require a function
+  formatDate: PropTypes.any,
+  onDragEnd: PropTypes.func.isRequired,
+  showConfirmationModal: PropTypes.func.isRequired,
+  selectedVideo: PropTypes.func.isRequired,
+  handleVideoPlay: PropTypes.func.isRequired,
+  redirectEdit: PropTypes.func.isRequired,
 };

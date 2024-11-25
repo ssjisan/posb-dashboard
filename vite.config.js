@@ -12,6 +12,6 @@ export default defineConfig(({ mode }) => {
       ),
     },
     plugins: [react()],
-    build: { chunkSizeWarningLimit: 1600 },
+    build: { chunkSizeWarningLimit: 2000 },
   };
 });
