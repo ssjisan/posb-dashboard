@@ -81,7 +81,7 @@ export default function UploadNewAlbum() {
           toast.error(errorMessage);
         }
       } else {
-        toast.error("Error creating album. Please try again.");
+        toast.error(error.message);
       }
     } finally {
       setIsSubmitting(false); // Re-enable button after submission

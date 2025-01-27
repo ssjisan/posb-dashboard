@@ -5,11 +5,8 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Page/Dashboard";
 import UserList from "../Page/UserList";
 import AddUser from "../Page/AddUser";
-import EventList from "../Page/EventList";
-import AddEvent from "../Page/AddEvent";
 import NoticeList from "../Page/NoticeList";
 import AddNotice from "../Page/AddNotice";
-import UpdateEvent from "../Page/UpdateEvent";
 import UpdateNotice from "../Page/UpdateNotice";
 import ChangePassword from "../Page/ChangePassword";
 import AddMember from "../Page/AddMember";
@@ -32,6 +29,9 @@ import AddLink from "../Page/Links/AddLink";
 import AddForm from "../Page/Forms/AddForm";
 import FormList from "../Page/Forms/FormList";
 import UpdateForm from "../Page/Forms/UpdateForm";
+import AddEvent from "../Page/Events/AddEvent";
+import EventList from "../Page/Events/EventList";
+import UpdateEvent from "../Page/Events/UpdateEvent";
 
 export default function MainRouters() {
   return (
@@ -44,9 +44,14 @@ export default function MainRouters() {
           <Route path="add_user" element={<AddUser />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="user_list" element={<UserList />} />
+
+          {/************************************** Events Routes Start Here **************************************/}
+
           <Route path="add_events" element={<AddEvent />} />
           <Route path="event/:slug" element={<UpdateEvent />} />
           <Route path="events_list" element={<EventList />} />
+
+          {/************************************** Events Routes End **************************************/}
 
           <Route path="add_album" element={<UploadAlbum />} />
           <Route path="album_list" element={<AlbumList />} />

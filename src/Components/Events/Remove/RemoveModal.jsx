@@ -3,10 +3,10 @@ import Modal from "@mui/material/Modal";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Warning } from "../../../assets/IconSet";
 
-export default function EventModal({
+export default function RemoveModal({
   isOpen,
   handleClose,
-  eventName,
+  resourceTitle,
   handleRemove,
 }) {
   return (
@@ -44,7 +44,7 @@ export default function EventModal({
           <Warning size="48px" color="#dc3545" />
           <Typography variant="body1" sx={{ textAlign: "center" }}>
             Are you sure you want to delete{" "}
-            <strong>&quot;{eventName}&quot;</strong>?
+            <strong>&quot;{resourceTitle}&quot;</strong>?
           </Typography>
         </Stack>
         <Stack
@@ -65,9 +65,9 @@ export default function EventModal({
   );
 }
 
-EventModal.propTypes = {
+RemoveModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  eventName: PropTypes.string.isRequired,
   handleRemove: PropTypes.func.isRequired,
+  resourceTitle: PropTypes.string.isRequired,
 };

@@ -1,6 +1,6 @@
 import { Box, Toolbar } from "@mui/material";
-import Sidebar from "../Layout/Sidebar";
-import UpdateAnEvent from "../Components/Events/UpdateEvent/UpdateAnEvent";
+import Sidebar from "../../Layout/Sidebar";
+import UpdateAnEvent from "../../Components/Events/UpdateEvent/UpdateAnEvent";
 export default function UpdateEvent() {
   const drawerWidth = 280;
 

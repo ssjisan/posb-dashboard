@@ -35,7 +35,7 @@ export default function Dashboard() {
               <NoticeUpdate />
             </Grid>
             <Grid item xs={12} sm={12} md={8}>
-              <UpcomingEvents />
+              {/* <UpcomingEvents /> */}
             </Grid>
           </Grid>
         </Box>
