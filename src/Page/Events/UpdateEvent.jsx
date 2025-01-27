@@ -1,8 +1,9 @@
-import { Box, Toolbar } from "@mui/material";
+import { Box, Stack, Toolbar, Typography, useMediaQuery } from "@mui/material";
 import Sidebar from "../../Layout/Sidebar";
-import UpdateAnEvent from "../../Components/Events/UpdateEvent/UpdateAnEvent";
+import UpdateForm from "../../Components/Events/Update/UpdateForm";
 export default function UpdateEvent() {
   const drawerWidth = 280;
+  const forBelow1200 = useMediaQuery("(max-width:1200px)");
 
   return (
     <Box>
@@ -16,7 +17,14 @@ export default function UpdateEvent() {
         }}
       >
         <Toolbar />
-        <UpdateAnEvent />
+        <Box sx={{ p: forBelow1200 ? "24px 0px" : "24px" }}>
+            <Stack gap={2} sx={{ pb: "64px", width: "100%" }}>
+              <Typography variant="h4" sx={{ mb: "40px" }}>
+                Update Event
+              </Typography>
+              <UpdateForm />
+            </Stack>
+          </Box>
       </Box>
     </Box>
   );

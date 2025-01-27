@@ -48,7 +48,7 @@ export default function MainRouters() {
           {/************************************** Events Routes Start Here **************************************/}
 
           <Route path="add_events" element={<AddEvent />} />
-          <Route path="event/:slug" element={<UpdateEvent />} />
+          <Route path="events/:id" element={<UpdateEvent />} />
           <Route path="events_list" element={<EventList />} />
 
           {/************************************** Events Routes End **************************************/}
@@ -72,25 +72,25 @@ export default function MainRouters() {
           <Route path="all-messages" element={<AllMessages />} />
           <Route path="update_contact" element={<UpdateContact />} />
 
-          {/* Forms Routes Start */}
+          {/**************************************  Forms Routes Start **************************************/}
           <Route path="upload_form" element={<AddForm />} />
           <Route path="forms" element={<FormList />} />
           <Route path="form/:formId" element={<UpdateForm />} />
-          {/* Forms Routes End */}
+          {/**************************************  Forms Routes End **************************************/}
 
-          {/* Links Routes Start */}
+          {/************************************** Links Routes Start **************************************/}
           <Route path="add_link" element={<AddLink />} />
           <Route path="links" element={<LinksList />} />
           <Route path="link/:linkId" element={<UpdateLink />} />
-          {/* Links Routes End */}
+          {/************************************** Links Routes End **************************************/}
 
-          {/* Videos Routes Start */}
+          {/************************************** Videos Routes Start **************************************/}
           <Route path="/upload_video" element={<UploadVideo />} />
           <Route path="/video_list" element={<VideoList />} />
           <Route path="/video/:slug" element={<UpdateVideo />} />
-          {/* Videos Routes End */}
+          {/************************************** Videos Routes End **************************************/}
         </Route>
-        {/* <Route path="*" element={<ErrorPage />} replace /> */}
+        {/************************************** <Route path="*" element={<ErrorPage />} replace /> **************************************/}
       </Routes>
     </>
   );

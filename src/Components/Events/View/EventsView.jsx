@@ -131,7 +131,7 @@ export default function EventsView() {
 
   const redirectEdit = (event, data) => {
     event.preventDefault();
-    navigate(`/courses_events/${data._id}`);
+    navigate(`/events/${data._id}`);
   };
 
   // Remove Event or course Start here //
