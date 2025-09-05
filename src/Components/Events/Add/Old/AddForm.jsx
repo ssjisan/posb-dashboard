@@ -205,11 +205,11 @@ export default function AddForm() {
               setLocation={setLocation}
               eventDate={eventDate}
               eventDateError={eventDateError}
-              handleEventDateChange={handleEventDateChange}
               eventTime={eventTime}
               setEventTime={setEventTime}
               registrationLink={registrationLink}
               setRegistrationLink={setRegistrationLink}
+              handleEventDateChange={handleEventDateChange}
               handleRegistrationStartDateChange={
                 handleRegistrationStartDateChange
               }

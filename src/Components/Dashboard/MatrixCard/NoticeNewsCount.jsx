@@ -1,24 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { MatrixIconNotice } from "../../../assets/Icons/MatrixIconNotice";
 
-export default function NoticeNewsCount() {
-  const [notices, setNotices] = useState([]);
-
-  useEffect(() => {
-    loadNotices();
-  }, []);
-
-  const loadNotices = async () => {
-    try {
-      const { data } = await axios.get("/notices");
-      setNotices(data);
-    } catch (err) {
-      toast.error("Problem Loading");
-    }
-  };
+export default function NoticeNewsCount({value}) {
+  
   return (
     <Box
       sx={{
@@ -34,7 +18,7 @@ export default function NoticeNewsCount() {
     >
       <MatrixIconNotice />
       <Stack>
-        <Typography variant="h4">{notices.length}</Typography>
+        <Typography variant="h4">{value}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Total Notice
         </Typography>

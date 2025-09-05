@@ -10,7 +10,14 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Drag, Edit, EyeBold, More, Remove } from "../../../../assets/IconSet";
+import {
+  Download,
+  Drag,
+  Edit,
+  EyeBold,
+  More,
+  Remove,
+} from "../../../../assets/IconSet";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -27,6 +34,7 @@ export default function Body({
   redirectEdit,
   selectedAlbum,
   onDragEnd,
+  handleDownloadAlbum,
 }) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -59,7 +67,7 @@ export default function Body({
                         <TableCell align="center">
                           <Tooltip title="Drag">
                             <IconButton sx={{ width: "40px", height: "40px" }}>
-                              <Drag color="#919EAB" size={24} />
+                              <Drag color="#212121" size={24} />
                             </IconButton>
                           </Tooltip>
                         </TableCell>
@@ -139,14 +147,21 @@ export default function Body({
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
           onClick={handlePreviewAlbum}
         >
-          <EyeBold color="#919EAB" size={20} />
+          <EyeBold color="#212121" size={18} />
           Preview
+        </MenuItem>
+        <MenuItem
+          sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
+          onClick={handleDownloadAlbum}
+        >
+          <Download color="#212121" size={18} />
+          Download
         </MenuItem>
         <MenuItem
           sx={{ display: "flex", gap: "8px", mb: "8px", borderRadius: "8px" }}
           onClick={(e) => redirectEdit(e, selectedAlbum)}
         >
-          <Edit color="#919EAB" size={20} />
+          <Edit color="#212121" size={18} />
           Edit
         </MenuItem>
         <MenuItem
@@ -158,7 +173,7 @@ export default function Body({
           }}
           onClick={showConfirmationModal}
         >
-          <Remove color="red" size={20} /> Delete
+          <Remove color="red" size={18} /> Delete
         </MenuItem>
       </Popover>
     </DragDropContext>
@@ -179,5 +194,6 @@ Body.propTypes = {
   handleAlbumClose: PropTypes.any,
   showConfirmationModal: PropTypes.any,
   redirectEdit: PropTypes.any,
-  onDragEnd: PropTypes.func.isRequired, // Updated to require a function
+  onDragEnd: PropTypes.func.isRequired,
+  handleDownloadAlbum: PropTypes.func.isRequired,
 };

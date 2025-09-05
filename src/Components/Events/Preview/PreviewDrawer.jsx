@@ -31,14 +31,19 @@ export default function PreviewDrawer({ toggleDrawer, open, eventData }) {
             height: "240px",
             overflow: "hidden",
             borderRadius: "16px",
+            border: "1px solid #f2f2f2",
           }}
         >
           <img
-            src={eventData?.coverPhoto[0].url}
+            src={
+              eventData?.coverPhoto?.url
+                ? eventData.coverPhoto.url
+                : "/placeholder.png"
+            }
             alt=""
             width="100%"
             height="100%"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
           />
         </Box>
         <Typography variant="h6">{eventData?.name}</Typography>

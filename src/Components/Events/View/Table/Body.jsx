@@ -95,7 +95,11 @@ export default function Body({
                             }}
                           >
                             <img
-                              src={data.coverPhoto[0].url}
+                              src={
+                                data?.coverPhoto?.url
+                                  ? data.coverPhoto.url
+                                  : "/placeholder.png"
+                              }
                               alt={data.name}
                               width="100%"
                               height="100%"
@@ -138,39 +142,22 @@ export default function Body({
                           ? format(new Date(data.eventTime), "hh:mm a")
                           : ""}
                       </TableCell>
-                      {data.registrationLink === "" ? (
+                      {data?.registrationRequired === true ? (
                         <TableCell
                           align="left"
                           sx={{ padding: "16px", width: "140px" }}
                         >
-                          N/A
+                          Yes
                         </TableCell>
                       ) : (
                         <TableCell
                           align="left"
                           sx={{ padding: "16px", width: "140px" }}
                           component={"a"}
-                          href={data.registrationLink}
                         >
-                          Preview
+                          No
                         </TableCell>
                       )}
-                      <TableCell align="left" sx={{ p: "16px" }}>
-                        {data.registrationStartDate
-                          ? format(
-                              new Date(data.registrationStartDate),
-                              "dd MMMM, yyyy"
-                            )
-                          : "N/A"}
-                      </TableCell>
-                      <TableCell align="left" sx={{ p: "16px" }}>
-                        {data.registrationEndDate
-                          ? format(
-                              new Date(data.registrationEndDate),
-                              "dd MMMM, yyyy"
-                            )
-                          : "N/A"}
-                      </TableCell>
                       <TableCell align="center">
                         <Tooltip title="Actions">
                           <IconButton

@@ -20,13 +20,7 @@ export default function Header({ selectedTab }) {
           Time
         </TableCell>
         <TableCell align="left" sx={{ p: "16px" }}>
-          Reg. Link
-        </TableCell>
-        <TableCell align="left" sx={{ p: "16px" }}>
-          Reg. Start
-        </TableCell>
-        <TableCell align="left" sx={{ p: "16px" }}>
-          Reg. End
+          Reg. Required
         </TableCell>
         <TableCell align="center"></TableCell>
       </TableRow>

@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import navConfig from "./Common/NavConfig";
 import {
   ListItem,
   ListItemButton,
@@ -14,15 +13,15 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import Logo from "/itbd.svg";
 import Navbar from "./Navbar";
+import navConfig from "./Common/NavConfig";
 import "./Scrollbar.css";
 import { ArrowDown, Bullet } from "../assets/IconSet";
+import { Logo } from "../assets/Logo";
 
 const drawerWidth = 280;
 
 function Sidebar(props) {
-  //eslint-disable-next-line
   const { window } = props;
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -63,13 +62,20 @@ function Sidebar(props) {
           p: "16px",
         }}
       >
-        <Box sx={{ ml: "32px" }}>
-          <img src={Logo} alt="logo" width="48px" height="48px" />
+        <Box sx={{ ml: "24px" }}>
+          <Logo width={"40px"} height={"40px"} />
         </Box>
         <List>
-          {navConfig({ pathname }).map((section) =>
-            section.items.length === 1 ? (
-              // Render ListItemButton directly if only one item, using Link
+          {navConfig({ pathname }).map((section) => {
+            // ✅ Section active logic includes extraActivePaths
+            const isSectionActive =
+              section.items.some((item) => pathname === item.link) ||
+              (section.extraActivePaths &&
+                section.extraActivePaths.some((path) =>
+                  pathname.startsWith(path)
+                ));
+
+            return section.items.length === 1 ? (
               <ListItemButton
                 component={Link}
                 to={section.items[0].link}
@@ -102,14 +108,10 @@ function Sidebar(props) {
                 </Typography>
               </ListItemButton>
             ) : (
-              // Render Accordion if more than one item
               <Accordion
                 square={false}
                 key={section.title}
-                expanded={
-                  expanded === section.title ||
-                  section.items.some((item) => pathname === item.link)
-                }
+                expanded={expanded === section.title || isSectionActive}
                 sx={{
                   borderRadius: "8px",
                   overflow: "hidden",
@@ -135,13 +137,11 @@ function Sidebar(props) {
                     gap: "8px",
                     minHeight: "44px",
                     margin: "0px",
-                    backgroundColor: section.items.some(
-                      (item) => pathname === item.link
-                    )
+                    backgroundColor: isSectionActive
                       ? "rgba(0 ,174, 96, 0.12)"
                       : "transparent",
                     "&:hover": {
-                      backgroundColor: "#EFF0F1", // Background color on hover
+                      backgroundColor: "#EFF0F1",
                     },
                     "&.Mui-expanded": {
                       minHeight: "44px",
@@ -160,25 +160,16 @@ function Sidebar(props) {
                   </ListItemIcon>
                   <Typography
                     variant="overline"
-                    color={
-                      section.items.some((item) => pathname === item.link)
-                        ? "#00AE60"
-                        : "#637381"
-                    }
+                    color={isSectionActive ? "#00AE60" : "#637381"}
                     sx={{
                       fontSize: "14px",
-                      textTransform: "none", // Prevents uppercase transformation
-                      fontWeight: section.items.some(
-                        (item) => pathname === item.link
-                      )
-                        ? 600
-                        : 500,
+                      textTransform: "none",
+                      fontWeight: isSectionActive ? 600 : 500,
                     }}
                   >
                     {section.title}
                   </Typography>
                 </AccordionSummary>
-
                 <AccordionDetails sx={{ p: "8px 0px 0px 16px" }}>
                   {section.items.map((item) => (
                     <ListItem
@@ -219,8 +210,8 @@ function Sidebar(props) {
                   ))}
                 </AccordionDetails>
               </Accordion>
-            )
-          )}
+            );
+          })}
         </List>
       </Box>
     </div>

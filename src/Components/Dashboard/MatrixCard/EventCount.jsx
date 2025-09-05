@@ -1,22 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { MatrixIconEvent } from "../../../assets/Icons/MatrixIconEvent";
 
-export default function EventCount() {
-  const [events, setEvents] = useState([]);
-  useEffect(() => {
-    loadEvents();
-  }, []);
-  const loadEvents = async () => {
-    try {
-      const { data } = await axios.get("/events");
-      setEvents(data);
-    } catch (err) {
-      toast.error("Check");
-    }
-  };
+export default function EventCount({value}) {
+  
   return (
     <Box
       sx={{
@@ -32,7 +18,7 @@ export default function EventCount() {
     >
       <MatrixIconEvent />
       <Stack>
-        <Typography variant="h4">{events.length}</Typography>
+        <Typography variant="h4">{value}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Total Events
         </Typography>

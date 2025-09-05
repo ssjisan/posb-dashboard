@@ -1,23 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+
 import { MatrixIconMember } from "../../../assets/Icons/MatrixIconMember";
 
-export default function MemberCount() {
-  const [members, setMembers] = useState([]);
-  useEffect(() => {
-    loadMembers();
-  }, []);
-
-  const loadMembers = async () => {
-    try {
-      const { data } = await axios.get("/members");
-      setMembers(data);
-    } catch (err) {
-      toast.error("Something Wrong");
-    }
-  };
+export default function MemberCount({ value }) {
   return (
     <Box
       sx={{
@@ -34,7 +19,7 @@ export default function MemberCount() {
       <MatrixIconMember />
 
       <Stack>
-        <Typography variant="h4">{members.length}</Typography>
+        <Typography variant="h4">{value}</Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Total Member
         </Typography>

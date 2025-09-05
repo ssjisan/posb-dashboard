@@ -21,7 +21,7 @@ body {
 
 .custom-quill .ql-toolbar {
   border: none; /* Remove separate border for the toolbar */
-  background: #fff; /* Background for the toolbar */
+  background: transparent; /* Background for the toolbar */
 }
 
 .custom-quill .ql-container {

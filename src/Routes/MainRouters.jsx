@@ -31,7 +31,6 @@ import FormList from "../Page/Forms/FormList";
 import UpdateForm from "../Page/Forms/UpdateForm";
 import AddEvent from "../Page/Events/AddEvent";
 import EventList from "../Page/Events/EventList";
-import UpdateEvent from "../Page/Events/UpdateEvent";
 
 export default function MainRouters() {
   return (
@@ -48,7 +47,7 @@ export default function MainRouters() {
           {/************************************** Events Routes Start Here **************************************/}
 
           <Route path="add_events" element={<AddEvent />} />
-          <Route path="events/:id" element={<UpdateEvent />} />
+          <Route path="events/:eventId" element={<AddEvent />} />
           <Route path="events_list" element={<EventList />} />
 
           {/************************************** Events Routes End **************************************/}

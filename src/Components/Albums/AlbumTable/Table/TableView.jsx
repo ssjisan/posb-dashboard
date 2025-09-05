@@ -1,4 +1,11 @@
-import { Box, Table, TableContainer } from "@mui/material";
+import {
+  Box,
+  Table,
+  TableContainer,
+  CircularProgress,
+  Typography,
+  Stack
+} from "@mui/material";
 import Header from "./Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -8,7 +15,7 @@ import Pagination from "./Pagination";
 import RemoveAlbum from "../../RemoveAlbum/RemoveAlbum";
 import Gallery from "../../GalleryViewer/Gallery";
 import { useNavigate } from "react-router-dom";
-
+import { NoData } from "../../../../assets/IconSet";
 export default function TableView() {
   const [albums, setAlbums] = useState([]);
   const [open, setOpen] = useState(null);
@@ -18,17 +25,22 @@ export default function TableView() {
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const [albumToDelete, setAlbumToDelete] = useState(null);
   const [albumOpen, setAlbumOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   // Load Albums Start //
   useEffect(() => {
     loadAlbums();
   }, []);
   const loadAlbums = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get("/albums");
       setAlbums(data);
     } catch (err) {
       toast.error("Check");
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -123,6 +135,34 @@ export default function TableView() {
       toast.error("Failed to update album order.");
     }
   };
+  
+
+  // Doanlowd the album
+
+  const handleDownloadAlbum = async () => {
+    handleCloseMenu();
+    const toastId = toast.loading("Downloading album, please wait...");
+    try {
+      if (!selectedAlbum?.slug) return;
+
+      const response = await axios.get(`/${selectedAlbum.slug}/download`, {
+        responseType: "blob",
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${selectedAlbum.name}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      toast.dismiss(toastId);
+    } catch (error) {
+      console.error("Error downloading album:", error);
+      toast.error("Error downloading album:", error);
+      toast.dismiss(toastId);
+    }
+  };
 
   return (
     <Box
@@ -135,32 +175,49 @@ export default function TableView() {
       }}
     >
       <TableContainer>
-        <Table>
-          <Header />
-          <Body
-            onDragEnd={onDragEnd}
-            albums={albums}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            open={open}
-            handleOpenMenu={handleOpenMenu}
-            handleCloseMenu={handleCloseMenu}
-            selectedAlbum={selectedAlbum}
-            albumOpen={albumOpen}
-            setAlbumOpen={setAlbumOpen}
-            handlePreviewAlbum={handlePreviewAlbum}
-            handleAlbumClose={handleAlbumClose}
-            showConfirmationModal={showConfirmationModal}
-            redirectEdit={redirectEdit}
-          />
-          <Pagination
-            albums={albums}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Table>
+        {loading ? (
+          // ✅ Show loading spinner
+          <Box display="flex" justifyContent="center" alignItems="center" p={5}>
+            <CircularProgress />
+          </Box>
+        ) : albums.length === 0 ? (
+          // ✅ No data case
+          <Stack display="flex" justifyContent="center" alignItems="center" p={5}>
+            <NoData/>
+            <Typography variant="subtitle2" color="text.secondary" fontWeight="400">
+              No Album to show
+            </Typography>
+          </Stack>
+        ) : (
+          // ✅ Show table if data exists
+          <Table>
+            <Header />
+            <Body
+              onDragEnd={onDragEnd}
+              albums={albums}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              open={open}
+              handleOpenMenu={handleOpenMenu}
+              handleCloseMenu={handleCloseMenu}
+              selectedAlbum={selectedAlbum}
+              albumOpen={albumOpen}
+              setAlbumOpen={setAlbumOpen}
+              handlePreviewAlbum={handlePreviewAlbum}
+              handleAlbumClose={handleAlbumClose}
+              showConfirmationModal={showConfirmationModal}
+              redirectEdit={redirectEdit}
+              handleDownloadAlbum={handleDownloadAlbum}
+            />
+            <Pagination
+              albums={albums}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              handleChangePage={handleChangePage}
+              handleChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Table>
+        )}
       </TableContainer>
       <Gallery
         selectedImages={selectedAlbum?.images}

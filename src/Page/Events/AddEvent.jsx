@@ -2,11 +2,10 @@ import {
   Box,
   Stack,
   Toolbar,
-  Typography,
   useMediaQuery,
 } from "@mui/material";
 import Sidebar from "../../Layout/Sidebar";
-import AddForm from "../../Components/Events/Add/AddForm";
+import Form from "../../Components/Events/Add/Form";
 
 export default function AddEvent() {
   const drawerWidth = 280;
@@ -27,10 +26,7 @@ export default function AddEvent() {
         <Box>
           <Box sx={{ p: forBelow1200 ? "24px 0px" : "24px" }}>
             <Stack gap={2} sx={{ pb: "64px", width: "100%" }}>
-              <Typography variant="h4" sx={{ mb: "40px" }}>
-                Create a new Event
-              </Typography>
-              <AddForm />
+              <Form />
             </Stack>
           </Box>
         </Box>

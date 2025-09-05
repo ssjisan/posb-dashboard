@@ -1,6 +1,6 @@
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import PropTypes from "prop-types";
-import { Cross, Upload } from "../../../assets/IconSet";
+import { Cross, Upload } from "../../../../assets/IconSet";
 
 export default function EventCover({
   coverPhoto,
@@ -8,17 +8,18 @@ export default function EventCover({
   removeImage,
   error,
 }) {
-  const backgroundImage =
+    const backgroundImage =
     "url(\"data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23333' stroke-width='1' stroke-dasharray='12' stroke-dashoffset='15' stroke-linecap='round'/%3e%3c/svg%3e\")";
 
   return (
+    
     <Stack gap="16px">
       <Box
         onClick={() =>
           document.getElementById("blog-cover-upload-input").click()
         } // Click on the hidden input when the box is clicked
         sx={{
-          width: "100%",
+            width: "100%",
           height: "320px",
           backgroundImage: backgroundImage,
           borderRadius: "12px",
@@ -33,11 +34,7 @@ export default function EventCover({
         {coverPhoto ? (
           <>
             <img
-              src={
-                typeof coverPhoto === "string"
-                  ? coverPhoto // Existing image URL
-                  : URL.createObjectURL(coverPhoto) // Newly uploaded File
-              }
+              src={URL.createObjectURL(coverPhoto)}
               alt="Blog Cover"
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
