@@ -31,6 +31,7 @@ import FormList from "../Page/Forms/FormList";
 import UpdateForm from "../Page/Forms/UpdateForm";
 import AddEvent from "../Page/Events/AddEvent";
 import EventList from "../Page/Events/EventList";
+import RegistrationDetails from "../Page/Events/RegistrationDetails";
 
 export default function MainRouters() {
   return (
@@ -49,6 +50,8 @@ export default function MainRouters() {
           <Route path="add_events" element={<AddEvent />} />
           <Route path="events/:eventId" element={<AddEvent />} />
           <Route path="events_list" element={<EventList />} />
+          <Route path="registrations" element={<RegistrationDetails />} />
+          
 
           {/************************************** Events Routes End **************************************/}
 
