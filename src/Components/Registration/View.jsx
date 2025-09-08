@@ -18,12 +18,25 @@ export default function View() {
   const [selectedEvent, setSelectedEvent] = useState("");
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(null); // For open pop up menu
+  const [selectedRowId, setSelectedRowId] = useState(null); // Tracks the ID of the currently selected row to display the action menu.
 
-  // Fetch all events for the dropdown
+  // ---------------- MENU HANDLERS ----------------
+  const handleOpenMenu = (event, rowData) => {
+    setOpen(event.currentTarget);
+    setSelectedRowId(rowData);
+  };
+
+  const handleCloseMenu = () => {
+    setOpen(null);
+    setSelectedRowId(null);
+  };
+
+  // ---------------- FETCH EVENTS ----------------
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get("/events-list"); // API that returns { _id, name }
+        const res = await axios.get("/events-list"); // API returns [{ _id, name }]
         setEvents(res.data || []);
       } catch (err) {
         console.error("Failed to fetch events list:", err);
@@ -32,26 +45,25 @@ export default function View() {
     fetchEvents();
   }, []);
 
-  // Fetch registrations whenever selectedEvent changes
-  useEffect(() => {
+  // ---------------- FETCH REGISTRATIONS ----------------
+  const fetchRegistrations = async () => {
     if (!selectedEvent) {
       setRegistrations([]);
       return;
     }
+    setLoading(true);
+    try {
+      const res = await axios.get(`/registrations?course=${selectedEvent}`);
+      setRegistrations(res.data.registrations || []);
+    } catch (err) {
+      console.error("Failed to fetch registrations:", err);
+      setRegistrations([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchRegistrations = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(`/registrations?course=${selectedEvent}`);
-        setRegistrations(res.data.registrations || []);
-      } catch (err) {
-        console.error("Failed to fetch registrations:", err);
-        setRegistrations([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchRegistrations();
   }, [selectedEvent]);
 
@@ -90,7 +102,14 @@ export default function View() {
         <TableContainer>
           <Table sx={{ mt: "16px" }}>
             <Header />
-            <Body registrations={registrations} />
+            <Body
+              registrations={registrations}
+              handleOpenMenu={handleOpenMenu}
+              open={open}
+              handleCloseMenu={handleCloseMenu}
+              refreshData={fetchRegistrations}
+              selectedEvent={selectedEvent}
+            />
           </Table>
         </TableContainer>
       )}

@@ -3,37 +3,25 @@ import TableCell from "@mui/material/TableCell";
 import { Box, Typography } from "@mui/material";
 
 export default function Header() {
-  const columnCount = 7; // Adjusted: Name, Email/Phone, Designation/Workplace, Payment From, TrxID, Status
-  const cellStyle = {
-    p: "16px",
-    width: `${100 / columnCount}%`,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    verticalAlign: "top",
-  };
-
   return (
     <TableHead>
       <TableRow>
-        <TableCell align="left" sx={cellStyle}>
-          Name
-        </TableCell>
+        <TableCell align="left">Name</TableCell>
 
         {/* Merged Email + Phone */}
-        <TableCell align="left" sx={cellStyle}>
+        <TableCell align="left">
           <Box>
-            <Typography variant="body1" noWrap>
+            <Typography variant="body2" fontSize="0.8rem" noWrap>
               Email
             </Typography>
-            <Typography variant="body2" fontSize="0.8rem" noWrap>
+            <Typography variant="body1" noWrap>
               Phone
             </Typography>
           </Box>
         </TableCell>
 
         {/* Merged Designation + Workplace */}
-        <TableCell align="left" sx={cellStyle}>
+        <TableCell align="left">
           <Box>
             <Typography variant="body1" noWrap>
               Designation
@@ -44,18 +32,10 @@ export default function Header() {
           </Box>
         </TableCell>
 
-        <TableCell align="left" sx={cellStyle}>
-          Payment From
-        </TableCell>
-        <TableCell align="left" sx={cellStyle}>
-          TrxID
-        </TableCell>
-        <TableCell align="left" sx={cellStyle}>
-          Status
-        </TableCell>
-        <TableCell align="left" sx={cellStyle}>
-          Action
-        </TableCell>
+        <TableCell align="left">Payment From</TableCell>
+        <TableCell align="left">TrxID</TableCell>
+        <TableCell align="left">Status</TableCell>
+        <TableCell align="left">Action</TableCell>
       </TableRow>
     </TableHead>
   );
