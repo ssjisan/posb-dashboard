@@ -61,11 +61,7 @@ const navConfig = ({ pathname }) => [
       {
         title: "Events List",
         link: "/events_list", 
-      },
-      {
-        title: "Registrations",
-        link: "/registrations", 
-      },
+      }
     ],
   },
   {

@@ -158,7 +158,14 @@ export default function EventsView() {
       toast.error("Unable to delete event at the moment.");
     }
   };
-
+  const handlePayment = (event,data)=>{
+    event.preventDefault();
+    navigate(`/registration/${data._id}`);
+  }
+  const handleDownload = (event,data)=>{
+    event.preventDefault();
+    navigate(`/registration/confirm/${data._id}`);
+  }
   const handleRemove = () => {
     if (dataToDelete) {
       // Call the removeResource function with the ID of the resource to delete
@@ -206,6 +213,8 @@ export default function EventsView() {
             setIsModalOpen={setIsModalOpen}
             handlePreview={handlePreview}
             redirectEdit={redirectEdit}
+            handlePayment={handlePayment}
+            handleDownload={handleDownload}
           />
         </Table>
         {hasMore && !loading && (

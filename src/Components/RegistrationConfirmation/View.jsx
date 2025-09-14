@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Table, TableContainer, Typography } from "@mui/material";
+import { Box, Table, TableContainer, Typography, Button } from "@mui/material";
 import Header from "./Table/Header";
 import Body from "./Table/Body";
 import { useParams } from "react-router-dom";
@@ -9,27 +9,13 @@ export default function View() {
   const { id: courseId } = useParams(); // courseId from URL params
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(null); // For open pop up menu
-  const [selectedRowId, setSelectedRowId] = useState(null);
-
-  // ---------------- MENU HANDLERS ----------------
-  const handleOpenMenu = (event, rowData) => {
-    setOpen(event.currentTarget);
-    setSelectedRowId(rowData);
-  };
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-    setSelectedRowId(null);
-  };
 
   // ---------------- FETCH REGISTRATIONS ----------------
   const fetchRegistrations = async () => {
     if (!courseId) return;
-
     setLoading(true);
     try {
-      const res = await axios.get(`/registrations/${courseId}`);
+      const res = await axios.get(`/registration/confirmation/${courseId}`);
       setRegistrations(res.data.registrations || []);
     } catch (err) {
       console.error("Failed to fetch registrations:", err);
@@ -43,6 +29,53 @@ export default function View() {
     fetchRegistrations();
   }, [courseId]);
 
+  // ---------------- DOWNLOAD CSV ----------------
+  const handleDownloadCSV = () => {
+    if (!registrations.length) return;
+
+    // CSV header
+    const headers = [
+      "Name",
+      "Email",
+      "Phone",
+      "Designation",
+      "Workplace",
+      "Bkash Number",
+      "Transaction ID",
+      "Status",
+      "Remarks",
+    ];
+
+    // CSV rows
+    const rows = registrations.map((r) => [
+      r.name,
+      r.email,
+      r.phone,
+      r.designation,
+      r.workplace,
+      r.senderNumber || "",
+      r.transactionId || "",
+      r.status,
+      r.remarks || "",
+    ]);
+
+    // Combine header + rows
+    const csvContent = [headers, ...rows]
+      .map((e) => e.map((v) => `"${v}"`).join(",")) // wrap in quotes
+      .join("\n");
+
+    // Create Blob and trigger download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `Confirmed_Registrations_${courseId}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <Box
       sx={{
@@ -53,6 +86,13 @@ export default function View() {
         mt: 3,
       }}
     >
+      {/* Download Button */}
+      {registrations.length > 0 && (
+        <Button variant="contained" sx={{ mb: 2 }} onClick={handleDownloadCSV}>
+          Download CSV
+        </Button>
+      )}
+
       {loading ? (
         <Typography sx={{ mt: 2 }}>Loading registrations...</Typography>
       ) : registrations.length === 0 ? (
@@ -63,9 +103,6 @@ export default function View() {
             <Header />
             <Body
               registrations={registrations}
-              handleOpenMenu={handleOpenMenu}
-              open={open}
-              handleCloseMenu={handleCloseMenu}
               refreshData={fetchRegistrations}
               selectedEvent={courseId}
             />

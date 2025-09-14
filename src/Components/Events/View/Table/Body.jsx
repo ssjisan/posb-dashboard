@@ -18,6 +18,8 @@ import {
   Drag,
   NoData,
   EyeBold,
+  Bill,
+  Download,
 } from "../../../../assets/IconSet";
 import { format } from "date-fns";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -34,6 +36,8 @@ export default function Body({
   setDataToDelete,
   setIsModalOpen,
   redirectEdit,
+  handlePayment,
+  handleDownload,
 }) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -195,32 +199,67 @@ export default function Body({
         }}
       >
         <MenuItem
-          sx={{ display: "flex", gap: "16px", mb: "8px", borderRadius: "8px" }}
+          sx={{
+            display: "flex",
+            gap: "8px",
+            mb: "8px",
+            borderRadius: "8px",
+            fontSize: "14px",
+          }}
           onClick={() => handlePreview(selectedRowId)}
         >
-          <EyeBold color="#919EAB" size={20} />
+          <EyeBold color="#919EAB" size={16} />
           Preview
         </MenuItem>
+
         {selectedTab === "running" && (
           <MenuItem
             sx={{
               display: "flex",
-              gap: "16px",
+              gap: "8px",
               mb: "8px",
               borderRadius: "8px",
+              fontSize: "14px",
             }}
             onClick={(e) => redirectEdit(e, selectedRowId)}
           >
-            <Edit color="#919EAB" size={20} />
+            <Edit color="#919EAB" size={16} />
             Edit
           </MenuItem>
         )}
         <MenuItem
           sx={{
+            display: "flex",
+            gap: "8px",
+            mb: "8px",
+            borderRadius: "8px",
+            fontSize: "14px",
+          }}
+          onClick={(e) => handlePayment(e, selectedRowId)}
+        >
+          <Bill color="#919EAB" size={16} />
+          Payment
+        </MenuItem>
+        <MenuItem
+          sx={{
+            display: "flex",
+            gap: "8px",
+            mb: "8px",
+            borderRadius: "8px",
+            fontSize: "14px",
+          }}
+          onClick={(e) => handleDownload(e, selectedRowId)}
+        >
+          <Download color="#919EAB" size={16} />
+          Download list
+        </MenuItem>
+        <MenuItem
+          sx={{
             color: "error.main",
             display: "flex",
-            gap: "16px",
+            gap: "8px",
             borderRadius: "8px",
+            fontSize: "14px",
           }}
           onClick={() => {
             setDataToDelete(selectedRowId);
@@ -228,7 +267,7 @@ export default function Body({
             handleCloseMenu(); // Close popover
           }}
         >
-          <Remove color="red" size={20} /> Delete
+          <Remove color="red" size={16} /> Delete
         </MenuItem>
       </Popover>
     </DragDropContext>
@@ -260,4 +299,6 @@ Body.propTypes = {
   setDataToDelete: PropTypes.func.isRequired, // Function to set the item to delete
   setIsModalOpen: PropTypes.func.isRequired, // Function to open/close modal
   redirectEdit: PropTypes.func.isRequired,
+  handlePayment: PropTypes.func.isRequired,
+  handleDownload: PropTypes.func.isRequired,
 };
